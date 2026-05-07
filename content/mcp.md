@@ -5,7 +5,7 @@ template = "docs.html"
 
 # Model Context Protocol (MCP)
 
-Boxxy Terminal natively supports the **Model Context Protocol (MCP)**, an open standard that allows you to securely connect your AI agents to external tools, databases, and APIs.
+Boxxy Terminal natively supports the **Model Context Protocol (MCP)**, an open standard that allows you to connect your characters to external tools, databases, and APIs.
 
 With MCP, you can give =BoxxyClaw= access to:
 - Live, version-specific documentation (e.g., Context7)
@@ -59,6 +59,6 @@ Once added, your servers will appear in the MCP list in Preferences.
 
 Boxxy is designed to be blazingly fast. To ensure your terminal boots instantly, Boxxy uses a **"Lazy Boot"** strategy for MCP servers. 
 
-When you add a server, Boxxy fetches its list of available tools and caches them. When you open a new terminal pane, the agent immediately knows what tools are available, *but it doesn't actually start the background processes (like `npx`) until you ask it to use one of those tools.* 
+When you add a server, Boxxy fetches its list of available tools and caches them. When you open a new terminal pane, the character immediately knows what tools are available, *but it doesn't actually start the background processes (like `npx`) until you ask it to use one of those tools.* 
 
 This means you can configure dozens of heavy MCP servers without experiencing any startup lag! Furthermore, Boxxy implements strict lifecycle management, guaranteeing that when you close a pane or exit the app, all local MCP child processes are instantly terminated to prevent "zombie" processes from lingering on your system.

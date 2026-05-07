@@ -25,33 +25,30 @@ To enable terminal hyperlinks =(OSC 8)=, ensure that CLI tools like `ls` or `eza
 Navigate to =Preferences= -> =APIs= and enter the connection strings for your preferred LLM providers. Then, open =Model Selection= to assign specific models to Boxxy's core functions:
 
 - `AI Chat:` Used exclusively for the AI Chat in the sidebar. This model is completely stateless and separate from the rest of the application's UI and Database.
-- `Claw:` Powers the Boxxy Agents and assists with `Bookmarks Scripts`. A highly capable, reasoning-focused model is recommended here.
-- `Memories:` Responsible for extracting background facts and matching database memories. A fast, lightweight model is ideal for this task.
+- `Claw:` Powers your characters and assists with `Bookmarks Scripts`. A highly capable, yet fast, reasoning-focused model is recommended here.
+- `Memories & Dreams:` Responsible for extracting background facts and matching database memories. A fast, lightweight model is ideal for this task.
 
 **Pro Tip:** Press `Shift + Control + p` and type =Models= to quickly jump to the =Model Selection= menu. Experiment with different models until you find the perfect balance of speed and intelligence.
 
 --- 
 
-## BoxxyClaw
+## Characters Conversation
 
-Press `Control + /` and send your first message to activate =BoxxyClaw=. This setting is managed per-terminal pane, but you can configure an option in Preferences to always start new terminals with Claw enabled.
+Press `Control + /` to start a new conversation with a character. Boxxy comes with 3 pre-installed characters, but you can edit them [or add your own](@/characters.md).
 
-Claw operates in two distinct modes; you can switch modes directly from the =ClawMsgBar=.
-
-- **Proactive:** Boxxy will attempt to assist immediately when a terminal error occurs or when a task fails to complete successfully. This is incredibly useful for troubleshooting multi-step workflows.
-- **Lazy:** When an error occurs, Claw will wait and offer a prompt to look for a solution. The Claw Indicator will become visible with a 5-second cooldown, giving you the choice to request help.
-
-You can also use the Message Bar to paste large chunks of text or even **images** directly from your clipboard to provide extra context to the agent! 
+You can also use the Message Bar to paste large chunks of text or even **images** directly from your clipboard to provide extra context to your character! 
 
 ---
 
 ## Reminders & Scheduled Tasks
 
-Boxxy agents understand when you ask them to **remind you of something!** For example, you can ask an agent "Remind me to take my dog out in 10 minutes", and the agent will send you a notification. You can set as many reminders as you like, and at any time you can ask an agent to list them.
+Your characters understand when you ask them to **remind you of something!** For example, you can ask your character "Remind me to take my dog out in 10 minutes", and they will send you a notification. You can set as many reminders as you like, and at any time you can ask them to list pending reminders.
 
 You can also set scheduled tasks — for example, "Please clean up my PC in 20 minutes". In this case, Boxxy will present an approval widget before executing.
 
-**Note:** Tasks and Reminders are scoped per agent. Closing an agent will automatically cancel its pending reminders and scheduled tasks.
+**Note:** Tasks and Reminders are scoped per character. Closing a pane will automatically cancel its pending reminders and scheduled tasks.
+
+---
 
 ## Bookmarks
 
@@ -59,7 +56,9 @@ Open =Bookmarks= from the =Command Palette=. Here, you can create and save =Pyth
 
 Need dynamic inputs? Define runtime variables using the `{{{my_var}}}` syntax. Boxxy will prompt you to fill them out right when you invoke the script.
 
-All your scripts are safely stored locally at `config/boxxy-terminal/bookmarks`.
+All your scripts are safely stored locally at `~/.config/boxxy-terminal/bookmarks`.
+
+---
 
 ## Picking Up Where You Left Off
 
@@ -71,28 +70,49 @@ See more at [How It Works](@/how-it-works.md#resume-session).
 
 --- 
 
-## Memories
+## Memories & Dreams
 
-Boxxy is a self-improving system driven by =Memories=. Tell BoxxyClaw something like ='My favorite editor is micro'=, and Boxxy will remember your preference for next time!
+Boxxy is a self-improving system with two complementary layers that build up knowledge about you over time.
 
-While the core functionality is present, Boxxy is currently in =PREVIEW=. Because there isn't a firm migration strategy yet, your short-term memories might be wiped during application updates. 
+**Memories** are persistent facts your character knows about you. They are collected in two ways:
+- **Explicit**: Tell your character directly — ='My favorite editor is micro'= — and it will store that fact immediately.
+- **Implicit**: A background model evaluates every conversation turn and silently extracts durable preferences and patterns without interrupting you.
 
-However, your =Long Term Memory= will survive updates! You can manually view and edit these persistent facts in `.config/boxxy-terminal/boxxyclaw/MEMORY.md`.
+All memories are stored in a human-readable file at `~/.config/boxxy-terminal/boxxyclaw/MEMORY.md` that you can view, edit, or add to at any time.
+
+**Dreams** are how Boxxy consolidates what it has learned. When your machine is on AC power and idle, a low-priority background pipeline runs a three-phase process: it ingests recent interactions, extracts lasting behavioral patterns while resolving any conflicts, and then promotes the distilled facts into the memory database. Think of it as the system "sleeping on" your session to build a cleaner, more accurate picture of your preferences.
+
+**Note:** Boxxy is currently in =PREVIEW=. Short-term memories may be wiped during application updates, but your long-term memory in `MEMORY.md` will survive.
 
 --- 
 
 ## Token Consumption
 
-Boxxy is nor context-cheap! To perform at its best, it simultaneously processes a comprehensive set of data: the core toolbox, your active skills, relevant memories, and a snapshot of the terminal buffer. 
+Boxxy is not context-cheap! To perform at its best, it simultaneously processes a comprehensive set of data: the core toolbox, your active skills, relevant memories, and a snapshot of the terminal buffer. 
 
 You can monitor real-time usage via the =ClawSidebar=. However, modern flagship models (like Gemini, Claude, and GPT) utilize advanced **Context Caching**. This typically reduces the actual billable tokens by up to 80-90% for subsequent requests in the same session. 
 
-To inspect the exact payload Boxxy is broadcasting, you can run Booxy with =Context Logging Env= `BOXXY_DEBUG_CONTEXT=1`
+To inspect the exact payload Boxxy is broadcasting, run:
 
---- 
+```bash
+BOXXY_DEBUG_CONTEXT=1 boxxy-agent start
+```
 
-## Other Tweaks
-Depending on your distribution, you may need to raise your system's `inotify` limits. You can check your current values with:
+---
+
+## Desktop Shell Extension
+
+Boxxy has an optional companion extension for **GNOME Shell** that brings daemon controls and character management into your desktop panel. You can monitor the agent, start or stop it, browse your characters, and jump directly to an active pane — all without touching the terminal.
+
+Get it here: [gnome-shell-boxxy-companion](https://github.com/boxxy-dev/gnome-shell-boxxy-companion)
+
+Support for other desktops (KDE Plasma, COSMIC, Waybar, etc.) is not available yet, but community plugins are very welcome — the integration is simple D-Bus calls against the `boxxy-agent` daemon.
+
+---
+
+## Troubleshooting: inotify Limits
+
+Depending on your distribution, you may need to raise your system's `inotify` limits. Boxxy uses file-watching heavily (for hot-reloading skills, characters, and memories), and low inotify limits can cause silent failures. Check your current values with:
 
 ```bash
 cat /proc/sys/fs/inotify/max_user_instances

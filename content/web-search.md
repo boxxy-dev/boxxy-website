@@ -5,11 +5,11 @@ template = "docs.html"
 
 # Web Search
 
-Boxxy Terminal features integrated real-time web search, allowing your AI agents to browse the internet to find documentation, troubleshoot errors, or gather up-to-date information directly from the terminal.
+Boxxy Terminal features integrated real-time web search, allowing your characters to browse the internet to find documentation, troubleshoot errors, or gather up-to-date information directly from the terminal.
 
 ## Supported Search Engines
 
-Currently, Boxxy supports **Tavily** as the primary search provider. Tavily is specifically optimized for LLMs, providing clean, search-engine-optimized content that helps agents generate more accurate responses.
+Currently, Boxxy supports **Tavily** as the primary search provider. Tavily is specifically optimized for LLMs, providing clean, search-engine-optimized content that helps characters generate more accurate responses.
 
 ---
 
@@ -24,22 +24,22 @@ To enable web search capability:
     *   Find the **Search Engines** section.
     *   Enter your key in the **Tavily API Key** field.
 3.  **Enable the Tool:**
-    *   Switch to the =Agents= tab in Preferences.
-    *   Under **Agent Toolbox**, ensure **Enable Web Search** is toggled **ON**.
+    *   Switch to the =Characters= tab in Preferences.
+    *   Under **Character Toolbox**, ensure **Enable Web Search** is toggled **ON**.
 
 ---
 
 ## Using Web Search
 
-Web search is a powerful tool in your agent's toolbox. You can use it in two ways:
+Web search is a powerful tool in your character's toolbox. You can use it in two ways:
 
-### 1. Manual Activation (Per Pane)
-You can toggle web search on or off for a specific terminal pane without changing your global settings.
+### 1. Manual Activation (Per Character)
+You can toggle web search on or off for a specific character conversation without changing your global settings.
 *   Open the =Claw Message Bar= (`Ctrl+/`).
-*   Click the **Globe Icon** to toggle web search for the current session.
+*   Click the **Globe Icon** in the message bar toolbar to toggle web search for that character's session.
 
 ### 2. Automatic Search
-If enabled, the agent will automatically decide to use the web whenever it needs information it doesn't have—for example, if you ask about a library released yesterday or a specific error code from a cloud provider.
+If enabled, your character will automatically decide to use the web whenever it needs information it doesn't have—for example, if you ask about a library released yesterday or a specific error code from a cloud provider.
 
 > **Example Prompt:** "Search the web for the latest breaking changes in React 19 and summarize them."
 
@@ -47,6 +47,6 @@ If enabled, the agent will automatically decide to use the web whenever it needs
 
 ## Security & Control
 
-*   **Master Switch:** You can globally disable the web search capability in the =Agents= preferences tab.
-*   **Approval Protocol:** By default, Boxxy agents will describe their intent to search before performing the action, keeping you in control of what data is being sent to search providers.
+*   **Master Switch:** You can globally disable the web search capability in the =Characters= preferences tab.
+*   **Approval Protocol:** By default, your character will describe their intent to search before performing the action, keeping you in control of what data is being sent to search providers.
 *   **Privacy:** Boxxy only sends the search query to the provider; your local terminal history and file contents are never shared with search engines unless explicitly requested.

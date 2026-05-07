@@ -62,7 +62,23 @@ flatpak-builder --user --install --force-clean build-dir flatpak/dev.boxxy.Boxxy
 One of the most important things to monitor is the exact context Boxxy sends to the model. You can inspect this by enabling context logging:
 
 ```bash
-BOXXY_DEBUG_CONTEXT=1 cargo run -p boxxy-app
+BOXXY_DEBUG_CONTEXT=1 cargo run -p boxxy-agent
 ```
 
 (This works in both debug and release builds, but will remain completely silent unless the variable is set to 1.)
+
+---
+
+## Packaging for Linux Distributions
+
+If you are packaging Boxxy for a system package manager (Nix, Arch AUR, Debian, Fedora, etc.), you **must** disable the built-in self-updater. When distributed through a package manager, updates are the package manager's responsibility — the in-app updater should never run.
+
+Build with the `disable-self-update` Cargo feature:
+
+```bash
+cargo build --release --features disable-self-update
+```
+
+This compiles `boxxy-app` → `boxxy-window` → `boxxy-ai-core` with the feature propagated through the entire crate hierarchy. The resulting binary will never attempt to update itself, regardless of the environment it runs in.
+
+The self-update UI and version-check network requests are fully compiled out, so there are no runtime flags or config files to manage — the package build alone is sufficient.

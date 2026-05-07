@@ -21,7 +21,7 @@ Boxxy is built to handle everything from daily terminal tasks to complex Linux s
 
 ### 4. Interactive Scripting with Bookmarks
 * **The Scenario:** You have a common deployment or cleanup script you run frequently, but it requires different parameters each time.
-* **The Boxxy Way:** Save the script as a **Bookmark** using `{{{project_name}}}` variables. When you run it from the Command Palette, Boxxy natively prompts you for the dynamic inputs, executes the script, and its agent monitors the output to ensure everything ran successfully.
+* **The Boxxy Way:** Save the script as a **Bookmark** using `{{{project_name}}}` variables. When you run it from the Command Palette, Boxxy natively prompts you for the dynamic inputs, executes the script, and your character monitors the output to ensure everything ran successfully.
 
 ### 5. Context-Aware Log Analysis
 * **The Scenario:** You're tailing `journalctl` or a production log file and spot a recurring system error that makes no sense.

@@ -11,16 +11,15 @@ Below is a breakdown of the core components that make Boxxy tick.
 
 ---
 
-## Terminals & ClawAgents
+## Terminals & Characters
 
-When =BoxxyClaw= is enabled, every terminal instance is associated with a =BoxxyAgent=. An Agent is 
-essentially a dedicated session from your chosen =LLM Model=. 
+When =BoxxyClaw= is enabled, every terminal instance is paired with a =Character=. Each character is a dedicated session from your chosen =LLM Model=.
 
-The core philosophy here is isolation: users typically spawn a new terminal to tackle a specific task. By assigning a unique agent to each terminal, we ensure that the context for that specific task remains isolated from your other ongoing work. 
+The core philosophy here is isolation: users typically spawn a new terminal to tackle a specific task. By assigning a unique character to each terminal, we ensure that the context for that specific task remains isolated from your other ongoing work.
 
-To provide assistance, the agent tracks your terminal's activity—what commands were run in the past and what is currently executing. When necessary, it can also read directly from the terminal buffer. To optimize resource usage and reduce token consumption, Boxxy employs a paging system: the agent might initially request the last 50 lines of output. If that isn't sufficient to understand the context, it will request the preceding 50 lines, and so on.
+To provide assistance, the character tracks your terminal's activity — what commands were run in the past and what is currently executing. When necessary, they can also read directly from the terminal buffer using a smart paging system (see [Terminal Buffer](#terminal-buffer) below).
 
-However, it's very common to use multiple terminals simultaneously for a single, complex project. In these scenarios, you can explicitly ask an agent (by its name) to collaborate with another agent. When linked this way, the agents will share their context, allowing them to work together seamlessly across multiple terminal panes or windows.
+However, it's very common to use multiple terminals simultaneously for a single, complex project. In these scenarios, you can explicitly ask a character (by name) to collaborate with another. When linked this way, they will share their context, allowing them to work together seamlessly across multiple terminal panes or windows.
 
 ---
 
@@ -32,27 +31,25 @@ Boxxy doesn't just forget everything when you close a tab. It is designed to lea
 While you work, Boxxy silently extracts facts—like your favorite editor or local environment specs—and mirrors them to a human-readable file at `~/.config/boxxy-terminal/boxxyclaw/MEMORY.md`. You are always in control of what the AI knows:
 
 - **Verification**: New facts appear in  =Pending= until you move them to =Active.=
-- **Manual Edits**: You can open the file and type your own facts directly into the agent's "brain" at any time.
+- **Manual Edits**: You can open the file and type your own facts directly into your character's "brain" at any time.
 - **Smart Scoping**: Memories can be =Global= (applying everywhere) or =Project-Specific= (only active when you are working in a specific folder).
-- **Pinning (📌)**: Add a 📌 emoji to any memory in the file to ensure it is always injected into the agent's context, regardless of what you are doing.
-
----
+- **Pinning (📌)**: Add a 📌 emoji to any memory in the file to ensure it is always injected into the character's context, regardless of what you are doing.
 
 ---
 
 ## Terminal Buffer
 
-Boxxy's agents aren't disconnected chatbots; they are deeply integrated into your terminal environment. Each terminal pane has its own dedicated agent, and you can see its unique name displayed directly in the terminal interface.
+Your characters aren't disconnected chatbots; they are deeply integrated into your terminal environment. Each pane has its own dedicated character, and you can see their name displayed directly in the terminal interface.
 
 ### Intelligent Paging
-To provide the best assistance, agents have "eyes" on your terminal's activity. When necessary, they can read directly from the active terminal buffer to understand exactly what error you are seeing.
+To provide the best assistance, characters have "eyes" on your terminal's activity. When necessary, they can read directly from the active terminal buffer to understand exactly what error you are seeing.
 
 To optimize resource usage and radically reduce token consumption, Boxxy employs a smart **paging system**:
-1. When you ask a question or an error occurs, the agent initially requests only a small snapshot of the last **50 lines** of output.
-2. If that snapshot isn't sufficient to understand the context, the agent will dynamically request the *preceding* 50 lines.
-3. It iterates backwards through the buffer history until it identifies the root cause of the issue.
+1. When you ask a question or an error occurs, the character initially requests only a small snapshot of the last **50 lines** of output.
+2. If that snapshot isn't sufficient to understand the context, they will dynamically request the *preceding* 50 lines.
+3. They iterate backwards through the buffer history until identifying the root cause of the issue.
 
-This ensures the agent gets the precise context it needs without unnecessarily flooding the model with thousands of lines of irrelevant history.
+This ensures the character gets the precise context needed without unnecessarily flooding the model with thousands of lines of irrelevant history.
 
 ---
 
@@ -76,7 +73,7 @@ Resuming a session also restores its =Cumulative Context Analytics=. Your sideba
 
 ## Toolbox
 
-Think of the **Toolbox** as the agent's set of "superpowers." Instead of the AI simply guessing and typing commands into your terminal, it uses a library of highly reliable, structured tools to interact with your computer.
+Think of the **Toolbox** as your character's set of "superpowers." Instead of simply guessing and typing commands into your terminal, they use a library of highly reliable, structured tools to interact with your computer.
 
 These tools are grouped into specialized categories:
 - **File Operations**: Safely read, write, and list directories. The AI can even read specific line ranges to save time and tokens.
@@ -87,21 +84,31 @@ These tools are grouped into specialized categories:
 ### Safety First: The Approval Protocol
 We believe in **Supervised Autonomy**. Boxxy never performs a "dangerous" action (like deleting a file, killing a process, or reading your clipboard) without your explicit permission. 
 
-When an agent wants to use a sensitive tool, it will pause and present its plan to you in a popover. Only after you click **Approve** will the tool execute and return its results to the agent. This ensures you are always in control of what the AI is doing on your machine.
+When a character wants to use a sensitive tool, they will pause and present their plan to you in a popover. Only after you click **Approve** will the tool execute. This ensures you are always in control of what your character is doing on your machine.
 
 ---
 
 ## Boxxy Agent
 
-Because Boxxy is primarily distributed as a secure, sandboxed =Flatpak=, it faces a unique challenge: sandboxed applications usually cannot see or interact with the host operating system. This is great for security, but terrible for a terminal emulator that needs to run your local tools!
+The =Boxxy Agent= is a persistent host-level daemon that manages all privileged operations on your machine. It started as a workaround for Flatpak sandboxing — sandboxed applications cannot normally see or interact with the host OS — but has since grown into the backbone of the entire application.
 
-To solve this, Boxxy uses a hidden background process called the =Boxxy Agent=. 
+The agent runs as a **single shared instance** for all open Boxxy windows. When Boxxy launches, it starts the daemon (or detects an already-running one) and claims a fixed name on your D-Bus session bus. All UI processes then communicate with it over this private, fast D-Bus connection.
 
-When you open Boxxy, it securely spawns this agent *outside* of the sandbox directly on your host machine. The terminal UI and the Host Agent then talk to each other over a private, lightning-fast D-Bus connection. 
+### What the daemon manages
 
-This bridge is what allows Boxxy to:
-- Spawn real shells (like Bash or Fish) with full access to your system's files and programs.
-- Accurately track your Current Working Directory (CWD) across tabs.
-- Let the AI =ClawAgents= safely read files and execute commands on your actual machine, rather than being trapped inside the Flatpak bubble.
+- **PTY sessions**: Spawns and owns all your terminal shells. Each session is tracked with a ring buffer, so context survives even if a pane is closed and resumed later.
+- **Claw toolbox**: Handles the privileged side of all character tools — shell execution, file I/O (with path blacklisting), process management, and clipboard access.
+- **Character claims**: Tracks which character is assigned to which terminal pane. Claims are held in memory only; nothing is written to disk.
+- **Background maintenance**: Monitors system state (power source, ghost mode) and coordinates background work like the =Dreams= consolidation pipeline.
 
-In short: Boxxy's UI stays safely sandboxed, while the Boxxy Agent does the heavy lifting on your host system.
+### Lifecycle
+
+The agent can be controlled directly from the command line:
+```bash
+boxxy-agent start       # run the daemon
+boxxy-agent stop        # clean shutdown
+boxxy-agent restart     # reload without downtime
+boxxy-agent list-sessions  # show active PTY sessions
+```
+
+In short: Boxxy's UI is a thin, sandboxed frontend. The Boxxy Agent is where everything actually runs.
