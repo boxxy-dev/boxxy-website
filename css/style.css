@@ -168,6 +168,7 @@ h1:hover .zola-anchor, h2:hover .zola-anchor, h3:hover .zola-anchor {
     font-size: 0.8em;
 }
 .content-area p { line-height: 1.8; margin-bottom: 1.5rem; }
+.content-area blockquote p { margin-bottom: 0; }
 .content-area a:hover {
     text-decoration: underline !important;
 }

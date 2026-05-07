@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxxy Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="navbar is-dark">
+        <div class="container">
+            <div class="navbar-brand">
+                <div class="navbar-item">
+                    <a class="boxxy-brand-button" href="/">
+                        <strong>Boxxy Terminal</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-live-button" href="/live">
+                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
+                        <span>Live</span>
+                    </a>
+                </div>
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Star</span>
+                        <span class="star-count" id="github-stars">...</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <!-- Sidebar Navigation -->
+            <aside class="column is-3">
+                <div class="sidebar">
+                    <p class="sidebar-title">Getting Started</p>
+                    <ul class="menu-list mb-5">
+                        <li><a href="/getting-started" class="">Getting Started</a></li>
+                        <li><a href="/how-it-works" class="">How It Works</a></li>
+                        <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/telemetry" class="">Telemetry</a></li>
+                    </ul>
+
+                    <p class="sidebar-title">What Boxxy Can Do</p>
+                    <ul class="menu-list mb-5">
+                        <li><a href="/features" class="">Features</a></li>
+                        <li><a href="/mcp" class="">MCP</a></li>
+                        <li><a href="/web-search" class="">Web Search</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="is-active">Characters</a></li>
+                        <li><a href="/use-cases" class="">Use Cases</a></li>
+                    </ul>
+
+                    <p class="sidebar-title">Community</p>
+                    <ul class="menu-list">
+                        <li><a href="/releases" class="">Releases</a></li>
+                        <li><a href="/live" class="" style="display: flex; align-items: center; gap: 0.5rem;">
+                            Dashboard
+                            <span style="background-color: #f38ba8; color: #11111b; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">Live</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="column is-9">
+                <div class="content content-area">
+                    
+                        <h1 id="characters"><a class="zola-anchor" href="#characters" aria-label="Anchor link for: characters">🔗</a>Characters</h1>
+<p>Instead of interacting with a faceless LLM, every =BoxxyClaw= character has a <strong>personality, avatar, and color</strong>. Characters are per-pane — you can run different characters in different splits, each with its own tone and expertise.</p>
+<hr />
+<h2 id="the-default-characters"><a class="zola-anchor" href="#the-default-characters" aria-label="Anchor link for: the-default-characters">🔗</a>The Default Characters</h2>
+<p>Boxxy ships with three bundled characters:</p>
+<div style="display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 1.5rem 0;">
+<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #8035D4; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
+  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/niko-una/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #8035D4;" alt="Niko Una">
+  <div>
+    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Niko Una</div>
+    <div style="color: #8035D4; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Tsundere Maid of the Linux Desktop</div>
+  </div>
+  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">Technically sharp but flustered by praise. Will absolutely help you — just don't expect a thank-you.</p>
+</div>
+<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #204A87; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
+  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/levi-kujo/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #204A87;" alt="Levi Kujo">
+  <div>
+    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Levi Kujo</div>
+    <div style="color: #204A87; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Full-Metal Kernel Alchemist</div>
+  </div>
+  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">No-nonsense and brutally direct. Values demonstrated expertise and has zero patience for cargo-cult practices.</p>
+</div>
+<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #B31825; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
+  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/kuro/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #B31825;" alt="Kuro">
+  <div>
+    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Kuro</div>
+    <div style="color: #B31825; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Demonic Arch User, btw</div>
+  </div>
+  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">Theatrical and sardonic. Celebrates every successful build as a minor dark victory, and will remind you to use the ArchWiki.</p>
+</div>
+</div>
+<hr />
+<h2 id="changing-a-character"><a class="zola-anchor" href="#changing-a-character" aria-label="Anchor link for: changing-a-character">🔗</a>Changing a Character</h2>
+<ol>
+<li>Open the =Claw Message Bar= (<code>Ctrl+/</code>) on the target pane.</li>
+<li>Type <code>@</code> to open the character picker.</li>
+<li>Select a different character to reassign.</li>
+</ol>
+<blockquote>
+<p>The session restarts with the new personality. Your conversation history is preserved and rehydrated automatically.</p>
+</blockquote>
+<hr />
+<h2 id="creating-custom-characters"><a class="zola-anchor" href="#creating-custom-characters" aria-label="Anchor link for: creating-custom-characters">🔗</a>Creating Custom Characters</h2>
+<p>Characters are simple directories inside your Boxxy config folder:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="plain"><span class="giallo-l"><span>~/.config/boxxy-terminal/boxxyclaw/characters/&lt;slug&gt;/</span></span>
+<span class="giallo-l"><span>├── CHARACTER.toml</span></span>
+<span class="giallo-l"><span>└── AVATAR.png        (optional — 256×256 PNG)</span></span></code></pre>
+<p><strong>CHARACTER.toml</strong></p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span>display_name</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;My Custom Character&quot;</span></span>
+<span class="giallo-l"><span>color</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#7B61FF&quot;</span></span>
+<span class="giallo-l"><span>duties</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Expert in Python backend development and Docker orchestration.&quot;</span></span>
+<span class="giallo-l"><span>personality</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Patient and thorough. Always explains the &#39;why&#39; behind every suggestion.&quot;</span></span></code></pre><table><thead><tr><th style="text-align: left">Field</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>display_name</code></td><td style="text-align: left">Name shown in the badge, sidebar, and swarm tools.</td></tr>
+<tr><td style="text-align: left"><code>color</code></td><td style="text-align: left">CSS hex color for the pane badge and UI accents.</td></tr>
+<tr><td style="text-align: left"><code>duties</code></td><td style="text-align: left">Short role description injected into the system prompt.</td></tr>
+<tr><td style="text-align: left"><code>personality</code></td><td style="text-align: left">Behavioral guidelines that shape how the character communicates.</td></tr>
+</tbody></table>
+<p>A stable UUID is auto-generated on first load. You can safely share character directories — Boxxy detects and resolves any ID collisions automatically.</p>
+<h3 id="hot-reload"><a class="zola-anchor" href="#hot-reload" aria-label="Anchor link for: hot-reload">🔗</a>Hot Reload</h3>
+<p>You don't need to restart anything. The =boxxy-agent= daemon watches the characters directory for changes and picks up edits to <code>CHARACTER.toml</code> or <code>AVATAR.png</code> within seconds. Active sessions whose character's personality changed will apply the new prompt on the very next turn.</p>
+<h3 id="sorting"><a class="zola-anchor" href="#sorting" aria-label="Anchor link for: sorting">🔗</a>Sorting</h3>
+<p>Create a <code>characters.json</code> in the characters directory to control the display order:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="json"><span class="giallo-l"><span style="color: #9399B2;">[</span><span style="color: #A6E3A1;">&quot;niko-una&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;levi-kujo&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;my-custom-character&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;kuro&quot;</span><span style="color: #9399B2;">]</span></span></code></pre>
+<p>You can also drag and drop characters directly in =Preferences= to reorder them.</p>
+<hr />
+<h2 id="resetting-to-defaults"><a class="zola-anchor" href="#resetting-to-defaults" aria-label="Anchor link for: resetting-to-defaults">🔗</a>Resetting to Defaults</h2>
+<p>Open =Preferences= (<code>Ctrl+,</code>), navigate to =Characters=, and click <strong>Reset to Defaults</strong>. This wipes all custom characters and re-extracts the three bundled defaults.</p>
+
+                    
+
+                    <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">
+                    <div class="has-text-right">
+                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content&#x2F;characters.md" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Improve this page
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
+
+
+    <footer class="footer">
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html>

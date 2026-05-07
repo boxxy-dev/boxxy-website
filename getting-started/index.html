@@ -51,6 +51,7 @@
                         <li><a href="/getting-started" class="is-active">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/models" class="">Models</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +60,8 @@
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
                         <li><a href="/web-search" class="">Web Search</a></li>
-                        <li><a href="/skills" class="">Agent Skills</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
                     </ul>
 
@@ -91,45 +93,54 @@
 <p>Navigate to =Preferences= -&gt; =APIs= and enter the connection strings for your preferred LLM providers. Then, open =Model Selection= to assign specific models to Boxxy's core functions:</p>
 <ul>
 <li><code>AI Chat:</code> Used exclusively for the AI Chat in the sidebar. This model is completely stateless and separate from the rest of the application's UI and Database.</li>
-<li><code>Claw:</code> Powers the Boxxy Agents and assists with <code>Bookmarks Scripts</code>. A highly capable, reasoning-focused model is recommended here.</li>
-<li><code>Memories:</code> Responsible for extracting background facts and matching database memories. A fast, lightweight model is ideal for this task.</li>
+<li><code>Claw:</code> Powers your characters and assists with <code>Bookmarks Scripts</code>. A highly capable, yet fast, reasoning-focused model is recommended here.</li>
+<li><code>Memories &amp; Dreams:</code> Responsible for extracting background facts and matching database memories. A fast, lightweight model is ideal for this task.</li>
 </ul>
 <p><strong>Pro Tip:</strong> Press <code>Shift + Control + p</code> and type =Models= to quickly jump to the =Model Selection= menu. Experiment with different models until you find the perfect balance of speed and intelligence.</p>
 <hr />
-<h2 id="boxxyclaw"><a class="zola-anchor" href="#boxxyclaw" aria-label="Anchor link for: boxxyclaw">🔗</a>BoxxyClaw</h2>
-<p>Press <code>Control + /</code> and send your first message to activate =BoxxyClaw=. This setting is managed per-terminal pane, but you can configure an option in Preferences to always start new terminals with Claw enabled.</p>
-<p>Claw operates in two distinct modes; you can switch modes directly from the =ClawMsgBar=.</p>
-<ul>
-<li><strong>Proactive:</strong> Boxxy will attempt to assist immediately when a terminal error occurs or when a task fails to complete successfully. This is incredibly useful for troubleshooting multi-step workflows.</li>
-<li><strong>Lazy:</strong> When an error occurs, Claw will wait and offer a prompt to look for a solution. The Claw Indicator will become visible with a 5-second cooldown, giving you the choice to request help.</li>
-</ul>
-<p>You can also use the Message Bar to paste large chunks of text or even <strong>images</strong> directly from your clipboard to provide extra context to the agent!</p>
+<h2 id="characters-conversation"><a class="zola-anchor" href="#characters-conversation" aria-label="Anchor link for: characters-conversation">🔗</a>Characters Conversation</h2>
+<p>Press <code>Control + /</code> to start a new conversation with a character. Boxxy comes with 3 pre-installed characters, but you can edit them <a href="https://boxxy.dev/characters/">or add your own</a>.</p>
+<p>You can also use the Message Bar to paste large chunks of text or even <strong>images</strong> directly from your clipboard to provide extra context to your character!</p>
 <hr />
 <h2 id="reminders-scheduled-tasks"><a class="zola-anchor" href="#reminders-scheduled-tasks" aria-label="Anchor link for: reminders-scheduled-tasks">🔗</a>Reminders &amp; Scheduled Tasks</h2>
-<p>Boxxy agents understand when you ask them to <strong>remind you of something!</strong> For example, you can ask an agent "Remind me to take my dog out in 10 minutes", and the agent will send you a notification. You can set as many reminders as you like, and at any time you can ask an agent to list them.</p>
+<p>Your characters understand when you ask them to <strong>remind you of something!</strong> For example, you can ask your character "Remind me to take my dog out in 10 minutes", and they will send you a notification. You can set as many reminders as you like, and at any time you can ask them to list pending reminders.</p>
 <p>You can also set scheduled tasks — for example, "Please clean up my PC in 20 minutes". In this case, Boxxy will present an approval widget before executing.</p>
-<p><strong>Note:</strong> Tasks and Reminders are scoped per agent. Closing an agent will automatically cancel its pending reminders and scheduled tasks.</p>
+<p><strong>Note:</strong> Tasks and Reminders are scoped per character. Closing a pane will automatically cancel its pending reminders and scheduled tasks.</p>
+<hr />
 <h2 id="bookmarks"><a class="zola-anchor" href="#bookmarks" aria-label="Anchor link for: bookmarks">🔗</a>Bookmarks</h2>
 <p>Open =Bookmarks= from the =Command Palette=. Here, you can create and save =Python= and =Shell= scripts. Boxxy automatically registers your saved bookmarks as quick-actions in the =Command Palette= for lightning-fast execution.</p>
 <p>Need dynamic inputs? Define runtime variables using the <code>{{{my_var}}}</code> syntax. Boxxy will prompt you to fill them out right when you invoke the script.</p>
-<p>All your scripts are safely stored locally at <code>config/boxxy-terminal/bookmarks</code>.</p>
+<p>All your scripts are safely stored locally at <code>~/.config/boxxy-terminal/bookmarks</code>.</p>
+<hr />
 <h2 id="picking-up-where-you-left-off"><a class="zola-anchor" href="#picking-up-where-you-left-off" aria-label="Anchor link for: picking-up-where-you-left-off">🔗</a>Picking Up Where You Left Off</h2>
 <p>Never lose your context again. You can resume any of your <strong>last 10 sessions</strong> in any terminal pane by pressing <code>Control + /</code> and typing <code>/resume</code>. Boxxy will present your recent history, making it easy to pick up exactly where you left off.</p>
 <p>If you want to keep a specific session forever, you can =Pin it= using the pin toggle in the message bar. Pinned sessions are always displayed at the top of your list and are never automatically deleted, no matter how many new sessions you start!</p>
 <p>See more at <a href="https://boxxy.dev/how-it-works/#resume-session">How It Works</a>.</p>
 <hr />
-<h2 id="memories"><a class="zola-anchor" href="#memories" aria-label="Anchor link for: memories">🔗</a>Memories</h2>
-<p>Boxxy is a self-improving system driven by =Memories=. Tell BoxxyClaw something like ='My favorite editor is micro'=, and Boxxy will remember your preference for next time!</p>
-<p>While the core functionality is present, Boxxy is currently in =PREVIEW=. Because there isn't a firm migration strategy yet, your short-term memories might be wiped during application updates.</p>
-<p>However, your =Long Term Memory= will survive updates! You can manually view and edit these persistent facts in <code>.config/boxxy-terminal/boxxyclaw/MEMORY.md</code>.</p>
+<h2 id="memories-dreams"><a class="zola-anchor" href="#memories-dreams" aria-label="Anchor link for: memories-dreams">🔗</a>Memories &amp; Dreams</h2>
+<p>Boxxy is a self-improving system with two complementary layers that build up knowledge about you over time.</p>
+<p><strong>Memories</strong> are persistent facts your character knows about you. They are collected in two ways:</p>
+<ul>
+<li><strong>Explicit</strong>: Tell your character directly — ='My favorite editor is micro'= — and it will store that fact immediately.</li>
+<li><strong>Implicit</strong>: A background model evaluates every conversation turn and silently extracts durable preferences and patterns without interrupting you.</li>
+</ul>
+<p>All memories are stored in a human-readable file at <code>~/.config/boxxy-terminal/boxxyclaw/MEMORY.md</code> that you can view, edit, or add to at any time.</p>
+<p><strong>Dreams</strong> are how Boxxy consolidates what it has learned. When your machine is on AC power and idle, a low-priority background pipeline runs a three-phase process: it ingests recent interactions, extracts lasting behavioral patterns while resolving any conflicts, and then promotes the distilled facts into the memory database. Think of it as the system "sleeping on" your session to build a cleaner, more accurate picture of your preferences.</p>
+<p><strong>Note:</strong> Boxxy is currently in =PREVIEW=. Short-term memories may be wiped during application updates, but your long-term memory in <code>MEMORY.md</code> will survive.</p>
 <hr />
 <h2 id="token-consumption"><a class="zola-anchor" href="#token-consumption" aria-label="Anchor link for: token-consumption">🔗</a>Token Consumption</h2>
-<p>Boxxy is nor context-cheap! To perform at its best, it simultaneously processes a comprehensive set of data: the core toolbox, your active skills, relevant memories, and a snapshot of the terminal buffer.</p>
+<p>Boxxy is not context-cheap! To perform at its best, it simultaneously processes a comprehensive set of data: the core toolbox, your active skills, relevant memories, and a snapshot of the terminal buffer.</p>
 <p>You can monitor real-time usage via the =ClawSidebar=. However, modern flagship models (like Gemini, Claude, and GPT) utilize advanced <strong>Context Caching</strong>. This typically reduces the actual billable tokens by up to 80-90% for subsequent requests in the same session.</p>
-<p>To inspect the exact payload Boxxy is broadcasting, you can run Booxy with =Context Logging Env= <code>BOXXY_DEBUG_CONTEXT=1</code></p>
+<p>To inspect the exact payload Boxxy is broadcasting, run:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span>BOXXY_DEBUG_CONTEXT</span><span style="color: #94E2D5;">=</span><span style="color: #A6E3A1;">1</span><span style="color: #89B4FA;font-style: italic;"> boxxy-agent</span><span style="color: #A6E3A1;"> start</span></span></code></pre>
 <hr />
-<h2 id="other-tweaks"><a class="zola-anchor" href="#other-tweaks" aria-label="Anchor link for: other-tweaks">🔗</a>Other Tweaks</h2>
-<p>Depending on your distribution, you may need to raise your system's <code>inotify</code> limits. You can check your current values with:</p>
+<h2 id="desktop-shell-extension"><a class="zola-anchor" href="#desktop-shell-extension" aria-label="Anchor link for: desktop-shell-extension">🔗</a>Desktop Shell Extension</h2>
+<p>Boxxy has an optional companion extension for <strong>GNOME Shell</strong> that brings daemon controls and character management into your desktop panel. You can monitor the agent, start or stop it, browse your characters, and jump directly to an active pane — all without touching the terminal.</p>
+<p>Get it here: <a rel="external" href="https://github.com/boxxy-dev/gnome-shell-boxxy-companion">gnome-shell-boxxy-companion</a></p>
+<p>Support for other desktops (KDE Plasma, COSMIC, Waybar, etc.) is not available yet, but community plugins are very welcome — the integration is simple D-Bus calls against the <code>boxxy-agent</code> daemon.</p>
+<hr />
+<h2 id="troubleshooting-inotify-limits"><a class="zola-anchor" href="#troubleshooting-inotify-limits" aria-label="Anchor link for: troubleshooting-inotify-limits">🔗</a>Troubleshooting: inotify Limits</h2>
+<p>Depending on your distribution, you may need to raise your system's <code>inotify</code> limits. Boxxy uses file-watching heavily (for hot-reloading skills, characters, and memories), and low inotify limits can cause silent failures. Check your current values with:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cat</span><span style="color: #A6E3A1;"> /proc/sys/fs/inotify/max_user_instances</span></span>
 <span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cat</span><span style="color: #A6E3A1;"> /proc/sys/fs/inotify/max_user_watches</span></span></code></pre>
 <p>For example, Fedora's defaults are often too low for modern development. You can safely raise both values by running:</p>

@@ -51,6 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="is-active">Development</a></li>
+                        <li><a href="/models" class="">Models</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +60,8 @@
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
                         <li><a href="/web-search" class="">Web Search</a></li>
-                        <li><a href="/skills" class="">Agent Skills</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
                     </ul>
 
@@ -109,8 +111,15 @@
 <hr />
 <h2 id="context"><a class="zola-anchor" href="#context" aria-label="Anchor link for: context">🔗</a>Context</h2>
 <p>One of the most important things to monitor is the exact context Boxxy sends to the model. You can inspect this by enabling context logging:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span>BOXXY_DEBUG_CONTEXT</span><span style="color: #94E2D5;">=</span><span style="color: #A6E3A1;">1</span><span style="color: #89B4FA;font-style: italic;"> cargo</span><span style="color: #A6E3A1;"> run -p boxxy-app</span></span></code></pre>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span>BOXXY_DEBUG_CONTEXT</span><span style="color: #94E2D5;">=</span><span style="color: #A6E3A1;">1</span><span style="color: #89B4FA;font-style: italic;"> cargo</span><span style="color: #A6E3A1;"> run -p boxxy-agent</span></span></code></pre>
 <p>(This works in both debug and release builds, but will remain completely silent unless the variable is set to 1.)</p>
+<hr />
+<h2 id="packaging-for-linux-distributions"><a class="zola-anchor" href="#packaging-for-linux-distributions" aria-label="Anchor link for: packaging-for-linux-distributions">🔗</a>Packaging for Linux Distributions</h2>
+<p>If you are packaging Boxxy for a system package manager (Nix, Arch AUR, Debian, Fedora, etc.), you <strong>must</strong> disable the built-in self-updater. When distributed through a package manager, updates are the package manager's responsibility — the in-app updater should never run.</p>
+<p>Build with the <code>disable-self-update</code> Cargo feature:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cargo</span><span style="color: #A6E3A1;"> build --release --features disable-self-update</span></span></code></pre>
+<p>This compiles <code>boxxy-app</code> → <code>boxxy-window</code> → <code>boxxy-ai-core</code> with the feature propagated through the entire crate hierarchy. The resulting binary will never attempt to update itself, regardless of the environment it runs in.</p>
+<p>The self-update UI and version-check network requests are fully compiled out, so there are no runtime flags or config files to manage — the package build alone is sufficient.</p>
 
                     
 

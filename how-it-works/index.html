@@ -51,6 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="is-active">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/models" class="">Models</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +60,8 @@
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
                         <li><a href="/web-search" class="">Web Search</a></li>
-                        <li><a href="/skills" class="">Agent Skills</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
                     </ul>
 
@@ -82,12 +84,11 @@
 <p>Boxxy is designed to be more than just a terminal with a chat window. It is built from the ground up to be a truly agentic environment that learns from you as you work.</p>
 <p>Below is a breakdown of the core components that make Boxxy tick.</p>
 <hr />
-<h2 id="terminals-clawagents"><a class="zola-anchor" href="#terminals-clawagents" aria-label="Anchor link for: terminals-clawagents">🔗</a>Terminals &amp; ClawAgents</h2>
-<p>When =BoxxyClaw= is enabled, every terminal instance is associated with a =BoxxyAgent=. An Agent is
-essentially a dedicated session from your chosen =LLM Model=.</p>
-<p>The core philosophy here is isolation: users typically spawn a new terminal to tackle a specific task. By assigning a unique agent to each terminal, we ensure that the context for that specific task remains isolated from your other ongoing work.</p>
-<p>To provide assistance, the agent tracks your terminal's activity—what commands were run in the past and what is currently executing. When necessary, it can also read directly from the terminal buffer. To optimize resource usage and reduce token consumption, Boxxy employs a paging system: the agent might initially request the last 50 lines of output. If that isn't sufficient to understand the context, it will request the preceding 50 lines, and so on.</p>
-<p>However, it's very common to use multiple terminals simultaneously for a single, complex project. In these scenarios, you can explicitly ask an agent (by its name) to collaborate with another agent. When linked this way, the agents will share their context, allowing them to work together seamlessly across multiple terminal panes or windows.</p>
+<h2 id="terminals-characters"><a class="zola-anchor" href="#terminals-characters" aria-label="Anchor link for: terminals-characters">🔗</a>Terminals &amp; Characters</h2>
+<p>When =BoxxyClaw= is enabled, every terminal instance is paired with a =Character=. Each character is a dedicated session from your chosen =LLM Model=.</p>
+<p>The core philosophy here is isolation: users typically spawn a new terminal to tackle a specific task. By assigning a unique character to each terminal, we ensure that the context for that specific task remains isolated from your other ongoing work.</p>
+<p>To provide assistance, the character tracks your terminal's activity — what commands were run in the past and what is currently executing. When necessary, they can also read directly from the terminal buffer using a smart paging system (see <a href="https://boxxy.dev/how-it-works/#terminal-buffer">Terminal Buffer</a> below).</p>
+<p>However, it's very common to use multiple terminals simultaneously for a single, complex project. In these scenarios, you can explicitly ask a character (by name) to collaborate with another. When linked this way, they will share their context, allowing them to work together seamlessly across multiple terminal panes or windows.</p>
 <hr />
 <h2 id="self-improving"><a class="zola-anchor" href="#self-improving" aria-label="Anchor link for: self-improving">🔗</a>Self-Improving</h2>
 <p>Boxxy doesn't just forget everything when you close a tab. It is designed to learn your preferences, project structures, and "lessons learned" through a sophisticated, dual-layered memory system.</p>
@@ -95,23 +96,22 @@ essentially a dedicated session from your chosen =LLM Model=.</p>
 <p>While you work, Boxxy silently extracts facts—like your favorite editor or local environment specs—and mirrors them to a human-readable file at <code>~/.config/boxxy-terminal/boxxyclaw/MEMORY.md</code>. You are always in control of what the AI knows:</p>
 <ul>
 <li><strong>Verification</strong>: New facts appear in  =Pending= until you move them to =Active.=</li>
-<li><strong>Manual Edits</strong>: You can open the file and type your own facts directly into the agent's "brain" at any time.</li>
+<li><strong>Manual Edits</strong>: You can open the file and type your own facts directly into your character's "brain" at any time.</li>
 <li><strong>Smart Scoping</strong>: Memories can be =Global= (applying everywhere) or =Project-Specific= (only active when you are working in a specific folder).</li>
-<li><strong>Pinning (📌)</strong>: Add a 📌 emoji to any memory in the file to ensure it is always injected into the agent's context, regardless of what you are doing.</li>
+<li><strong>Pinning (📌)</strong>: Add a 📌 emoji to any memory in the file to ensure it is always injected into the character's context, regardless of what you are doing.</li>
 </ul>
 <hr />
-<hr />
 <h2 id="terminal-buffer"><a class="zola-anchor" href="#terminal-buffer" aria-label="Anchor link for: terminal-buffer">🔗</a>Terminal Buffer</h2>
-<p>Boxxy's agents aren't disconnected chatbots; they are deeply integrated into your terminal environment. Each terminal pane has its own dedicated agent, and you can see its unique name displayed directly in the terminal interface.</p>
+<p>Your characters aren't disconnected chatbots; they are deeply integrated into your terminal environment. Each pane has its own dedicated character, and you can see their name displayed directly in the terminal interface.</p>
 <h3 id="intelligent-paging"><a class="zola-anchor" href="#intelligent-paging" aria-label="Anchor link for: intelligent-paging">🔗</a>Intelligent Paging</h3>
-<p>To provide the best assistance, agents have "eyes" on your terminal's activity. When necessary, they can read directly from the active terminal buffer to understand exactly what error you are seeing.</p>
+<p>To provide the best assistance, characters have "eyes" on your terminal's activity. When necessary, they can read directly from the active terminal buffer to understand exactly what error you are seeing.</p>
 <p>To optimize resource usage and radically reduce token consumption, Boxxy employs a smart <strong>paging system</strong>:</p>
 <ol>
-<li>When you ask a question or an error occurs, the agent initially requests only a small snapshot of the last <strong>50 lines</strong> of output.</li>
-<li>If that snapshot isn't sufficient to understand the context, the agent will dynamically request the <em>preceding</em> 50 lines.</li>
-<li>It iterates backwards through the buffer history until it identifies the root cause of the issue.</li>
+<li>When you ask a question or an error occurs, the character initially requests only a small snapshot of the last <strong>50 lines</strong> of output.</li>
+<li>If that snapshot isn't sufficient to understand the context, they will dynamically request the <em>preceding</em> 50 lines.</li>
+<li>They iterate backwards through the buffer history until identifying the root cause of the issue.</li>
 </ol>
-<p>This ensures the agent gets the precise context it needs without unnecessarily flooding the model with thousands of lines of irrelevant history.</p>
+<p>This ensures the character gets the precise context needed without unnecessarily flooding the model with thousands of lines of irrelevant history.</p>
 <hr />
 <h2 id="resume-session"><a class="zola-anchor" href="#resume-session" aria-label="Anchor link for: resume-session">🔗</a>Resume Session</h2>
 <p>Boxxy supports a stateless =Resume Session= model that allows you to restore any of your last 10 active sessions—or any session you've explicitly pinned—into any terminal pane.</p>
@@ -128,7 +128,7 @@ essentially a dedicated session from your chosen =LLM Model=.</p>
 <p>Resuming a session also restores its =Cumulative Context Analytics=. Your sidebar will accurately reflect the total token spend for the entire life of that session, even if you've switched model providers or restarted the application.</p>
 <hr />
 <h2 id="toolbox"><a class="zola-anchor" href="#toolbox" aria-label="Anchor link for: toolbox">🔗</a>Toolbox</h2>
-<p>Think of the <strong>Toolbox</strong> as the agent's set of "superpowers." Instead of the AI simply guessing and typing commands into your terminal, it uses a library of highly reliable, structured tools to interact with your computer.</p>
+<p>Think of the <strong>Toolbox</strong> as your character's set of "superpowers." Instead of simply guessing and typing commands into your terminal, they use a library of highly reliable, structured tools to interact with your computer.</p>
 <p>These tools are grouped into specialized categories:</p>
 <ul>
 <li><strong>File Operations</strong>: Safely read, write, and list directories. The AI can even read specific line ranges to save time and tokens.</li>
@@ -138,19 +138,25 @@ essentially a dedicated session from your chosen =LLM Model=.</p>
 </ul>
 <h3 id="safety-first-the-approval-protocol"><a class="zola-anchor" href="#safety-first-the-approval-protocol" aria-label="Anchor link for: safety-first-the-approval-protocol">🔗</a>Safety First: The Approval Protocol</h3>
 <p>We believe in <strong>Supervised Autonomy</strong>. Boxxy never performs a "dangerous" action (like deleting a file, killing a process, or reading your clipboard) without your explicit permission.</p>
-<p>When an agent wants to use a sensitive tool, it will pause and present its plan to you in a popover. Only after you click <strong>Approve</strong> will the tool execute and return its results to the agent. This ensures you are always in control of what the AI is doing on your machine.</p>
+<p>When a character wants to use a sensitive tool, they will pause and present their plan to you in a popover. Only after you click <strong>Approve</strong> will the tool execute. This ensures you are always in control of what your character is doing on your machine.</p>
 <hr />
 <h2 id="boxxy-agent"><a class="zola-anchor" href="#boxxy-agent" aria-label="Anchor link for: boxxy-agent">🔗</a>Boxxy Agent</h2>
-<p>Because Boxxy is primarily distributed as a secure, sandboxed =Flatpak=, it faces a unique challenge: sandboxed applications usually cannot see or interact with the host operating system. This is great for security, but terrible for a terminal emulator that needs to run your local tools!</p>
-<p>To solve this, Boxxy uses a hidden background process called the =Boxxy Agent=.</p>
-<p>When you open Boxxy, it securely spawns this agent <em>outside</em> of the sandbox directly on your host machine. The terminal UI and the Host Agent then talk to each other over a private, lightning-fast D-Bus connection.</p>
-<p>This bridge is what allows Boxxy to:</p>
+<p>The =Boxxy Agent= is a persistent host-level daemon that manages all privileged operations on your machine. It started as a workaround for Flatpak sandboxing — sandboxed applications cannot normally see or interact with the host OS — but has since grown into the backbone of the entire application.</p>
+<p>The agent runs as a <strong>single shared instance</strong> for all open Boxxy windows. When Boxxy launches, it starts the daemon (or detects an already-running one) and claims a fixed name on your D-Bus session bus. All UI processes then communicate with it over this private, fast D-Bus connection.</p>
+<h3 id="what-the-daemon-manages"><a class="zola-anchor" href="#what-the-daemon-manages" aria-label="Anchor link for: what-the-daemon-manages">🔗</a>What the daemon manages</h3>
 <ul>
-<li>Spawn real shells (like Bash or Fish) with full access to your system's files and programs.</li>
-<li>Accurately track your Current Working Directory (CWD) across tabs.</li>
-<li>Let the AI =ClawAgents= safely read files and execute commands on your actual machine, rather than being trapped inside the Flatpak bubble.</li>
+<li><strong>PTY sessions</strong>: Spawns and owns all your terminal shells. Each session is tracked with a ring buffer, so context survives even if a pane is closed and resumed later.</li>
+<li><strong>Claw toolbox</strong>: Handles the privileged side of all character tools — shell execution, file I/O (with path blacklisting), process management, and clipboard access.</li>
+<li><strong>Character claims</strong>: Tracks which character is assigned to which terminal pane. Claims are held in memory only; nothing is written to disk.</li>
+<li><strong>Background maintenance</strong>: Monitors system state (power source, ghost mode) and coordinates background work like the =Dreams= consolidation pipeline.</li>
 </ul>
-<p>In short: Boxxy's UI stays safely sandboxed, while the Boxxy Agent does the heavy lifting on your host system.</p>
+<h3 id="lifecycle"><a class="zola-anchor" href="#lifecycle" aria-label="Anchor link for: lifecycle">🔗</a>Lifecycle</h3>
+<p>The agent can be controlled directly from the command line:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> start</span><span style="color: #9399B2;font-style: italic;">       # run the daemon</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> stop</span><span style="color: #9399B2;font-style: italic;">        # clean shutdown</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> restart</span><span style="color: #9399B2;font-style: italic;">     # reload without downtime</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> list-sessions</span><span style="color: #9399B2;font-style: italic;">  # show active PTY sessions</span></span></code></pre>
+<p>In short: Boxxy's UI is a thin, sandboxed frontend. The Boxxy Agent is where everything actually runs.</p>
 
                     
 

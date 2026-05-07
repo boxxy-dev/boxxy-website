@@ -93,11 +93,17 @@
                         <div class="column is-12 mt-5">
                             <h2 class="title is-4" style="color: #cdd6f4; border-bottom: 2px solid #313244; padding-bottom: 0.5rem; margin-bottom: 1.5rem;">System</h2>
                             <div class="columns is-multiline">
-                                <!-- Left Column: OS Usage -->
+                                <!-- Left Column: OS Usage + Desktop Usage -->
                                 <div class="column is-6">
-                                    <div class="content-area" style="height: 100%;">
+                                    <div class="content-area" style="margin-bottom: 1.5rem;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">OS Usage</h3>
                                         <ul id="os-container" style="list-style: none; margin: 0; padding: 0;">
+                                            <!-- Populated by JS -->
+                                        </ul>
+                                    </div>
+                                    <div class="content-area">
+                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Desktop Environment</h3>
+                                        <ul id="desktop-container" style="list-style: none; margin: 0; padding: 0;">
                                             <!-- Populated by JS -->
                                         </ul>
                                     </div>
@@ -174,7 +180,7 @@
         const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
         try {
-            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes] = await Promise.all([
+            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes] = await Promise.all([
                 supabase.from('public_stats_daily').select('*').order('day', { ascending: false }).limit(30),
                 supabase.from('tool_usage_stats_7d').select('*').order('usage_count', { ascending: false }).limit(10),
                 supabase.from('os_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
@@ -183,7 +189,8 @@
                 supabase.from('claw_usage_per_launch_stats_7d').select('*').limit(1),
                 supabase.from('public_stats_all_time').select('*').single(),
                 supabase.from('pkg_type_usage_stats_all_time').select('*').order('user_count', { ascending: false }),
-                supabase.from('claw_model_stats_7d').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false })
+                supabase.from('claw_model_stats_7d').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }),
+                supabase.from('desktop_usage_stats_7d').select('*').order('unique_users', { ascending: false })
             ]);
 
             const daily = statsRes.data || [];
@@ -195,6 +202,7 @@
             const allTimeData = allTimeRes.data || {};
             const pkgAllTimeData = pkgAllTimeRes.data || [];
             const models = modelRes.data || [];
+            const desktopData = desktopRes.data || [];
 
             // Calculate totals and date range
             const last7Days = daily.slice(0, 7);
@@ -314,6 +322,21 @@
                         <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
                             <span style="color: #cdd6f4; font-weight: 700;">${sh.shell_name}</span>
                             <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${sh.unique_users.toLocaleString()} devs</span>
+                        </li>
+                    `;
+                });
+            }
+
+            const desktopContainer = document.getElementById('desktop-container');
+            desktopContainer.innerHTML = '';
+            if (desktopData.length === 0) {
+                desktopContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No desktop data yet — populates on next launch.</li>';
+            } else {
+                desktopData.forEach(de => {
+                    desktopContainer.innerHTML += `
+                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
+                            <span style="color: #cdd6f4; font-weight: 700;">${de.desktop_name}</span>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${de.unique_users.toLocaleString()} devs</span>
                         </li>
                     `;
                 });

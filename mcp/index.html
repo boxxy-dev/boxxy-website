@@ -51,6 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/models" class="">Models</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +60,8 @@
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="is-active">MCP</a></li>
                         <li><a href="/web-search" class="">Web Search</a></li>
-                        <li><a href="/skills" class="">Agent Skills</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
                     </ul>
 
@@ -79,7 +81,7 @@
                 <div class="content content-area">
                     
                         <h1 id="model-context-protocol-mcp"><a class="zola-anchor" href="#model-context-protocol-mcp" aria-label="Anchor link for: model-context-protocol-mcp">🔗</a>Model Context Protocol (MCP)</h1>
-<p>Boxxy Terminal natively supports the <strong>Model Context Protocol (MCP)</strong>, an open standard that allows you to securely connect your AI agents to external tools, databases, and APIs.</p>
+<p>Boxxy Terminal natively supports the <strong>Model Context Protocol (MCP)</strong>, an open standard that allows you to connect your characters to external tools, databases, and APIs.</p>
 <p>With MCP, you can give =BoxxyClaw= access to:</p>
 <ul>
 <li>Live, version-specific documentation (e.g., Context7)</li>
@@ -125,7 +127,7 @@
 <hr />
 <h2 id="how-it-works-under-the-hood"><a class="zola-anchor" href="#how-it-works-under-the-hood" aria-label="Anchor link for: how-it-works-under-the-hood">🔗</a>How it Works (Under the Hood)</h2>
 <p>Boxxy is designed to be blazingly fast. To ensure your terminal boots instantly, Boxxy uses a <strong>"Lazy Boot"</strong> strategy for MCP servers.</p>
-<p>When you add a server, Boxxy fetches its list of available tools and caches them. When you open a new terminal pane, the agent immediately knows what tools are available, <em>but it doesn't actually start the background processes (like <code>npx</code>) until you ask it to use one of those tools.</em></p>
+<p>When you add a server, Boxxy fetches its list of available tools and caches them. When you open a new terminal pane, the character immediately knows what tools are available, <em>but it doesn't actually start the background processes (like <code>npx</code>) until you ask it to use one of those tools.</em></p>
 <p>This means you can configure dozens of heavy MCP servers without experiencing any startup lag! Furthermore, Boxxy implements strict lifecycle management, guaranteeing that when you close a pane or exit the app, all local MCP child processes are instantly terminated to prevent "zombie" processes from lingering on your system.</p>
 
                     

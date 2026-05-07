@@ -51,6 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/models" class="">Models</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +60,8 @@
                         <li><a href="/features" class="is-active">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
                         <li><a href="/web-search" class="">Web Search</a></li>
-                        <li><a href="/skills" class="">Agent Skills</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
                     </ul>
 
@@ -103,7 +105,53 @@
 </ul>
 <hr />
 <h2 id="agentic-features"><a class="zola-anchor" href="#agentic-features" aria-label="Anchor link for: agentic-features">🔗</a>Agentic Features</h2>
-<p>And then there is the =Agentic Part= 🤖</p>
+<p>BoxxyClaw is the AI layer built directly into the terminal. Unlike chat-window add-ons, it has full access to your shell, file system, and terminal buffer — allowing it to act, not just advise.</p>
+<hr />
+<h3 id="characters"><a class="zola-anchor" href="#characters" aria-label="Anchor link for: characters">🔗</a>Characters</h3>
+<p>Each terminal pane gets its own =Character=: a persistent AI session with a distinct name, personality, and color. Characters are isolated by design — one terminal per task — but you can explicitly link two characters so they share context when working on a multi-terminal project.</p>
+<p>Boxxy ships with three pre-built characters. You can edit any of them or add your own via Markdown files in <code>~/.config/boxxy-terminal/boxxyclaw/characters/</code>. See <a href="https://boxxy.dev/characters/">Characters</a> for details.</p>
+<hr />
+<h3 id="memory-system"><a class="zola-anchor" href="#memory-system" aria-label="Anchor link for: memory-system">🔗</a>Memory System</h3>
+<p>Boxxy is self-improving. While you work, it silently extracts facts (your preferred editor, your project stack, lessons learned) and stores them in a human-readable file at <code>~/.config/boxxy-terminal/boxxyclaw/MEMORY.md</code>.</p>
+<ul>
+<li><strong>Pending → Active</strong>: New facts wait for your approval before influencing the character.</li>
+<li><strong>Project-scoped</strong>: Memories can apply globally or only when you are inside a specific folder.</li>
+<li><strong>Pinned memories (📌)</strong>: Mark any fact with 📌 to force it into every context window, no matter what.</li>
+<li><strong>Long-term survival</strong>: Long-term memories persist across app updates; short-term ones may not during preview phases.</li>
+</ul>
+<hr />
+<h3 id="toolbox-approval-protocol"><a class="zola-anchor" href="#toolbox-approval-protocol" aria-label="Anchor link for: toolbox-approval-protocol">🔗</a>Toolbox &amp; Approval Protocol</h3>
+<p>Characters interact with your machine through a structured set of tools rather than free-form shell guessing. Tools are grouped by capability:</p>
+<ul>
+<li><strong>File Operations</strong>: Read, write, and list files — with line-range support to keep tokens low.</li>
+<li><strong>System Monitoring</strong>: Process lists and hardware specs as clean, structured data.</li>
+<li><strong>Web &amp; Network</strong>: Fetch live documentation or look up error codes.</li>
+<li><strong>Clipboard</strong>: Read from and write to your system clipboard.</li>
+<li><strong>Shell Execution</strong>: Run commands directly in your terminal environment.</li>
+</ul>
+<p>Any sensitive action (file deletion, process kill, clipboard access) requires your explicit approval via an <strong>Approve</strong> popover. The character presents its intent; nothing executes until you confirm.</p>
+<hr />
+<h3 id="skills"><a class="zola-anchor" href="#skills" aria-label="Anchor link for: skills">🔗</a>Skills</h3>
+<p>Characters can dynamically load specialized instruction sets called =Skills= to gain expert-level knowledge on demand. Skills are plain Markdown files in <code>~/.config/boxxy-terminal/skills/</code> and are hot-reloaded without restarting the terminal.</p>
+<p>Bundled examples include <code>linux-system</code>, <code>linux-cleaner</code>, <code>docker-admin</code>, and <code>network-analyzer</code>. Activation is automatic — the character reads your prompt and loads whichever skill is most relevant.</p>
+<p>See <a href="https://boxxy.dev/skills/">Character Skills</a> for the full guide and how to create your own.</p>
+<hr />
+<h3 id="mcp-support"><a class="zola-anchor" href="#mcp-support" aria-label="Anchor link for: mcp-support">🔗</a>MCP Support</h3>
+<p>Boxxy natively supports the <strong>Model Context Protocol</strong>, letting you connect characters to external tools and APIs — live documentation servers, Git repositories, Slack, Jira, GitHub, or custom internal scripts.</p>
+<p>Servers are configured in =Preferences= → =MCP= and boot lazily: Boxxy caches available tools at startup but only spawns the background process when a tool is actually needed, keeping terminal startup instant even with dozens of servers configured.</p>
+<p>See <a href="https://boxxy.dev/mcp/">MCP</a> for setup instructions.</p>
+<hr />
+<h3 id="web-search"><a class="zola-anchor" href="#web-search" aria-label="Anchor link for: web-search">🔗</a>Web Search</h3>
+<p>Characters can search the web in real time using <strong>Tavily</strong>, a search provider optimized for LLMs. Toggle web search per character from the Globe Icon in the message bar, or set it globally in =Preferences= → =Characters=.</p>
+<p>Your terminal history and file contents are never sent to the search provider — only the query itself. See <a href="https://boxxy.dev/web-search/">Web Search</a>.</p>
+<hr />
+<h3 id="resume-sessions"><a class="zola-anchor" href="#resume-sessions" aria-label="Anchor link for: resume-sessions">🔗</a>Resume Sessions</h3>
+<p>Press <code>Ctrl+/</code> and type <code>/resume</code> to restore any of your last 10 sessions — or any pinned session — into any terminal pane. Boxxy stores history locally in SQLite and rehydrates the full sidebar, context analytics, and working directory.</p>
+<p>Because resumption is stateless, you can start a session with one model and continue it with another. The new model reads the transcript and picks up without interruption.</p>
+<hr />
+<h3 id="reminders-bookmarks"><a class="zola-anchor" href="#reminders-bookmarks" aria-label="Anchor link for: reminders-bookmarks">🔗</a>Reminders &amp; Bookmarks</h3>
+<p><strong>Reminders:</strong> Ask your character to remind you of something ("remind me to check the deploy in 20 minutes") and they will send a native notification on time. Reminders are scoped per pane and cancelled automatically when you close it.</p>
+<p><strong>Bookmarks:</strong> Save Python or shell scripts in =Bookmarks= (accessible from the Command Palette). Use <code>{{{my_var}}}</code> syntax to define runtime variables — Boxxy will prompt for inputs when you invoke the script. All bookmarks are stored locally at <code>~/.config/boxxy-terminal/bookmarks</code>.</p>
 
                     
 

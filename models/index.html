@@ -51,7 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
-                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/models" class="is-active">Models</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +59,7 @@
                     <ul class="menu-list mb-5">
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/web-search" class="is-active">Web Search</a></li>
+                        <li><a href="/web-search" class="">Web Search</a></li>
                         <li><a href="/skills" class="">Skills</a></li>
                         <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
@@ -80,57 +80,49 @@
             <main class="column is-9">
                 <div class="content content-area">
                     
-                        <h1 id="web-search"><a class="zola-anchor" href="#web-search" aria-label="Anchor link for: web-search">🔗</a>Web Search</h1>
-<p>Boxxy Terminal features integrated real-time web search, allowing your characters to browse the internet to find documentation, troubleshoot errors, or gather up-to-date information directly from the terminal.</p>
-<h2 id="supported-search-engines"><a class="zola-anchor" href="#supported-search-engines" aria-label="Anchor link for: supported-search-engines">🔗</a>Supported Search Engines</h2>
-<p>Currently, Boxxy supports <strong>Tavily</strong> as the primary search provider. Tavily is specifically optimized for LLMs, providing clean, search-engine-optimized content that helps characters generate more accurate responses.</p>
+                        <h1 id="supported-models"><a class="zola-anchor" href="#supported-models" aria-label="Anchor link for: supported-models">🔗</a>Supported Models</h1>
+<p>Boxxy connects to LLM providers via <a rel="external" href="https://github.com/0xplaygrounds/rig">rig</a>, an open-source Rust framework for building LLM-powered applications. Any provider supported by rig can be added to Boxxy.</p>
+<p>Configure your API keys in =Preferences= → =APIs=, then assign models to each function in =Preferences= → =Model Selection=.</p>
 <hr />
-<h2 id="setting-up-web-search"><a class="zola-anchor" href="#setting-up-web-search" aria-label="Anchor link for: setting-up-web-search">🔗</a>Setting Up Web Search</h2>
-<p>To enable web search capability:</p>
-<ol>
-<li><strong>Get an API Key:</strong> Sign up at <a rel="external" href="https://tavily.com/">Tavily</a> to get your free or pro API key.</li>
-<li><strong>Configure in Boxxy:</strong>
-<ul>
-<li>Open Boxxy =Preferences= (<code>Ctrl+,</code>).</li>
-<li>Navigate to the =APIs= tab on the left sidebar.</li>
-<li>Find the <strong>Search Engines</strong> section.</li>
-<li>Enter your key in the <strong>Tavily API Key</strong> field.</li>
-</ul>
-</li>
-<li><strong>Enable the Tool:</strong>
-<ul>
-<li>Switch to the =Characters= tab in Preferences.</li>
-<li>Under <strong>Character Toolbox</strong>, ensure <strong>Enable Web Search</strong> is toggled <strong>ON</strong>.</li>
-</ul>
-</li>
-</ol>
+<h2 id="google-gemini"><a class="zola-anchor" href="#google-gemini" aria-label="Anchor link for: google-gemini">🔗</a>Google Gemini</h2>
+<table><thead><tr><th style="text-align: left">Model</th><th style="text-align: left">Thinking</th></tr></thead><tbody>
+<tr><td style="text-align: left">Gemini 3.1 Pro</td><td style="text-align: left">Low · Medium · High</td></tr>
+<tr><td style="text-align: left">Gemini 3.1 Flash Lite</td><td style="text-align: left">Minimal · Low · Medium · High</td></tr>
+</tbody></table>
 <hr />
-<h2 id="using-web-search"><a class="zola-anchor" href="#using-web-search" aria-label="Anchor link for: using-web-search">🔗</a>Using Web Search</h2>
-<p>Web search is a powerful tool in your character's toolbox. You can use it in two ways:</p>
-<h3 id="1-manual-activation-per-character"><a class="zola-anchor" href="#1-manual-activation-per-character" aria-label="Anchor link for: 1-manual-activation-per-character">🔗</a>1. Manual Activation (Per Character)</h3>
-<p>You can toggle web search on or off for a specific character conversation without changing your global settings.</p>
-<ul>
-<li>Open the =Claw Message Bar= (<code>Ctrl+/</code>).</li>
-<li>Click the <strong>Globe Icon</strong> in the message bar toolbar to toggle web search for that character's session.</li>
-</ul>
-<h3 id="2-automatic-search"><a class="zola-anchor" href="#2-automatic-search" aria-label="Anchor link for: 2-automatic-search">🔗</a>2. Automatic Search</h3>
-<p>If enabled, your character will automatically decide to use the web whenever it needs information it doesn't have—for example, if you ask about a library released yesterday or a specific error code from a cloud provider.</p>
-<blockquote>
-<p><strong>Example Prompt:</strong> "Search the web for the latest breaking changes in React 19 and summarize them."</p>
-</blockquote>
+<h2 id="anthropic-claude"><a class="zola-anchor" href="#anthropic-claude" aria-label="Anchor link for: anthropic-claude">🔗</a>Anthropic Claude</h2>
+<table><thead><tr><th style="text-align: left">Model</th><th style="text-align: left">Thinking</th></tr></thead><tbody>
+<tr><td style="text-align: left">Claude Opus 4.6</td><td style="text-align: left">Extended</td></tr>
+<tr><td style="text-align: left">Claude Sonnet 4.6</td><td style="text-align: left">Extended · Adaptive</td></tr>
+</tbody></table>
 <hr />
-<h2 id="security-control"><a class="zola-anchor" href="#security-control" aria-label="Anchor link for: security-control">🔗</a>Security &amp; Control</h2>
-<ul>
-<li><strong>Master Switch:</strong> You can globally disable the web search capability in the =Characters= preferences tab.</li>
-<li><strong>Approval Protocol:</strong> By default, your character will describe their intent to search before performing the action, keeping you in control of what data is being sent to search providers.</li>
-<li><strong>Privacy:</strong> Boxxy only sends the search query to the provider; your local terminal history and file contents are never shared with search engines unless explicitly requested.</li>
-</ul>
+<h2 id="openai"><a class="zola-anchor" href="#openai" aria-label="Anchor link for: openai">🔗</a>OpenAI</h2>
+<table><thead><tr><th style="text-align: left">Model</th><th style="text-align: left">Reasoning effort</th></tr></thead><tbody>
+<tr><td style="text-align: left">GPT-5.4</td><td style="text-align: left">None · Low · Medium · High · XHigh</td></tr>
+<tr><td style="text-align: left">GPT-5.4 Mini</td><td style="text-align: left">None · Low · Medium · High · XHigh</td></tr>
+<tr><td style="text-align: left">GPT-5.4 Nano</td><td style="text-align: left">None · Low · Medium · High · XHigh</td></tr>
+</tbody></table>
+<hr />
+<h2 id="deepseek"><a class="zola-anchor" href="#deepseek" aria-label="Anchor link for: deepseek">🔗</a>DeepSeek</h2>
+<table><thead><tr><th style="text-align: left">Model</th><th style="text-align: left">Notes</th></tr></thead><tbody>
+<tr><td style="text-align: left">DeepSeek-V4-Pro</td><td style="text-align: left">1M context · 384K max output</td></tr>
+<tr><td style="text-align: left">DeepSeek-V4-Flash</td><td style="text-align: left">1M context · 384K max output</td></tr>
+</tbody></table>
+<hr />
+<h2 id="ollama"><a class="zola-anchor" href="#ollama" aria-label="Anchor link for: ollama">🔗</a>Ollama</h2>
+<p>Local models via Ollama — enter any model name you have pulled (e.g. <code>llama3</code>, <code>mistral</code>, <code>qwen2.5-coder</code>). No thinking controls are exposed since capabilities vary per model.</p>
+<hr />
+<h2 id="openrouter"><a class="zola-anchor" href="#openrouter" aria-label="Anchor link for: openrouter">🔗</a>OpenRouter</h2>
+<p>Any model available on OpenRouter — enter the full model string (e.g. <code>mistralai/mistral-7b-instruct</code>). No thinking controls are exposed.</p>
+<hr />
+<h2 id="missing-a-provider-or-model"><a class="zola-anchor" href="#missing-a-provider-or-model" aria-label="Anchor link for: missing-a-provider-or-model">🔗</a>Missing a provider or model?</h2>
+<p>New providers and models are added regularly. If something you need is missing, <a rel="external" href="https://github.com/boxxy-dev/boxxy/issues">open an issue</a> and we'll look into adding it.</p>
 
                     
 
                     <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">
                     <div class="has-text-right">
-                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content&#x2F;web-search.md" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
+                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content&#x2F;models.md" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             Improve this page
                         </a>

@@ -51,6 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/models" class="">Models</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +60,8 @@
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
                         <li><a href="/web-search" class="">Web Search</a></li>
-                        <li><a href="/skills" class="is-active">Agent Skills</a></li>
+                        <li><a href="/skills" class="is-active">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
                     </ul>
 
@@ -79,8 +81,8 @@
                 <div class="content content-area">
                     
                         <h1 id="agentic-skills-automations"><a class="zola-anchor" href="#agentic-skills-automations" aria-label="Anchor link for: agentic-skills-automations">🔗</a>Agentic Skills &amp; Automations</h1>
-<p>Boxxy-Terminal uses an advanced <strong>Agentic Skill System</strong> (inspired by <a rel="external" href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">standard Agentic Skills</a>) that allows AI agents to "level up" their expertise on demand. Instead of overwhelming the agent with every possible instruction at once, Boxxy lets agents discover, load, and execute specialized domain knowledge and custom scripts only when they need them.</p>
-<p>This adheres to modern <strong>Agentic Standards</strong>, treating agents not just as chatbots, but as autonomous systems capable of executing pre-defined workflows, utilizing local scripts, and strictly following domain-specific rules.</p>
+<p>Boxxy uses the <a rel="external" href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">standard Agentic Skill System</a>, allowing characters to "level up" their expertise on demand. Instead of overwhelming the character with every possible instruction at once, Boxxy lets characters discover, load, and execute specialized domain knowledge and custom scripts only when they need them.</p>
+<p>This treats characters not just as chatbots, but as autonomous systems capable of executing pre-defined workflows, utilizing local scripts, and strictly following domain-specific rules.</p>
 <hr />
 <h2 id="what-are-skills"><a class="zola-anchor" href="#what-are-skills" aria-label="Anchor link for: what-are-skills">🔗</a>What are Skills?</h2>
 <p>Skills are specialized instruction sets, workflow definitions, and tool configurations that target specific domains. Examples include:</p>
@@ -92,16 +94,16 @@
 </ul>
 <hr />
 <h2 id="how-activation-works"><a class="zola-anchor" href="#how-activation-works" aria-label="Anchor link for: how-activation-works">🔗</a>How Activation Works</h2>
-<p>Activation is entirely <strong>agent-driven</strong>. You don't need to manually tell the agent which skill to use.</p>
+<p>Activation is entirely <strong>automatic</strong>. You don't need to manually tell your character which skill to use.</p>
 <ol>
-<li><strong>Discovery:</strong> When you send a prompt, the agent evaluates its "Available Skills" list against your request.</li>
+<li><strong>Discovery:</strong> When you send a prompt, the character evaluates its "Available Skills" list against your request.</li>
 <li><strong>Activation:</strong> If it identifies a relevant skill (e.g., you ask to "deploy the app"), it uses the <code>activate_skill</code> tool.</li>
-<li><strong>Instruction Loading:</strong> Boxxy instantly injects the full, detailed instructions, required scripts, and constraints for that skill into the agent's current reasoning loop.</li>
-<li><strong>Autonomous Execution:</strong> The agent then follows those expert-level guidelines—executing any necessary shell commands, reading files, or invoking other tools—to complete the task autonomously and accurately.</li>
+<li><strong>Instruction Loading:</strong> Boxxy instantly injects the full, detailed instructions, required scripts, and constraints for that skill into the character's active context.</li>
+<li><strong>Autonomous Execution:</strong> The character then follows those expert-level guidelines—executing any necessary shell commands, reading files, or invoking other tools—to complete the task autonomously and accurately.</li>
 </ol>
 <hr />
 <h2 id="viewing-available-skills"><a class="zola-anchor" href="#viewing-available-skills" aria-label="Anchor link for: viewing-available-skills">🔗</a>Viewing Available Skills</h2>
-<p>You can see which skills are currently available to your agents simply by asking the agent directly:</p>
+<p>You can see which skills your character can currently activate — just ask them directly:</p>
 <blockquote>
 <p><strong>Example Prompt:</strong> "Which specialized skills can you activate for this task?"</p>
 </blockquote>
@@ -119,7 +121,7 @@
 <span class="giallo-l"><span style="color: #94E2D5;">1.</span><span> Check the </span><span style="color: #A6E3A1;">`X-Internal-Header`</span><span>.</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">2.</span><span> Reference the documentation at </span><span style="color: #A6E3A1;">`https://docs.internal.com`</span><span>.</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">3.</span><span> To deploy, run the script located at </span><span style="color: #A6E3A1;">`./scripts/deploy.sh`</span><span>.</span></span></code></pre><h3 id="hot-reloading"><a class="zola-anchor" href="#hot-reloading" aria-label="Anchor link for: hot-reloading">🔗</a>Hot Reloading</h3>
-<p>Once you save a new skill file, Boxxy's <strong>Hot Reload</strong> system detects the change instantly, making the skill available to all active agents without needing to restart the terminal. This allows for rapid iteration of your agentic workflows!</p>
+<p>Once you save a new skill file, Boxxy's <strong>Hot Reload</strong> system detects the change instantly, making the skill available to all active characters without needing to restart the terminal. This allows for rapid iteration of your agentic workflows!</p>
 
                     
 
