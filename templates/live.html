@@ -48,7 +48,7 @@
                             <div class="fancy-box p-5 has-text-centered" style="height: 100%; border-color: #cba6f7; box-shadow: 1px 1px 0 #cba6f7, 2px 2px 0 #cba6f7, 3px 3px 0 #cba6f7, 4px 4px 0 #cba6f7, 5px 5px 0 #cba6f7, 6px 6px 0 #cba6f7;">
                                 <h3 style="color: #a6adc8; text-transform: uppercase; font-size: 0.9rem; font-weight: 800; letter-spacing: 1px;">Daily Developers</h3>
                                 <p id="current-dau" class="mt-3" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 2.5rem; color: #cba6f7; font-weight: 700;">-</p>
-                                <p style="color: #6c7086; font-size: 0.8rem; font-weight: 600;">All-time: <span id="total-devs-alltime">-</span></p>
+                                <p style="color: #6c7086; font-size: 0.8rem; font-weight: 600;"><span id="weekly-devs-wrap" style="display: none;">7d: <span id="total-devs-7d">-</span> • </span>All-time: <span id="total-devs-alltime">-</span></p>
                             </div>
                         </div>
 
@@ -142,8 +142,17 @@
         const supabaseAnonKey = 'sb_publishable_Z-SbIil88PSj3ri24CM7aw_8vzsCFie';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
+        const escapeHtml = (unsafe) => {
+            return String(unsafe ?? '')
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+
         try {
-            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes] = await Promise.all([
+            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes, stats7dRes] = await Promise.all([
                 supabase.from('public_stats_daily').select('*').order('day', { ascending: false }).limit(30),
                 supabase.from('tool_usage_stats_7d').select('*').order('usage_count', { ascending: false }).limit(10),
                 supabase.from('os_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
@@ -153,7 +162,8 @@
                 supabase.from('public_stats_all_time').select('*').single(),
                 supabase.from('pkg_type_usage_stats_all_time').select('*').order('user_count', { ascending: false }),
                 supabase.from('claw_model_stats_7d').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }),
-                supabase.from('desktop_usage_stats_7d').select('*').order('unique_users', { ascending: false })
+                supabase.from('desktop_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
+                supabase.from('public_stats_7d').select('*').maybeSingle()
             ]);
 
             const daily = statsRes.data || [];
@@ -166,13 +176,19 @@
             const pkgAllTimeData = pkgAllTimeRes.data || [];
             const models = modelRes.data || [];
             const desktopData = desktopRes.data || [];
+            const stats7d = stats7dRes && !stats7dRes.error ? stats7dRes.data : null;
 
             // Calculate totals and date range
             const last7Days = daily.slice(0, 7);
-            const tokensLastWeek = last7Days.reduce((acc, curr) => acc + (Number(curr.total_tokens) || 0), 0);
-            const tokensAllTime = allTimeData.total_tokens || 0;
-            const currentDau = daily[0]?.dau || 0;
-            const totalDevsAllTime = allTimeData.total_users || 0;
+            const tokensLastWeek = stats7d && stats7d.total_tokens_7d !== undefined
+                ? Number(stats7d.total_tokens_7d)
+                : last7Days.reduce((acc, curr) => acc + (Number(curr.total_tokens) || 0), 0);
+            const tokensAllTime = Number(allTimeData.total_tokens) || 0;
+            // Use rolling 24h DAU when available; otherwise avoid UTC-midnight drop by considering the most recent completed UTC day
+            const currentDau = stats7d && stats7d.dau_24h !== undefined
+                ? Math.max(Number(stats7d.dau_24h) || 0, Number(daily[0]?.dau) || 0)
+                : Math.max(Number(daily[0]?.dau) || 0, Number(daily[1]?.dau) || 0);
+            const totalDevsAllTime = Number(allTimeData.total_users) || 0;
 
             // Date range formatting
             if (last7Days.length > 0) {
@@ -190,8 +206,13 @@
             document.getElementById('current-dau').innerText = currentDau.toLocaleString();
             document.getElementById('total-devs-alltime').innerText = totalDevsAllTime.toLocaleString();
 
+            if (stats7d && stats7d.wau_7d !== undefined) {
+                document.getElementById('total-devs-7d').innerText = Number(stats7d.wau_7d).toLocaleString();
+                document.getElementById('weekly-devs-wrap').style.display = 'inline';
+            }
+
             if (adoption && adoption.adoption_rate_percent !== null) {
-                document.getElementById('claw-adoption').innerText = `${adoption.adoption_rate_percent}%`;
+                document.getElementById('claw-adoption').innerText = `${Number(adoption.adoption_rate_percent)}%`;
             }
 
             const toolsContainer = document.getElementById('tools-container');
@@ -201,10 +222,18 @@
                 toolsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No tool usage data available yet.</p>';
             } else {
                 tools.forEach(tool => {
+                    const safeName = escapeHtml(tool.tool_name);
+                    const safeCount = (Number(tool.usage_count) || 0).toLocaleString();
+                    const isExternalMcp = tool.tool_name === 'external_mcp_tool';
+                    const badgeHtml = isExternalMcp
+                        ? '<span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 8px;">External MCP</span>'
+                        : '';
                     toolsContainer.innerHTML += `
                         <div class="is-flex is-justify-content-space-between is-align-items-center mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1rem !important; padding: 0 !important;">${tool.tool_name}</code>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #bac2de; font-weight: 600;">${tool.usage_count.toLocaleString()} uses</span>
+                            <div class="is-flex is-align-items-center">
+                                <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1rem !important; padding: 0 !important;">${safeName}</code>${badgeHtml}
+                            </div>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #bac2de; font-weight: 600;">${safeCount} uses</span>
                         </div>
                     `;
                 });
@@ -216,22 +245,24 @@
                 providersContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No provider data available yet.</li>';
             } else {
                 // Calculate the sum of users to get the percentage denominator
-                const totalProviderUsers = providers.reduce((acc, p) => acc + p.unique_users, 0);
+                const totalProviderUsers = providers.reduce((acc, p) => acc + (Number(p.unique_users) || 0), 0);
 
                 providers.forEach(p => {
-                    // Capitalize (e.g., "openai" -> "OpenAI")
-                    const name = p.provider_name === 'openai' ? 'OpenAI' : p.provider_name.charAt(0).toUpperCase() + p.provider_name.slice(1);
+                    const rawName = String(p.provider_name || '');
+                    const name = escapeHtml(rawName.toLowerCase() === 'openai' ? 'OpenAI' : rawName.charAt(0).toUpperCase() + rawName.slice(1));
+                    const uniqueUsers = Number(p.unique_users) || 0;
+                    const totalInvocations = Number(p.total_invocations) || 0;
 
                     // Calculate the percentage
                     const percentage = totalProviderUsers > 0
-                        ? ((p.unique_users / totalProviderUsers) * 100).toFixed(1)
+                        ? ((uniqueUsers / totalProviderUsers) * 100).toFixed(1)
                         : 0;
 
                     providersContainer.innerHTML += `
                         <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
                             <span style="color: #cdd6f4; font-weight: 700;">${name}</span>
                             <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
-                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${p.unique_users.toLocaleString()} devs - ${p.total_invocations.toLocaleString()} queries)</small>
+                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${uniqueUsers.toLocaleString()} devs - ${totalInvocations.toLocaleString()} queries)</small>
                             </span>
                         </li>
                     `;
@@ -244,10 +275,12 @@
                 osContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No OS data available yet.</li>';
             } else {
                 osData.forEach(os => {
+                    const safeOs = escapeHtml(os.os_name);
+                    const safeUsers = (Number(os.unique_users) || 0).toLocaleString();
                     osContainer.innerHTML += `
                         <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${os.os_name}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${os.unique_users.toLocaleString()} devs</span>
+                            <span style="color: #cdd6f4; font-weight: 700;">${safeOs}</span>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
                         </li>
                     `;
                 });
@@ -258,17 +291,19 @@
             if (pkgAllTimeData.length === 0) {
                 pkgContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No package data available yet.</li>';
             } else {
-                const totalPkgUsers = pkgAllTimeData.reduce((acc, p) => acc + p.user_count, 0);
+                const totalPkgUsers = pkgAllTimeData.reduce((acc, p) => acc + (Number(p.user_count) || 0), 0);
 
                 pkgAllTimeData.forEach(p => {
-                    const name = p.pkg_type.charAt(0).toUpperCase() + p.pkg_type.slice(1);
-                    const percentage = totalPkgUsers > 0 ? ((p.user_count / totalPkgUsers) * 100).toFixed(1) : 0;
+                    const rawPkg = String(p.pkg_type || '');
+                    const name = escapeHtml(rawPkg.charAt(0).toUpperCase() + rawPkg.slice(1));
+                    const userCount = Number(p.user_count) || 0;
+                    const percentage = totalPkgUsers > 0 ? ((userCount / totalPkgUsers) * 100).toFixed(1) : 0;
 
                     pkgContainer.innerHTML += `
                         <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
                             <span style="color: #cdd6f4; font-weight: 700;">${name}</span>
                             <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
-                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${p.user_count.toLocaleString()} devs)</small>
+                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${userCount.toLocaleString()} devs)</small>
                             </span>
                         </li>
                     `;
@@ -281,10 +316,12 @@
                 shellContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No shell data available yet.</li>';
             } else {
                 shellData.forEach(sh => {
+                    const safeShell = escapeHtml(sh.shell_name);
+                    const safeUsers = (Number(sh.unique_users) || 0).toLocaleString();
                     shellContainer.innerHTML += `
                         <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${sh.shell_name}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${sh.unique_users.toLocaleString()} devs</span>
+                            <span style="color: #cdd6f4; font-weight: 700;">${safeShell}</span>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
                         </li>
                     `;
                 });
@@ -296,10 +333,12 @@
                 desktopContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No desktop data yet — populates on next launch.</li>';
             } else {
                 desktopData.forEach(de => {
+                    const safeDesktop = escapeHtml(de.desktop_name);
+                    const safeUsers = (Number(de.unique_users) || 0).toLocaleString();
                     desktopContainer.innerHTML += `
                         <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${de.desktop_name}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${de.unique_users.toLocaleString()} devs</span>
+                            <span style="color: #cdd6f4; font-weight: 700;">${safeDesktop}</span>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
                         </li>
                     `;
                 });
@@ -310,23 +349,27 @@
             if (models.length === 0) {
                 modelsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No model usage data available yet.</p>';
             } else {
-                const filteredModels = models.filter(m => m.provider_name.toLowerCase() !== 'ollama');
+                const filteredModels = models.filter(m => String(m.provider_name || '').toLowerCase() !== 'ollama');
                 if (filteredModels.length === 0) {
                      modelsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No public model usage data available yet.</p>';
                 } else {
                     filteredModels.forEach(model => {
-                        const providerName = model.provider_name === 'openai' ? 'OpenAI' : model.provider_name.charAt(0).toUpperCase() + model.provider_name.slice(1);
+                        const rawProv = String(model.provider_name || '');
+                        const providerName = escapeHtml(rawProv.toLowerCase() === 'openai' ? 'OpenAI' : rawProv.charAt(0).toUpperCase() + rawProv.slice(1));
+                        const safeModelName = escapeHtml(model.model_name);
+                        const safeUsers = (Number(model.unique_users) || 0).toLocaleString();
+                        const safeQueries = (Number(model.total_invocations) || 0).toLocaleString();
                         modelsContainer.innerHTML += `
                             <div class="mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
                                 <div class="mb-2">
-                                    <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1.1rem !important; padding: 0 !important; font-weight: 700; word-break: break-all;">${model.model_name}</code>
+                                    <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1.1rem !important; padding: 0 !important; font-weight: 700; word-break: break-all;">${safeModelName}</code>
                                 </div>
                                 <div class="is-flex is-justify-content-space-between is-align-items-center">
                                     <span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${providerName}</span>
                                     <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.9rem; color: #a6adc8;">
-                                        <strong style="color: #f5e0dc;">${model.unique_users.toLocaleString()}</strong> devs 
+                                        <strong style="color: #f5e0dc;">${safeUsers}</strong> devs 
                                         <span style="margin: 0 8px; color: #45475a;">|</span>
-                                        <strong style="color: #89b4fa;">${model.total_invocations.toLocaleString()}</strong> queries
+                                        <strong style="color: #89b4fa;">${safeQueries}</strong> queries
                                     </span>
                                 </div>
                             </div>

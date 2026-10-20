@@ -54,7 +54,7 @@ You can also set scheduled tasks — for example, "Please clean up my PC in 20 m
 
 Open =Bookmarks= from the =Command Palette=. Here, you can create and save =Python= and =Shell= scripts. Boxxy automatically registers your saved bookmarks as quick-actions in the =Command Palette= for lightning-fast execution. 
 
-Need dynamic inputs? Define runtime variables using the `{{{my_var}}}` syntax. Boxxy will prompt you to fill them out right when you invoke the script.
+Need dynamic inputs? Define runtime variables using the <code>&#123;&#123;&#123;my_var&#125;&#125;&#125;</code> syntax. Boxxy will prompt you to fill them out right when you invoke the script.
 
 All your scripts are safely stored locally at `~/.config/boxxy-terminal/bookmarks`.
 

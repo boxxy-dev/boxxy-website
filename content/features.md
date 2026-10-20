@@ -110,4 +110,4 @@ Because resumption is stateless, you can start a session with one model and cont
 
 **Reminders:** Ask your character to remind you of something ("remind me to check the deploy in 20 minutes") and they will send a native notification on time. Reminders are scoped per pane and cancelled automatically when you close it.
 
-**Bookmarks:** Save Python or shell scripts in =Bookmarks= (accessible from the Command Palette). Use `{{{my_var}}}` syntax to define runtime variables — Boxxy will prompt for inputs when you invoke the script. All bookmarks are stored locally at `~/.config/boxxy-terminal/bookmarks`.
+**Bookmarks:** Save Python or shell scripts in =Bookmarks= (accessible from the Command Palette). Use <code>&#123;&#123;&#123;my_var&#125;&#125;&#125;</code> syntax to define runtime variables — Boxxy will prompt for inputs when you invoke the script. All bookmarks are stored locally at `~/.config/boxxy-terminal/bookmarks`.
