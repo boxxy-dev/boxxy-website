@@ -89,7 +89,7 @@
 <p>We welcome contributions! For the best results, check the root <code>AGENTS.md</code> and crate-level <code>AGENTS.md</code> files before opening an issue or pull request so your changes match Boxxy's modular crate boundaries.</p>
 <hr />
 <h2 id="requirements-building-testing"><a class="zola-anchor" href="#requirements-building-testing" aria-label="Anchor link for: requirements-building-testing">🔗</a>Requirements, Building &amp; Testing</h2>
-<p>Boxxy is built with =Rust 2024 (v1.98+)= and requires =GTK 4.24+= and =Libadwaita 1.9+=. For standard development and local testing, use =Cargo= directly:</p>
+<p>Boxxy is built with =Rust 2024 (v1.98+)= and requires =GTK 4.24+= and =Libadwaita 1.10+=. For standard development and local testing, use =Cargo= directly:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cargo</span><span style="color: #A6E3A1;"> build -p boxxy-agent -p boxxy-app</span></span>
 <span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cargo</span><span style="color: #A6E3A1;"> test</span></span></code></pre>
 <p>Please note that a standard Cargo build runs natively on your host; if you are working on sandbox-specific features, test inside a =Flatpak= build as well.</p>
