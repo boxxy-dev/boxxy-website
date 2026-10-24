@@ -25,7 +25,7 @@
         <loc>https://boxxy.dev/mcp/</loc>
     </url>
     <url>
-        <loc>https://boxxy.dev/models/</loc>
+        <loc>https://boxxy.dev/providers/</loc>
     </url>
     <url>
         <loc>https://boxxy.dev/releases/</loc>
@@ -38,8 +38,5 @@
     </url>
     <url>
         <loc>https://boxxy.dev/use-cases/</loc>
-    </url>
-    <url>
-        <loc>https://boxxy.dev/web-search/</loc>
     </url>
 </urlset>

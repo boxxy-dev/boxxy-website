@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxxy Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="navbar is-dark">
+        <div class="container">
+            <div class="navbar-brand">
+                <div class="navbar-item">
+                    <a class="boxxy-brand-button" href="/">
+                        <strong>Boxxy Terminal</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-live-button" href="/live">
+                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
+                        <span>Live</span>
+                    </a>
+                </div>
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Star</span>
+                        <span class="star-count" id="github-stars">...</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <!-- Sidebar Navigation -->
+            <aside class="column is-3">
+                <div class="sidebar">
+                    <p class="sidebar-title">Getting Started</p>
+                    <ul class="menu-list mb-5">
+                        <li><a href="/getting-started" class="">Getting Started</a></li>
+                        <li><a href="/how-it-works" class="">How It Works</a></li>
+                        <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/providers" class="is-active">Providers</a></li>
+                        <li><a href="/telemetry" class="">Telemetry</a></li>
+                    </ul>
+
+                    <p class="sidebar-title">What Boxxy Can Do</p>
+                    <ul class="menu-list mb-5">
+                        <li><a href="/features" class="">Features</a></li>
+                        <li><a href="/mcp" class="">MCP</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
+                        <li><a href="/use-cases" class="">Use Cases</a></li>
+                    </ul>
+
+                    <p class="sidebar-title">Community</p>
+                    <ul class="menu-list">
+                        <li><a href="/releases" class="">Releases</a></li>
+                        <li><a href="/live" class="" style="display: flex; align-items: center; gap: 0.5rem;">
+                            Dashboard
+                            <span style="background-color: #f38ba8; color: #11111b; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">Live</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="column is-9">
+                <div class="content content-area">
+                    
+                        <h1 id="providers"><a class="zola-anchor" href="#providers" aria-label="Anchor link for: providers">🔗</a>Providers</h1>
+<p>Boxxy connects to LLM providers via <a rel="external" href="https://github.com/0xplaygrounds/rig">rig</a>. Boxxy supports <strong>all models</strong> from each provider — automatically configuring thinking levels, context windows, and token pricing.</p>
+<p>Configure your API keys or custom endpoints in =Preferences= → =APIs=, then assign models to each role (<code>AI Chat</code>, <code>Claw</code>, and <code>Memories &amp; Dreams</code>) in =Preferences= → =Models Selection= or via the quick links in the =Claw Sidebar=.</p>
+<hr />
+<h2 id="ai-model-providers"><a class="zola-anchor" href="#ai-model-providers" aria-label="Anchor link for: ai-model-providers">🔗</a>AI Model Providers</h2>
+<table><thead><tr><th style="text-align: left">Provider</th><th style="text-align: left">Supported Models</th><th style="text-align: left">Notes</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>Google Gemini</strong></td><td style="text-align: left">All Gemini models</td><td style="text-align: left">Thinking level controls · Built-in Google Search</td></tr>
+<tr><td style="text-align: left"><strong>Anthropic Claude</strong></td><td style="text-align: left">All Claude models</td><td style="text-align: left">Thinking controls · Built-in Web Search</td></tr>
+<tr><td style="text-align: left"><strong>OpenAI</strong></td><td style="text-align: left">All OpenAI models</td><td style="text-align: left">Reasoning effort controls · Built-in Web Search</td></tr>
+<tr><td style="text-align: left"><strong>DeepSeek</strong></td><td style="text-align: left">All DeepSeek models</td><td style="text-align: left">Chat &amp; reasoning models · 1M context</td></tr>
+<tr><td style="text-align: left"><strong>Ollama</strong></td><td style="text-align: left">Any local model</td><td style="text-align: left">Auto-discovers installed models on your machine</td></tr>
+<tr><td style="text-align: left"><strong>OpenRouter</strong></td><td style="text-align: left">Any OpenRouter model</td><td style="text-align: left">Enter any model slug (e.g. <code>google/gemma-4-31b-it</code>)</td></tr>
+<tr><td style="text-align: left"><strong>Custom Endpoints</strong></td><td style="text-align: left">Any OpenAI-compatible model</td><td style="text-align: left">Presets for <strong>OpenCode Go</strong>, <strong>OpenCode Zen</strong>, <strong>LiteLLM</strong>, and <strong>vLLM / llama.cpp</strong> with <code>/models</code> discovery</td></tr>
+</tbody></table>
+<hr />
+<h2 id="web-search-providers"><a class="zola-anchor" href="#web-search-providers" aria-label="Anchor link for: web-search-providers">🔗</a>Web Search Providers</h2>
+<p>Characters can browse the web in real time to look up documentation, recent releases, or error codes. Enable web search in =Preferences= → =APIs= under <strong>Search Engines</strong>, and toggle it anytime per pane using the <strong>Globe Icon</strong> in the message bar (<code>Ctrl + /</code>).</p>
+<table><thead><tr><th style="text-align: left">Search Provider</th><th style="text-align: left">Supported Models</th><th style="text-align: left">Notes</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>Native Provider Search</strong></td><td style="text-align: left">Gemini · OpenAI · Anthropic</td><td style="text-align: left">Uses the provider's built-in server-side search — no extra API key required</td></tr>
+<tr><td style="text-align: left"><strong>Tavily</strong></td><td style="text-align: left">All providers</td><td style="text-align: left">LLM-optimized web search · Automatic fallback for local and custom models</td></tr>
+</tbody></table>
+<p><em>More web search providers are coming soon!</em></p>
+<hr />
+<h2 id="missing-a-provider"><a class="zola-anchor" href="#missing-a-provider" aria-label="Anchor link for: missing-a-provider">🔗</a>Missing a provider?</h2>
+<p>New model and search providers are added regularly. If there is a provider you would like to see supported, <a rel="external" href="https://github.com/boxxy-dev/boxxy/issues">open an issue</a> on GitHub!</p>
+
+                    
+
+                    <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">
+                    <div class="has-text-right">
+                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/providers.md" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Improve this page
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
+
+
+    <footer class="footer">
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html>

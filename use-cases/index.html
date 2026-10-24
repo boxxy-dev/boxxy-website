@@ -51,7 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
-                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/providers" class="">Providers</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +59,6 @@
                     <ul class="menu-list mb-5">
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/web-search" class="">Web Search</a></li>
                         <li><a href="/skills" class="">Skills</a></li>
                         <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="is-active">Use Cases</a></li>
@@ -81,31 +80,36 @@
                 <div class="content content-area">
                     
                         <h1 id="use-cases"><a class="zola-anchor" href="#use-cases" aria-label="Anchor link for: use-cases">🔗</a>Use Cases</h1>
-<p>Boxxy is built to handle everything from daily terminal tasks to complex Linux system administration. Think of it as your ultimate Linuxbox assistant. Here are five ways Boxxy can supercharge your workflow:</p>
-<h3 id="1-fixing-broken-dependencies"><a class="zola-anchor" href="#1-fixing-broken-dependencies" aria-label="Anchor link for: 1-fixing-broken-dependencies">🔗</a>1. Fixing Broken Dependencies</h3>
+<p>Boxxy is built to handle everything from everyday reminders and background jobs to deep Linux system administration. Think of it as your ultimate Linux companion. Here are the most popular ways people use Boxxy every day:</p>
+<h3 id="1-debugging-fixing-your-linux-box"><a class="zola-anchor" href="#1-debugging-fixing-your-linux-box" aria-label="Anchor link for: 1-debugging-fixing-your-linux-box">🔗</a>1. Debugging &amp; Fixing Your Linux Box</h3>
 <ul>
-<li><strong>The Scenario:</strong> You try to install a package with <code>apt</code> or <code>dnf</code>, but it fails due to a nightmare of conflicting dependencies or missing GPG keys.</li>
-<li><strong>The Boxxy Way:</strong> Instead of hunting through StackOverflow, press <code>Control + /</code> and type "fix this." Boxxy automatically reads the failure from your terminal buffer, uses its Toolbox to check your package manager's state, and proposes the exact commands needed to resolve the conflicts or import the missing keys.</li>
+<li><strong>The Scenario:</strong> You try to run a system update or start a service, and it fails with conflicting packages, broken GPG keys, or a cryptic <code>systemd</code> error.</li>
+<li><strong>The Boxxy Way:</strong> Instead of hunting through forum threads, press <code>Control + /</code> (or click the <strong>Error Detected</strong> pill) and type "fix this." Boxxy reads the failure straight from your terminal buffer, checks your OS and package manager state, and proposes the exact commands to fix it — waiting for your click on <strong>Approve</strong>.</li>
 </ul>
-<h3 id="2-complex-system-configuration"><a class="zola-anchor" href="#2-complex-system-configuration" aria-label="Anchor link for: 2-complex-system-configuration">🔗</a>2. Complex System Configuration</h3>
+<h3 id="2-sending-long-tasks-to-the-background"><a class="zola-anchor" href="#2-sending-long-tasks-to-the-background" aria-label="Anchor link for: 2-sending-long-tasks-to-the-background">🔗</a>2. Sending Long Tasks to the Background</h3>
 <ul>
-<li><strong>The Scenario:</strong> You need to configure a new Nginx site with SSL, set up a complicated <code>systemd</code> service, or tweak your firewall rules.</li>
-<li><strong>The Boxxy Way:</strong> Press <code>Control + /</code> and ask: "Help me set up an Nginx site for example.com with SSL." Boxxy checks your OS version, verifies if Nginx is installed, proposes the necessary configuration file writes in <code>/etc/nginx</code>, and guides you through the SSL generation—all while you simply click "Approve" for each step.</li>
+<li><strong>The Scenario:</strong> You're compiling a huge Rust workspace, running a full distro upgrade, or hosting a local dev server, and you need to close your terminal window to declutter your desktop.</li>
+<li><strong>The Boxxy Way:</strong> Close the tab or window and click <strong>Run in Background</strong>. Boxxy's background daemon keeps your shell and AI character running safely. You can monitor or reattach it from the <strong>GNOME Shell</strong> or <strong>COSMIC</strong> top-panel companion, or reopen Boxxy later and click <strong>Restore All</strong> to get your exact split-pane layout and TUI screen back instantly.</li>
 </ul>
-<h3 id="3-system-cleanup-maintenance"><a class="zola-anchor" href="#3-system-cleanup-maintenance" aria-label="Anchor link for: 3-system-cleanup-maintenance">🔗</a>3. System Cleanup &amp; Maintenance</h3>
+<h3 id="3-persistent-reminders-scheduled-tasks"><a class="zola-anchor" href="#3-persistent-reminders-scheduled-tasks" aria-label="Anchor link for: 3-persistent-reminders-scheduled-tasks">🔗</a>3. Persistent Reminders &amp; Scheduled Tasks</h3>
 <ul>
-<li><strong>The Scenario:</strong> Your root partition is at 99% capacity and you have no idea where the space went.</li>
-<li><strong>The Boxxy Way:</strong> Press <code>Control + /</code> and type: "My disk is full, help me clean it up safely." Because Boxxy can execute host-level commands, it runs <code>du</code> or <code>ncdu</code> in the background, analyzes the largest directories, and safely proposes the deletion of old Docker images, stale package caches, or orphaned logs.</li>
+<li><strong>The Scenario:</strong> You're deep in code and want to remember to check a deployment in 20 minutes, take a break in an hour, or run a cleanup task later.</li>
+<li><strong>The Boxxy Way:</strong> Press <code>Control + /</code> and tell your character: "Remind me to check the staging deploy in 20 minutes." Even if you close the terminal into the background, your character's timer keeps ticking in the daemon and sends a native desktop notification with their avatar right on schedule.</li>
 </ul>
-<h3 id="4-interactive-scripting-with-bookmarks"><a class="zola-anchor" href="#4-interactive-scripting-with-bookmarks" aria-label="Anchor link for: 4-interactive-scripting-with-bookmarks">🔗</a>4. Interactive Scripting with Bookmarks</h3>
+<h3 id="4-chatting-pairing-with-your-favorite-character"><a class="zola-anchor" href="#4-chatting-pairing-with-your-favorite-character" aria-label="Anchor link for: 4-chatting-pairing-with-your-favorite-character">🔗</a>4. Chatting &amp; Pairing with Your Favorite Character</h3>
 <ul>
-<li><strong>The Scenario:</strong> You have a common deployment or cleanup script you run frequently, but it requires different parameters each time.</li>
-<li><strong>The Boxxy Way:</strong> Save the script as a <strong>Bookmark</strong> using <code>{{{project_name}}}</code> variables. When you run it from the Command Palette, Boxxy natively prompts you for the dynamic inputs, executes the script, and your character monitors the output to ensure everything ran successfully.</li>
+<li><strong>The Scenario:</strong> Standard AI assistants feel robotic, forget your setup between tabs, and don't know whether you prefer <code>fish</code> over <code>bash</code> or <code>podman</code> over <code>docker</code>.</li>
+<li><strong>The Boxxy Way:</strong> Pair up with <strong>Niko</strong>, <strong>Levi</strong>, or <strong>Kuro</strong> — or create your own character in seconds. Your character knows your name, keeps their unique personality, and automatically learns your tools and project habits over time through <strong>Memories &amp; Dreams</strong>.</li>
 </ul>
-<h3 id="5-context-aware-log-analysis"><a class="zola-anchor" href="#5-context-aware-log-analysis" aria-label="Anchor link for: 5-context-aware-log-analysis">🔗</a>5. Context-Aware Log Analysis</h3>
+<h3 id="5-system-cleanup-disk-maintenance"><a class="zola-anchor" href="#5-system-cleanup-disk-maintenance" aria-label="Anchor link for: 5-system-cleanup-disk-maintenance">🔗</a>5. System Cleanup &amp; Disk Maintenance</h3>
 <ul>
-<li><strong>The Scenario:</strong> You're tailing <code>journalctl</code> or a production log file and spot a recurring system error that makes no sense.</li>
-<li><strong>The Boxxy Way:</strong> Press <code>Control + /</code> and ask: "What does this kernel panic mean?" Boxxy analyzes the surrounding log context in your terminal buffer, looks up documentation using its Web Search tool, and explains the root cause without you ever leaving the terminal.</li>
+<li><strong>The Scenario:</strong> Your root partition hits 98% capacity and you aren't sure what is eating up your drive.</li>
+<li><strong>The Boxxy Way:</strong> Ask your character: "My disk is almost full, help me clean it up safely." They will inspect disk usage, identify heavy caches, old container images, or orphaned packages, and propose safe cleanup steps one by one for your approval.</li>
+</ul>
+<h3 id="6-one-click-parameterized-scripts-with-bookmarks"><a class="zola-anchor" href="#6-one-click-parameterized-scripts-with-bookmarks" aria-label="Anchor link for: 6-one-click-parameterized-scripts-with-bookmarks">🔗</a>6. One-Click Parameterized Scripts with Bookmarks</h3>
+<ul>
+<li><strong>The Scenario:</strong> You have deployment, backup, or SSH tunnel scripts that you run often, but you always have to edit flags or hostnames by hand.</li>
+<li><strong>The Boxxy Way:</strong> Save the script in <strong>Bookmarks</strong> using <code>{{{environment}}}</code> or <code>{{{host}}}</code> variables (or ask Boxxy to generate the script for you). Whenever you run it, Boxxy prompts you for those variables in a clean overlay form and executes it right in your pane.</li>
 </ul>
 
                     

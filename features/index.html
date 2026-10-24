@@ -51,7 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
-                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/providers" class="">Providers</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +59,6 @@
                     <ul class="menu-list mb-5">
                         <li><a href="/features" class="is-active">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/web-search" class="">Web Search</a></li>
                         <li><a href="/skills" class="">Skills</a></li>
                         <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
@@ -81,77 +80,79 @@
                 <div class="content content-area">
                     
                         <h1 id="terminal-features"><a class="zola-anchor" href="#terminal-features" aria-label="Anchor link for: terminal-features">🔗</a>Terminal Features</h1>
-<p>Boxxy is, first and foremost, a high-performance Linux terminal built for modern developers. Before you even turn on the AI features, you're using a top-tier terminal emulator designed for speed, clarity, and deep shell integration.</p>
+<p>Boxxy is, first and foremost, a high-performance Linux terminal built for modern developers (requiring <strong>GTK 4.24+</strong>). Before you even turn on the AI features, you're using a top-tier terminal emulator designed for speed, clarity, and deep desktop integration.</p>
 <hr />
 <h3 id="the-core-engine-boxxy-vte"><a class="zola-anchor" href="#the-core-engine-boxxy-vte" aria-label="Anchor link for: the-core-engine-boxxy-vte">🔗</a>The Core Engine (boxxy-vte)</h3>
-<p>At the heart of Boxxy is a custom-built, 100% Rust terminal engine. It replaces traditional C-based libraries with a modern, async-first architecture.</p>
+<p>At the heart of Boxxy is a custom-built, 100% Rust terminal engine. It replaces traditional C-based libraries with a modern, async-first lock-free architecture.</p>
 <ul>
-<li><strong>GPU Accelerated Rendering</strong>: Uses GTK4's GSK scene graph to render text and images with silky-smooth performance and zero tearing.</li>
-<li><strong>Kittygraphics Support</strong>: Native support for the Kitty graphics protocol, allowing you to render high-resolution images and even rich media directly in your terminal grid.</li>
-<li><strong>Semantic Shell Integration</strong>: Full support for <strong>OSC 133</strong> markers. Boxxy understands the difference between your prompt, your command, and the resulting output, allowing for smarter context awareness.</li>
-<li><strong>Bidirectional Reflow</strong>: Smart text wrapping and unwrapping when you resize your window, ensuring your logs remain readable at any size.</li>
-<li><strong>Advanced Regex Search</strong>: A lightning-fast, Unicode-aware search system with automatic viewport scrolling and word-boundary detection.</li>
-<li><strong>Robust CWD Tracking</strong>: Instant directory tracking via <strong>OSC 7</strong>, which works seamlessly even over SSH or through sandboxed environments.</li>
+<li><strong>GPU Accelerated Rendering</strong>: Uses GTK4's GSK scene graph and frosted-glass backdrop blur to render text and images with silky-smooth performance.</li>
+<li><strong>Kittygraphics &amp; Image Viewer</strong>: Native support for the Kitty graphics protocol in the grid, plus a built-in multi-tab <strong>Image Viewer</strong> with high-speed 4K/8K thumbnail decoding, pan/zoom, and clipboard copy.</li>
+<li><strong>Semantic Shell Integration</strong>: Full support for <strong>OSC 133</strong> markers. Boxxy understands the exact boundaries between your prompt, your command, and the resulting output.</li>
+<li><strong>Bidirectional Reflow &amp; Smart Selection</strong>: Smooth text wrapping on resize and full-scrollback selection with edge autoscrolling and reliable Wayland clipboard persistence.</li>
+<li><strong>Advanced Regex Search</strong>: A lightning-fast, Unicode-aware search system with automatic viewport scrolling.</li>
+<li><strong>Robust CWD &amp; Files Integration</strong>: Instant directory tracking via <strong>OSC 7</strong>, plus a built-in <strong>Nautilus ("Open With Boxxy")</strong> context-menu extension and <code>-d</code> / <code>-t</code> CLI flags.</li>
 </ul>
-<h3 id="ui-layout"><a class="zola-anchor" href="#ui-layout" aria-label="Anchor link for: ui-layout">🔗</a>UI &amp; Layout</h3>
-<p>Boxxy is designed to maximize your screen real estate and keep you focused on your work.</p>
+<h3 id="ui-layout-background-shells"><a class="zola-anchor" href="#ui-layout-background-shells" aria-label="Anchor link for: ui-layout-background-shells">🔗</a>UI, Layout &amp; Background Shells</h3>
+<p>Boxxy is designed to maximize your screen real estate and keep long-running work safe.</p>
 <ul>
-<li><strong>Dynamic Splits with Soft Swap</strong>: Split your terminal vertically or horizontally as many times as you need. With "Soft Swap", you can seamlessly exchange the contents of two active panes via a simple keyboard shortcut without breaking your workflow.</li>
-<li><strong>iTerm2 Themes</strong>: Fully supports the popular iTerm2 color scheme format, giving you access to thousands of community-created themes. Switch between them instantly.</li>
-<li><strong>Seamless Background Images</strong>: Set a background image for your entire tab. Boxxy intelligently spans the image across all transparent terminal splits for a gorgeous, unified look.</li>
-<li><strong>Inactive Pane Dimming</strong>: Never get lost in your splits again. Boxxy automatically dims inactive terminal panes so your active focus is always crystal clear.</li>
-<li><strong>Modern Hyperlinks</strong>: Support for <strong>OSC 8</strong> hyperlinks with robust media previews on hover, making your terminal feel more like a modern web browser.</li>
-<li><strong>Native Progress Bars</strong>: Intercepts <strong>OSC 9;4</strong> sequences (like those from Cargo or Flatpak) to render native GTK progress bars directly in the UI.</li>
+<li><strong>Run in Background &amp; Split-Layout Restore</strong>: Close a tab or quit the entire app while builds, updates, or AI sessions are running by choosing <strong>Run in Background</strong>. The daemon preserves full TUI/ANSI screen state and lets you restore single shells or reconstruct your entire vertical/horizontal split layout in one click.</li>
+<li><strong>Dynamic Splits with Soft Swap</strong>: Split your terminal vertically or horizontally as many times as you need, and swap active panes anytime via keyboard shortcuts.</li>
+<li><strong>iTerm2 Themes &amp; Frosted Glass</strong>: Supports community iTerm2 color schemes, custom window transparency with native Wayland frosted-glass blur, and tab-wide background images.</li>
+<li><strong>Inactive Pane Dimming</strong>: Automatically dims inactive terminal panes so your active focus is always crystal clear.</li>
+<li><strong>Modern Hyperlinks &amp; Progress Bars</strong>: Support for <strong>OSC 8</strong> hyperlinks with media previews on hover, and <strong>OSC 9;4</strong> sequences (from Cargo, Flatpak, etc.) rendered as native GTK progress bars.</li>
 </ul>
 <hr />
 <h2 id="agentic-features"><a class="zola-anchor" href="#agentic-features" aria-label="Anchor link for: agentic-features">🔗</a>Agentic Features</h2>
 <p>BoxxyClaw is the AI layer built directly into the terminal. Unlike chat-window add-ons, it has full access to your shell, file system, and terminal buffer — allowing it to act, not just advise.</p>
 <hr />
-<h3 id="characters"><a class="zola-anchor" href="#characters" aria-label="Anchor link for: characters">🔗</a>Characters</h3>
-<p>Each terminal pane gets its own =Character=: a persistent AI session with a distinct name, personality, and color. Characters are isolated by design — one terminal per task — but you can explicitly link two characters so they share context when working on a multi-terminal project.</p>
-<p>Boxxy ships with three pre-built characters. You can edit any of them or add your own via Markdown files in <code>~/.config/boxxy-terminal/boxxyclaw/characters/</code>. See <a href="https://boxxy.dev/characters/">Characters</a> for details.</p>
-<hr />
-<h3 id="memory-system"><a class="zola-anchor" href="#memory-system" aria-label="Anchor link for: memory-system">🔗</a>Memory System</h3>
-<p>Boxxy is self-improving. While you work, it silently extracts facts (your preferred editor, your project stack, lessons learned) and stores them in a human-readable file at <code>~/.config/boxxy-terminal/boxxyclaw/MEMORY.md</code>.</p>
+<h3 id="origin-aware-error-diagnosis"><a class="zola-anchor" href="#origin-aware-error-diagnosis" aria-label="Anchor link for: origin-aware-error-diagnosis">🔗</a>Origin-Aware Error Diagnosis</h3>
+<p>Boxxy knows the difference between a command the agent proposed and a quick typo you made yourself:</p>
 <ul>
-<li><strong>Pending → Active</strong>: New facts wait for your approval before influencing the character.</li>
-<li><strong>Project-scoped</strong>: Memories can apply globally or only when you are inside a specific folder.</li>
-<li><strong>Pinned memories (📌)</strong>: Mark any fact with 📌 to force it into every context window, no matter what.</li>
-<li><strong>Long-term survival</strong>: Long-term memories persist across app updates; short-term ones may not during preview phases.</li>
+<li><strong>Agent Commands</strong>: If a command proposed by your character fails, the character automatically diagnoses the error and proposes a fix.</li>
+<li><strong>User Commands (Zero-Token Pill)</strong>: If you mistype a command yourself, Boxxy shows a subtle <strong>"Error Detected"</strong> pill in the corner of the pane without spending a single token. Click it only when you want your character to jump in and help!</li>
+</ul>
+<hr />
+<h3 id="characters-your-profile"><a class="zola-anchor" href="#characters-your-profile" aria-label="Anchor link for: characters-your-profile">🔗</a>Characters &amp; Your Profile</h3>
+<p>Each terminal pane gets its own =Character=: a persistent AI session with a distinct name, avatar, personality, and color. Characters are coordinated by a central registry so no two panes accidentally claim the same persona at once, and they can collaborate across splits using the <strong>Collaborative Swarm</strong> toolbox.</p>
+<p>Boxxy ships with three pre-built characters (<code>Niko Una</code>, <code>Levi Kujo</code>, and <code>Kuro</code>), and you can also configure your own <strong>"You" Profile</strong> (name, avatar, and accent color) in =Preferences= → =Characters=. See <a href="https://boxxy.dev/characters/">Characters</a> for details.</p>
+<hr />
+<h3 id="memory-system-dreaming"><a class="zola-anchor" href="#memory-system-dreaming" aria-label="Anchor link for: memory-system-dreaming">🔗</a>Memory System &amp; Dreaming</h3>
+<p>Boxxy is self-improving. It recalls relevant facts in under a millisecond using local SQLite FTS5 search and consolidates new knowledge in the background:</p>
+<ul>
+<li><strong>Provisional → Verified</strong>: Implicitly observed facts start as provisional candidates and are promoted to verified long-term memory once reinforced across sessions.</li>
+<li><strong>Background Dream Cycle</strong>: When your PC is on AC power and Boxxy's UI is closed, <code>boxxy-agent</code> runs a low-priority consolidation pass that syncs verified insights to <code>~/.config/boxxy-terminal/boxxyclaw/MEMORY.md</code> and writes an auditable log to <code>DREAMS.md</code>.</li>
+<li><strong>Zero Hot-Path Lag</strong>: Regular conversation turns never block on background memory LLM calls.</li>
 </ul>
 <hr />
 <h3 id="toolbox-approval-protocol"><a class="zola-anchor" href="#toolbox-approval-protocol" aria-label="Anchor link for: toolbox-approval-protocol">🔗</a>Toolbox &amp; Approval Protocol</h3>
-<p>Characters interact with your machine through a structured set of tools rather than free-form shell guessing. Tools are grouped by capability:</p>
+<p>Characters interact with your machine through a structured library of tools rather than blind shell guessing:</p>
 <ul>
-<li><strong>File Operations</strong>: Read, write, and list files — with line-range support to keep tokens low.</li>
-<li><strong>System Monitoring</strong>: Process lists and hardware specs as clean, structured data.</li>
-<li><strong>Web &amp; Network</strong>: Fetch live documentation or look up error codes.</li>
-<li><strong>Clipboard</strong>: Read from and write to your system clipboard.</li>
-<li><strong>Shell Execution</strong>: Run commands directly in your terminal environment.</li>
+<li><strong>File Operations &amp; Diffing</strong>: Read (<code>file_read</code>), write (<code>file_write</code>), delete (<code>file_delete</code>), and perform surgical edits (<code>replace_in_file</code>) with live diff previews, plus fast <code>glob_search</code> and <code>grep_search</code>.</li>
+<li><strong>System &amp; Background Processes</strong>: Inspect processes (<code>list_processes</code>), check hardware specs, or spawn detached GUI apps and dev servers (<code>run_background_command</code>).</li>
+<li><strong>Web, Network &amp; Clipboard</strong>: Fetch live documentation (<code>http_fetch</code>), search the web, and read/write the system clipboard.</li>
+<li><strong>Shell &amp; Workspace</strong>: Run commands in the terminal, restore background shells (<code>restore_background_shell</code>), and coordinate with peer panes.</li>
 </ul>
-<p>Any sensitive action (file deletion, process kill, clipboard access) requires your explicit approval via an <strong>Approve</strong> popover. The character presents its intent; nothing executes until you confirm.</p>
+<p>Every sensitive action (running commands, editing files, killing processes, clipboard access) requires your explicit confirmation via an in-terminal <strong>Approve</strong> popover.</p>
 <hr />
-<h3 id="skills"><a class="zola-anchor" href="#skills" aria-label="Anchor link for: skills">🔗</a>Skills</h3>
-<p>Characters can dynamically load specialized instruction sets called =Skills= to gain expert-level knowledge on demand. Skills are plain Markdown files in <code>~/.config/boxxy-terminal/skills/</code> and are hot-reloaded without restarting the terminal.</p>
-<p>Bundled examples include <code>linux-system</code>, <code>linux-cleaner</code>, <code>docker-admin</code>, and <code>network-analyzer</code>. Activation is automatic — the character reads your prompt and loads whichever skill is most relevant.</p>
-<p>See <a href="https://boxxy.dev/skills/">Character Skills</a> for the full guide and how to create your own.</p>
+<h3 id="skills-mcp-support"><a class="zola-anchor" href="#skills-mcp-support" aria-label="Anchor link for: skills-mcp-support">🔗</a>Skills &amp; MCP Support</h3>
+<ul>
+<li><strong>Skills</strong>: Characters automatically load specialized Markdown instruction sets from <code>~/.config/boxxy-terminal/skills/</code> (like <code>linux-system</code>, <code>linux-cleaner</code>, <code>docker-admin</code>, and <code>network-analyzer</code>) with instant hot-reload. See <a href="https://boxxy.dev/skills/">Character Skills</a>.</li>
+<li><strong>MCP Support</strong>: Connect characters to external tools and APIs via <strong>Stdio</strong> or <strong>Streamable HTTP</strong> in =Preferences= → =MCP=. See <a href="https://boxxy.dev/mcp/">MCP</a>.</li>
+</ul>
 <hr />
-<h3 id="mcp-support"><a class="zola-anchor" href="#mcp-support" aria-label="Anchor link for: mcp-support">🔗</a>MCP Support</h3>
-<p>Boxxy natively supports the <strong>Model Context Protocol</strong>, letting you connect characters to external tools and APIs — live documentation servers, Git repositories, Slack, Jira, GitHub, or custom internal scripts.</p>
-<p>Servers are configured in =Preferences= → =MCP= and boot lazily: Boxxy caches available tools at startup but only spawns the background process when a tool is actually needed, keeping terminal startup instant even with dozens of servers configured.</p>
-<p>See <a href="https://boxxy.dev/mcp/">MCP</a> for setup instructions.</p>
+<h3 id="built-in-tavily-web-search"><a class="zola-anchor" href="#built-in-tavily-web-search" aria-label="Anchor link for: built-in-tavily-web-search">🔗</a>Built-In &amp; Tavily Web Search</h3>
+<p>Characters can search the web in real time using either <strong>Built-in Native Search</strong> (server-side grounding on Gemini, OpenAI, and Anthropic) or <strong>Tavily</strong> (automatically used as a fallback for local and third-party models), with more search providers coming soon. Toggle web search per pane using the <strong>Globe Icon</strong> in the message bar. See <a href="https://boxxy.dev/providers/#web-search-providers">Providers</a>.</p>
 <hr />
-<h3 id="web-search"><a class="zola-anchor" href="#web-search" aria-label="Anchor link for: web-search">🔗</a>Web Search</h3>
-<p>Characters can search the web in real time using <strong>Tavily</strong>, a search provider optimized for LLMs. Toggle web search per character from the Globe Icon in the message bar, or set it globally in =Preferences= → =Characters=.</p>
-<p>Your terminal history and file contents are never sent to the search provider — only the query itself. See <a href="https://boxxy.dev/web-search/">Web Search</a>.</p>
+<h3 id="sidebar-history-session-resumption"><a class="zola-anchor" href="#sidebar-history-session-resumption" aria-label="Anchor link for: sidebar-history-session-resumption">🔗</a>Sidebar History &amp; Session Resumption</h3>
+<p>Open the =Claw Sidebar= on any new pane to browse your <strong>Past Conversations</strong>, with <strong>Pinned</strong> sessions at the top for one-click restoration — or press <code>Ctrl+/</code> and type <code>/resume</code>.</p>
+<p>Because session history is stored locally in SQLite with cumulative token and cost analytics, you can start a conversation with one provider (like Gemini) and seamlessly continue it with another (like Claude, Ollama, or a custom OpenAI-compatible endpoint).</p>
 <hr />
-<h3 id="resume-sessions"><a class="zola-anchor" href="#resume-sessions" aria-label="Anchor link for: resume-sessions">🔗</a>Resume Sessions</h3>
-<p>Press <code>Ctrl+/</code> and type <code>/resume</code> to restore any of your last 10 sessions — or any pinned session — into any terminal pane. Boxxy stores history locally in SQLite and rehydrates the full sidebar, context analytics, and working directory.</p>
-<p>Because resumption is stateless, you can start a session with one model and continue it with another. The new model reads the transcript and picks up without interruption.</p>
-<hr />
-<h3 id="reminders-bookmarks"><a class="zola-anchor" href="#reminders-bookmarks" aria-label="Anchor link for: reminders-bookmarks">🔗</a>Reminders &amp; Bookmarks</h3>
-<p><strong>Reminders:</strong> Ask your character to remind you of something ("remind me to check the deploy in 20 minutes") and they will send a native notification on time. Reminders are scoped per pane and cancelled automatically when you close it.</p>
-<p><strong>Bookmarks:</strong> Save Python or shell scripts in =Bookmarks= (accessible from the Command Palette). Use <code>{{{my_var}}}</code> syntax to define runtime variables — Boxxy will prompt for inputs when you invoke the script. All bookmarks are stored locally at <code>~/.config/boxxy-terminal/bookmarks</code>.</p>
+<h3 id="persistent-reminders-bookmarks-desktop-companions"><a class="zola-anchor" href="#persistent-reminders-bookmarks-desktop-companions" aria-label="Anchor link for: persistent-reminders-bookmarks-desktop-companions">🔗</a>Persistent Reminders, Bookmarks &amp; Desktop Companions</h3>
+<ul>
+<li><strong>Persistent Reminders &amp; Timers</strong>: Ask your character to set a reminder or schedule a task. When you send a tab or window to the background, <code>boxxy-agent</code> keeps the timer running and fires native desktop notifications on time.</li>
+<li><strong>Interactive Bookmarks</strong>: Save reusable Bash and Python scripts with <code>{{{variable}}}</code> placeholders, search them in the Bookmarks gallery, and generate scripts with AI.</li>
+<li><strong>GNOME Shell &amp; COSMIC Companions</strong>: Monitor detached background shells, active characters, and live reminder countdowns straight from your desktop top bar with the <a rel="external" href="https://github.com/boxxy-dev/gnome-shell-boxxy-companion">GNOME Shell Extension</a> and <a rel="external" href="https://github.com/boxxy-dev/cosmic-boxxy-companion">COSMIC Desktop Applet</a>.</li>
+</ul>
 
                     
 

@@ -51,7 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
-                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/providers" class="">Providers</a></li>
                         <li><a href="/telemetry" class="is-active">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +59,6 @@
                     <ul class="menu-list mb-5">
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/web-search" class="">Web Search</a></li>
                         <li><a href="/skills" class="">Skills</a></li>
                         <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
@@ -87,7 +86,7 @@
 <h2 id="privacy-principles"><a class="zola-anchor" href="#privacy-principles" aria-label="Anchor link for: privacy-principles">🔗</a>Privacy Principles</h2>
 <ul>
 <li><strong>Opt-In/Opt-Out:</strong> Telemetry is strictly configurable. While it may be enabled by default during preview phases to gather initial feedback, you can easily disable it at any time via =Preferences=. Disabling telemetry takes effect immediately across both the UI and background daemon and purges any unsent local telemetry events.</li>
-<li><strong>Zero PII (Personally Identifiable Information):</strong> We <strong>never</strong> collect file paths, file contents, usernames, IP addresses, prompt contents, terminal outputs, or custom MCP server names.</li>
+<li><strong>Zero PII (Personally Identifiable Information):</strong> We <strong>never</strong> collect file paths, file contents, usernames, IP addresses, prompt contents, terminal outputs, custom MCP server names, or custom AI endpoint names.</li>
 <li><strong>Anonymous Identifiers:</strong>
 <ul>
 <li><code>install_id</code>: A random, anonymous identifier generated once when you first run the app. This helps us count unique installations without knowing who you are.</li>
@@ -102,8 +101,8 @@
 <p>Here is the exhaustive list of the metrics we track when telemetry is enabled:</p>
 <table><thead><tr><th style="text-align: left">Category</th><th style="text-align: left">Metric Name</th><th style="text-align: left">Description</th><th style="text-align: left">Data Attributes Collected</th></tr></thead><tbody>
 <tr><td style="text-align: left"><strong>Growth &amp; Usage</strong></td><td style="text-align: left"><code>app.launch</code></td><td style="text-align: left">Triggered once per application startup.</td><td style="text-align: left"><code>os</code>, <code>arch</code>, <code>pkg_type</code> (e.g., flatpak, native), <code>version</code>, <code>shell</code> (e.g., bash, zsh, fish), <code>desktop</code> (e.g., GNOME, KDE)</td></tr>
-<tr><td style="text-align: left"><strong>AI Usage</strong></td><td style="text-align: left"><code>ai.tokens</code></td><td style="text-align: left">The number of tokens consumed during an AI interaction.</td><td style="text-align: left"><code>model_provider</code>, <code>model_name</code>, <code>role</code> (input/output), <code>feature</code></td></tr>
-<tr><td style="text-align: left"><strong>AI Performance</strong></td><td style="text-align: left"><code>ai.invocations</code></td><td style="text-align: left">A count of AI requests initiated by the user.</td><td style="text-align: left"><code>model_provider</code>, <code>model_name</code>, <code>feature</code></td></tr>
+<tr><td style="text-align: left"><strong>AI Usage</strong></td><td style="text-align: left"><code>ai.tokens</code></td><td style="text-align: left">The number of tokens consumed during an AI interaction (custom OpenAI-compatible endpoints are grouped anonymously as <code>Custom Endpoints</code>).</td><td style="text-align: left"><code>model_provider</code>, <code>model_name</code>, <code>role</code> (input/output), <code>feature</code></td></tr>
+<tr><td style="text-align: left"><strong>AI Performance</strong></td><td style="text-align: left"><code>ai.invocations</code></td><td style="text-align: left">A count of AI requests initiated by the user (custom OpenAI-compatible endpoints are grouped anonymously as <code>Custom Endpoints</code>).</td><td style="text-align: left"><code>model_provider</code>, <code>model_name</code>, <code>feature</code></td></tr>
 <tr><td style="text-align: left"><strong>AI Quality</strong></td><td style="text-align: left"><code>ai.latency</code></td><td style="text-align: left">The time it takes (in milliseconds) to receive a response from the AI model.</td><td style="text-align: left"><code>model_provider</code>, <code>model_name</code>, <code>feature</code></td></tr>
 <tr><td style="text-align: left"><strong>Product Features</strong></td><td style="text-align: left"><code>tool.use</code></td><td style="text-align: left">A count of which built-in AI tools are being utilized by the agent (custom MCP tools are grouped anonymously as <code>external_mcp_tool</code>).</td><td style="text-align: left"><code>tool_name</code> (e.g., <code>sys_shell_exec</code>, <code>file_read</code>, <code>external_mcp_tool</code>)</td></tr>
 <tr><td style="text-align: left"><strong>Retention</strong></td><td style="text-align: left"><code>claw.session_resume</code></td><td style="text-align: left">Triggered when a previous BoxxyClaw session is restored.</td><td style="text-align: left"><code>session_type</code> (e.g., normal, pinned)</td></tr>

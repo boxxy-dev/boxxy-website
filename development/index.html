@@ -51,7 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="is-active">Development</a></li>
-                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/providers" class="">Providers</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +59,6 @@
                     <ul class="menu-list mb-5">
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/web-search" class="">Web Search</a></li>
                         <li><a href="/skills" class="">Skills</a></li>
                         <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
@@ -84,17 +83,16 @@
 <p>Boxxy is largely developed using =AI Agents=. The most efficient way to start contributing to Boxxy is to clone the repository and ask your preferred agent to read the <code>AGENTS.md</code> file to familiarize itself with the project's architecture and conventions.</p>
 <hr />
 <h2 id="workflow-committing"><a class="zola-anchor" href="#workflow-committing" aria-label="Anchor link for: workflow-committing">🔗</a>Workflow &amp; Committing</h2>
-<p>Boxxy is currently in an early, high-velocity development phase. To maintain maximum speed, we utilize a private =dev= branch for active development.</p>
-<p>Once a major task or feature is finalized, we squash all related commits into a single =consolidated commit= before merging into the =main= branch. While this results in larger individual commits, the logic remains easy to parse and understand when analyzed by an =Agent=.</p>
+<p>Boxxy is in a high-velocity development phase. Once a task or feature is finalized and verified with unit tests and <code>scenario-runner</code>, changes are merged into the =main= branch with clear, user-readable commit summaries.</p>
 <hr />
 <h2 id="contributing"><a class="zola-anchor" href="#contributing" aria-label="Anchor link for: contributing">🔗</a>Contributing</h2>
-<p>We welcome code contributions! However, due to the rapid pace of downstream development, traditional PRs can be difficult to merge if they fall out of sync.</p>
-<p>For the best results, we prefer =agentic-style= contributions: clear prompts accompanied by code examples or detailed implementation strategies that our internal agents can help integrate seamlessly.</p>
+<p>We welcome contributions! For the best results, check the root <code>AGENTS.md</code> and crate-level <code>AGENTS.md</code> files before opening an issue or pull request so your changes match Boxxy's modular crate boundaries.</p>
 <hr />
-<h2 id="building-testing"><a class="zola-anchor" href="#building-testing" aria-label="Anchor link for: building-testing">🔗</a>Building &amp; Testing</h2>
-<p>Boxxy is built with =Rust 1.94=. For standard development and local testing, you can use =Cargo= directly:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cargo</span><span style="color: #A6E3A1;"> build -p boxxy-agent -p boxxy-terminal</span></span></code></pre>
-<p>Please note that a successful Cargo build does not always guarantee identical behavior within a =Flatpak= environment, especially for components involving <code>boxxy-agent</code>.</p>
+<h2 id="requirements-building-testing"><a class="zola-anchor" href="#requirements-building-testing" aria-label="Anchor link for: requirements-building-testing">🔗</a>Requirements, Building &amp; Testing</h2>
+<p>Boxxy is built with =Rust 2024 (v1.98+)= and requires =GTK 4.24+= and =Libadwaita 1.9+=. For standard development and local testing, use =Cargo= directly:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cargo</span><span style="color: #A6E3A1;"> build -p boxxy-agent -p boxxy-app</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cargo</span><span style="color: #A6E3A1;"> test</span></span></code></pre>
+<p>Please note that a standard Cargo build runs natively on your host; if you are working on sandbox-specific features, test inside a =Flatpak= build as well.</p>
 <h3 id="building-the-flatpak"><a class="zola-anchor" href="#building-the-flatpak" aria-label="Anchor link for: building-the-flatpak">🔗</a>Building the Flatpak</h3>
 <p>To build and test the =Flatpak= bundle locally, follow these steps:</p>
 <ol>
@@ -109,16 +107,16 @@
 <p><strong>Alternative:</strong> To build and install the Flatpak to your user environment in a single command:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">flatpak-builder</span><span style="color: #A6E3A1;"> --user --install --force-clean build-dir flatpak/dev.boxxy.BoxxyTerminal.yml</span></span></code></pre>
 <hr />
-<h2 id="context"><a class="zola-anchor" href="#context" aria-label="Anchor link for: context">🔗</a>Context</h2>
-<p>One of the most important things to monitor is the exact context Boxxy sends to the model. You can inspect this by enabling context logging:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span>BOXXY_DEBUG_CONTEXT</span><span style="color: #94E2D5;">=</span><span style="color: #A6E3A1;">1</span><span style="color: #89B4FA;font-style: italic;"> cargo</span><span style="color: #A6E3A1;"> run -p boxxy-agent</span></span></code></pre>
-<p>(This works in both debug and release builds, but will remain completely silent unless the variable is set to 1.)</p>
+<h2 id="context-debugging"><a class="zola-anchor" href="#context-debugging" aria-label="Anchor link for: context-debugging">🔗</a>Context Debugging</h2>
+<p>One of the most useful things to inspect during AI development is the exact context Boxxy sends to the model. Enable high-signal context logging with:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span>BOXXY_DEBUG_CONTEXT</span><span style="color: #94E2D5;">=</span><span style="color: #A6E3A1;">1</span><span style="color: #89B4FA;font-style: italic;"> cargo</span><span style="color: #A6E3A1;"> run</span></span></code></pre>
+<p>(This works in both debug and release builds and remains completely silent unless <code>BOXXY_DEBUG_CONTEXT=1</code> is set.)</p>
 <hr />
 <h2 id="packaging-for-linux-distributions"><a class="zola-anchor" href="#packaging-for-linux-distributions" aria-label="Anchor link for: packaging-for-linux-distributions">🔗</a>Packaging for Linux Distributions</h2>
 <p>If you are packaging Boxxy for a system package manager (Nix, Arch AUR, Debian, Fedora, etc.), you <strong>must</strong> disable the built-in self-updater. When distributed through a package manager, updates are the package manager's responsibility — the in-app updater should never run.</p>
 <p>Build with the <code>disable-self-update</code> Cargo feature:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">cargo</span><span style="color: #A6E3A1;"> build --release --features disable-self-update</span></span></code></pre>
-<p>This compiles <code>boxxy-app</code> → <code>boxxy-window</code> → <code>boxxy-ai-core</code> with the feature propagated through the entire crate hierarchy. The resulting binary will never attempt to update itself, regardless of the environment it runs in.</p>
+<p>This compiles <code>boxxy-app</code> → <code>boxxy-window</code> with the feature propagated through the crate hierarchy. The resulting binary will never attempt to update itself, regardless of the environment it runs in.</p>
 <p>The self-update UI and version-check network requests are fully compiled out, so there are no runtime flags or config files to manage — the package build alone is sufficient.</p>
 
                     

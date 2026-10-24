@@ -51,7 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="is-active">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
-                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/providers" class="">Providers</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +59,6 @@
                     <ul class="menu-list mb-5">
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/web-search" class="">Web Search</a></li>
                         <li><a href="/skills" class="">Skills</a></li>
                         <li><a href="/characters" class="">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
@@ -81,83 +80,70 @@
                 <div class="content content-area">
                     
                         <h1 id="how-it-works"><a class="zola-anchor" href="#how-it-works" aria-label="Anchor link for: how-it-works">🔗</a>How it Works</h1>
-<p>Boxxy is designed to be more than just a terminal with a chat window. It is built from the ground up to be a truly agentic environment that learns from you as you work.</p>
+<p>Boxxy is designed to be more than just a terminal with a chat window. It is built from the ground up to be a truly agentic environment that learns from you as you work and stays alive in the background when you need it.</p>
 <p>Below is a breakdown of the core components that make Boxxy tick.</p>
 <hr />
-<h2 id="terminals-characters"><a class="zola-anchor" href="#terminals-characters" aria-label="Anchor link for: terminals-characters">🔗</a>Terminals &amp; Characters</h2>
-<p>When =BoxxyClaw= is enabled, every terminal instance is paired with a =Character=. Each character is a dedicated session from your chosen =LLM Model=.</p>
-<p>The core philosophy here is isolation: users typically spawn a new terminal to tackle a specific task. By assigning a unique character to each terminal, we ensure that the context for that specific task remains isolated from your other ongoing work.</p>
-<p>To provide assistance, the character tracks your terminal's activity — what commands were run in the past and what is currently executing. When necessary, they can also read directly from the terminal buffer using a smart paging system (see <a href="https://boxxy.dev/how-it-works/#terminal-buffer">Terminal Buffer</a> below).</p>
-<p>However, it's very common to use multiple terminals simultaneously for a single, complex project. In these scenarios, you can explicitly ask a character (by name) to collaborate with another. When linked this way, they will share their context, allowing them to work together seamlessly across multiple terminal panes or windows.</p>
-<hr />
-<h2 id="self-improving"><a class="zola-anchor" href="#self-improving" aria-label="Anchor link for: self-improving">🔗</a>Self-Improving</h2>
-<p>Boxxy doesn't just forget everything when you close a tab. It is designed to learn your preferences, project structures, and "lessons learned" through a sophisticated, dual-layered memory system.</p>
-<h3 id="a-mirror-of-your-brain"><a class="zola-anchor" href="#a-mirror-of-your-brain" aria-label="Anchor link for: a-mirror-of-your-brain">🔗</a>A Mirror of Your Brain</h3>
-<p>While you work, Boxxy silently extracts facts—like your favorite editor or local environment specs—and mirrors them to a human-readable file at <code>~/.config/boxxy-terminal/boxxyclaw/MEMORY.md</code>. You are always in control of what the AI knows:</p>
+<h2 id="terminals-characters-swarm-coordination"><a class="zola-anchor" href="#terminals-characters-swarm-coordination" aria-label="Anchor link for: terminals-characters-swarm-coordination">🔗</a>Terminals, Characters &amp; Swarm Coordination</h2>
+<p>When =BoxxyClaw= is enabled, every terminal pane claims a unique =Character= from the central <code>CharacterRegistry</code> managed by <code>boxxy-agent</code>.</p>
+<p>Each pane is isolated by default so that context for one task never pollutes another. However, all active panes are connected through Boxxy's <strong>Global Workspace Radar</strong>:</p>
 <ul>
-<li><strong>Verification</strong>: New facts appear in  =Pending= until you move them to =Active.=</li>
-<li><strong>Manual Edits</strong>: You can open the file and type your own facts directly into your character's "brain" at any time.</li>
-<li><strong>Smart Scoping</strong>: Memories can be =Global= (applying everywhere) or =Project-Specific= (only active when you are working in a specific folder).</li>
-<li><strong>Pinning (📌)</strong>: Add a 📌 emoji to any memory in the file to ensure it is always injected into the character's context, regardless of what you are doing.</li>
+<li>You can ask one character (by name) to read another pane's output, delegate subtasks, or coordinate across splits.</li>
+<li>Characters also see any <strong>detached background shells</strong> in their radar and can restore them back into a tab whenever you ask.</li>
 </ul>
 <hr />
-<h2 id="terminal-buffer"><a class="zola-anchor" href="#terminal-buffer" aria-label="Anchor link for: terminal-buffer">🔗</a>Terminal Buffer</h2>
-<p>Your characters aren't disconnected chatbots; they are deeply integrated into your terminal environment. Each pane has its own dedicated character, and you can see their name displayed directly in the terminal interface.</p>
-<h3 id="intelligent-paging"><a class="zola-anchor" href="#intelligent-paging" aria-label="Anchor link for: intelligent-paging">🔗</a>Intelligent Paging</h3>
-<p>To provide the best assistance, characters have "eyes" on your terminal's activity. When necessary, they can read directly from the active terminal buffer to understand exactly what error you are seeing.</p>
-<p>To optimize resource usage and radically reduce token consumption, Boxxy employs a smart <strong>paging system</strong>:</p>
-<ol>
-<li>When you ask a question or an error occurs, the character initially requests only a small snapshot of the last <strong>50 lines</strong> of output.</li>
-<li>If that snapshot isn't sufficient to understand the context, they will dynamically request the <em>preceding</em> 50 lines.</li>
-<li>They iterate backwards through the buffer history until identifying the root cause of the issue.</li>
-</ol>
-<p>This ensures the character gets the precise context needed without unnecessarily flooding the model with thousands of lines of irrelevant history.</p>
+<h2 id="self-improving-memory-dreaming"><a class="zola-anchor" href="#self-improving-memory-dreaming" aria-label="Anchor link for: self-improving-memory-dreaming">🔗</a>Self-Improving Memory &amp; Dreaming</h2>
+<p>Boxxy doesn't forget everything when you close a tab. It learns your preferences, project structures, and environment through a fast, two-tier memory system:</p>
+<h3 id="1-sub-millisecond-recall-batch-extraction"><a class="zola-anchor" href="#1-sub-millisecond-recall-batch-extraction" aria-label="Anchor link for: 1-sub-millisecond-recall-batch-extraction">🔗</a>1. Sub-Millisecond Recall &amp; Batch Extraction</h3>
+<ul>
+<li><strong>Zero-Lag Turn Recall:</strong> Before every turn, Boxxy queries a local SQLite FTS5 index in under <code>1ms</code> — injecting relevant memories and core system facts (OS, shell, package manager) with <strong>zero extra LLM calls</strong> on the critical path.</li>
+<li><strong>Batch Flush:</strong> As conversation history slides past the active window or when a session goes to sleep/closes, a background pass extracts candidate facts and a concise episodic summary without slowing down your live chat.</li>
+</ul>
+<h3 id="2-the-dream-cycle-memory-md"><a class="zola-anchor" href="#2-the-dream-cycle-memory-md" aria-label="Anchor link for: 2-the-dream-cycle-memory-md">🔗</a>2. The Dream Cycle &amp; <code>MEMORY.md</code></h3>
+<p>When your PC is on AC power and all Boxxy windows are closed (Ghost Mode), the <code>boxxy-agent</code> daemon runs a low-priority <strong>Dream Cycle</strong>:</p>
+<ul>
+<li><strong>Reinforcement:</strong> Candidate facts that have been observed multiple times with high confidence are promoted to verified long-term memories.</li>
+<li><strong>Conflict Resolution:</strong> Outdated facts are automatically demoted when your habits change, while your explicit preferences and manual edits are strictly protected.</li>
+<li><strong>Human-Readable Sync:</strong> Verified memories are mirrored to <code>~/.config/boxxy-terminal/boxxyclaw/MEMORY.md</code> and logged in <code>DREAMS.md</code>.</li>
+</ul>
+<hr />
+<h2 id="terminal-buffer-origin-aware-diagnosis"><a class="zola-anchor" href="#terminal-buffer-origin-aware-diagnosis" aria-label="Anchor link for: terminal-buffer-origin-aware-diagnosis">🔗</a>Terminal Buffer &amp; Origin-Aware Diagnosis</h2>
+<p>Your characters have "eyes" on your terminal grid powered by <strong>OSC 133</strong> semantic prompt markers (<code>[PROMPT]</code>, <code>[COMMAND]</code>, <code>[OUTPUT]</code>):</p>
+<ul>
+<li><strong>Smart Snapshot Deduplication &amp; Paging:</strong> If the terminal hasn't changed since the last turn, Boxxy sends a tiny <code>[NO_CHANGE]</code> token instead of re-sending the buffer. When investigating long logs, the character pages backwards 50 lines at a time (<code>read_scrollback_page</code>) only as needed.</li>
+<li><strong>Origin-Aware Errors:</strong> If an agent-proposed command exits with an error, the character auto-diagnoses it immediately. If a command <em>you</em> typed fails, Boxxy shows a zero-token <strong>"Error Detected"</strong> pill in the corner so typos never waste tokens unless you click it.</li>
+</ul>
 <hr />
 <h2 id="resume-session"><a class="zola-anchor" href="#resume-session" aria-label="Anchor link for: resume-session">🔗</a>Resume Session</h2>
-<p>Boxxy supports a stateless =Resume Session= model that allows you to restore any of your last 10 active sessions—or any session you've explicitly pinned—into any terminal pane.</p>
-<h3 id="stateless-resumption"><a class="zola-anchor" href="#stateless-resumption" aria-label="Anchor link for: stateless-resumption">🔗</a>Stateless Resumption</h3>
-<p>Unlike other AI tools that rely on provider-side "Threads," Boxxy stores your entire conversation history locally in its SQLite database. When you use <code>/resume</code>:</p>
+<p>Boxxy stores your conversation history, tool logs, and token analytics locally in SQLite so you can pick up any session in any pane:</p>
 <ul>
-<li><strong>Rehydration:</strong> Boxxy loads the previous messages and "cleans" them of transient data (like old terminal snapshots).</li>
-<li><strong>Visual Logs:</strong> Your entire sidebar history—diagnoses, proposed actions, and tool results—is re-rendered instantly.</li>
-<li><strong>Environment Sync:</strong> Boxxy attempts to restore the terminal's =Working Directory= and re-activates any pending scheduled tasks.</li>
+<li><strong>Sidebar &amp; <code>/resume</code>:</strong> Browse your recent and <strong>Pinned</strong> conversations directly in the =Claw Sidebar= on any new pane (with quick actions to pin, unpin, or delete), or press <code>Ctrl+/</code> and type <code>/resume</code>.</li>
+<li><strong>Switch Models Anytime:</strong> Because history is stored locally in a provider-agnostic format, you can start a session with Gemini, switch to Claude or a custom OpenAI-compatible endpoint mid-conversation, and keep your full context and cumulative token/cost stats intact.</li>
 </ul>
-<h3 id="switching-brains-on-the-fly"><a class="zola-anchor" href="#switching-brains-on-the-fly" aria-label="Anchor link for: switching-brains-on-the-fly">🔗</a>Switching Brains on the Fly</h3>
-<p>Because Boxxy's resumption is stateless, you can start a session with one model (e.g., "Gemini 3.1" ) and resume it with another (e.g., "Claude 4.6"). The new model simply reads the previous exchange and continues as if it were there all along.</p>
-<h3 id="persistent-analytics"><a class="zola-anchor" href="#persistent-analytics" aria-label="Anchor link for: persistent-analytics">🔗</a>Persistent Analytics</h3>
-<p>Resuming a session also restores its =Cumulative Context Analytics=. Your sidebar will accurately reflect the total token spend for the entire life of that session, even if you've switched model providers or restarted the application.</p>
 <hr />
-<h2 id="toolbox"><a class="zola-anchor" href="#toolbox" aria-label="Anchor link for: toolbox">🔗</a>Toolbox</h2>
-<p>Think of the <strong>Toolbox</strong> as your character's set of "superpowers." Instead of simply guessing and typing commands into your terminal, they use a library of highly reliable, structured tools to interact with your computer.</p>
-<p>These tools are grouped into specialized categories:</p>
+<h2 id="toolbox-supervised-autonomy"><a class="zola-anchor" href="#toolbox-supervised-autonomy" aria-label="Anchor link for: toolbox-supervised-autonomy">🔗</a>Toolbox &amp; Supervised Autonomy</h2>
+<p>Instead of blindly guessing shell commands, characters use a structured toolbox:</p>
 <ul>
-<li><strong>File Operations</strong>: Safely read, write, and list directories. The AI can even read specific line ranges to save time and tokens.</li>
-<li><strong>System Monitoring</strong>: View active processes and hardware specs as clean, structured data.</li>
-<li><strong>Web &amp; Network</strong>: Fetch documentation or look up code examples directly from the web with built-in safety limits.</li>
-<li><strong>Clipboard Access</strong>: Securely read from and write to your system clipboard.</li>
+<li><strong>File &amp; Workspace Tools</strong>: <code>file_read</code>, <code>file_write</code>, <code>replace_in_file</code> (with unified diff preview), <code>file_delete</code>, <code>list_directory</code>, <code>glob_search</code>, and <code>grep_search</code>.</li>
+<li><strong>System &amp; Background Tools</strong>: <code>list_processes</code>, <code>kill_process</code>, <code>get_system_info</code>, and <code>run_background_command</code> (for launching detached GUI apps, dev servers, and scripts).</li>
+<li><strong>Web &amp; Clipboard Tools</strong>: Native server-side web search, Tavily <code>web_search</code>, <code>http_fetch</code>, and clipboard read/write.</li>
 </ul>
-<h3 id="safety-first-the-approval-protocol"><a class="zola-anchor" href="#safety-first-the-approval-protocol" aria-label="Anchor link for: safety-first-the-approval-protocol">🔗</a>Safety First: The Approval Protocol</h3>
-<p>We believe in <strong>Supervised Autonomy</strong>. Boxxy never performs a "dangerous" action (like deleting a file, killing a process, or reading your clipboard) without your explicit permission.</p>
-<p>When a character wants to use a sensitive tool, they will pause and present their plan to you in a popover. Only after you click <strong>Approve</strong> will the tool execute. This ensures you are always in control of what your character is doing on your machine.</p>
+<h3 id="the-approval-protocol"><a class="zola-anchor" href="#the-approval-protocol" aria-label="Anchor link for: the-approval-protocol">🔗</a>The Approval Protocol</h3>
+<p>Boxxy enforces <strong>Supervised Autonomy</strong>. Sensitive actions (running shell commands, modifying files, killing processes, or accessing the clipboard) always pause and present an in-terminal <strong>Approve / Reject</strong> card first. Nothing executes without your say-so.</p>
 <hr />
-<h2 id="boxxy-agent"><a class="zola-anchor" href="#boxxy-agent" aria-label="Anchor link for: boxxy-agent">🔗</a>Boxxy Agent</h2>
-<p>The =Boxxy Agent= is a persistent host-level daemon that manages all privileged operations on your machine. It started as a workaround for Flatpak sandboxing — sandboxed applications cannot normally see or interact with the host OS — but has since grown into the backbone of the entire application.</p>
-<p>The agent runs as a <strong>single shared instance</strong> for all open Boxxy windows. When Boxxy launches, it starts the daemon (or detects an already-running one) and claims a fixed name on your D-Bus session bus. All UI processes then communicate with it over this private, fast D-Bus connection.</p>
+<h2 id="boxxy-agent-background-persistence"><a class="zola-anchor" href="#boxxy-agent-background-persistence" aria-label="Anchor link for: boxxy-agent-background-persistence">🔗</a>Boxxy Agent &amp; Background Persistence</h2>
+<p>The =Boxxy Agent= (<code>boxxy-agent</code>) is a lightweight, host-privileged daemon that powers all terminal shells and AI sessions over a fast D-Bus connection — allowing Boxxy to work seamlessly both natively and inside a <strong>Flatpak</strong> sandbox (such as Fedora Silverblue).</p>
 <h3 id="what-the-daemon-manages"><a class="zola-anchor" href="#what-the-daemon-manages" aria-label="Anchor link for: what-the-daemon-manages">🔗</a>What the daemon manages</h3>
 <ul>
-<li><strong>PTY sessions</strong>: Spawns and owns all your terminal shells. Each session is tracked with a ring buffer, so context survives even if a pane is closed and resumed later.</li>
-<li><strong>Claw toolbox</strong>: Handles the privileged side of all character tools — shell execution, file I/O (with path blacklisting), process management, and clipboard access.</li>
-<li><strong>Character claims</strong>: Tracks which character is assigned to which terminal pane. Claims are held in memory only; nothing is written to disk.</li>
-<li><strong>Background maintenance</strong>: Monitors system state (power source, ghost mode) and coordinates background work like the =Dreams= consolidation pipeline.</li>
+<li><strong>Detached Background Shells</strong>: Owns all PTY sessions with a 4 MB ring buffer and full ANSI/TUI screen snapshots. When you choose <strong>Run in Background</strong> on tab or window close, your processes keep running and can be restored individually or in their original split-pane layout.</li>
+<li><strong>Persistent AI Sessions &amp; Timers</strong>: Keeps backgrounded <code>ClawSession</code> actors and their scheduled <strong>reminders/tasks</strong> alive even when all UI windows are closed, firing native desktop notifications via <code>org.freedesktop.Notifications</code> right on time.</li>
+<li><strong>Desktop Companion D-Bus API</strong>: Broadcasts real-time signals (<code>DetachedSessionsChanged</code>, <code>PendingTasksChanged</code>) consumed by the <a rel="external" href="https://github.com/boxxy-dev/gnome-shell-boxxy-companion">GNOME Shell Extension</a> and <a rel="external" href="https://github.com/boxxy-dev/cosmic-boxxy-companion">COSMIC Desktop Applet</a>.</li>
 </ul>
-<h3 id="lifecycle"><a class="zola-anchor" href="#lifecycle" aria-label="Anchor link for: lifecycle">🔗</a>Lifecycle</h3>
-<p>The agent can be controlled directly from the command line:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> start</span><span style="color: #9399B2;font-style: italic;">       # run the daemon</span></span>
-<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> stop</span><span style="color: #9399B2;font-style: italic;">        # clean shutdown</span></span>
-<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> restart</span><span style="color: #9399B2;font-style: italic;">     # reload without downtime</span></span>
-<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> list-sessions</span><span style="color: #9399B2;font-style: italic;">  # show active PTY sessions</span></span></code></pre>
-<p>In short: Boxxy's UI is a thin, sandboxed frontend. The Boxxy Agent is where everything actually runs.</p>
-
+<h3 id="cli-control"><a class="zola-anchor" href="#cli-control" aria-label="Anchor link for: cli-control">🔗</a>CLI Control</h3>
+<p>You can inspect or control the daemon anytime from your shell:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> status</span><span style="color: #9399B2;font-style: italic;">         # inspect daemon, dreaming status &amp; active sessions</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> list-sessions</span><span style="color: #9399B2;font-style: italic;">  # list active and background PTY sessions</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> restart</span><span style="color: #9399B2;font-style: italic;">        # reload the daemon cleanly</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-agent</span><span style="color: #A6E3A1;"> stop</span><span style="color: #9399B2;font-style: italic;">           # shut down the daemon</span></span></code></pre>
                     
 
                     <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">

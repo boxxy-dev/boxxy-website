@@ -51,7 +51,7 @@
                         <li><a href="/getting-started" class="">Getting Started</a></li>
                         <li><a href="/how-it-works" class="">How It Works</a></li>
                         <li><a href="/development" class="">Development</a></li>
-                        <li><a href="/models" class="">Models</a></li>
+                        <li><a href="/providers" class="">Providers</a></li>
                         <li><a href="/telemetry" class="">Telemetry</a></li>
                     </ul>
 
@@ -59,7 +59,6 @@
                     <ul class="menu-list mb-5">
                         <li><a href="/features" class="">Features</a></li>
                         <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/web-search" class="">Web Search</a></li>
                         <li><a href="/skills" class="">Skills</a></li>
                         <li><a href="/characters" class="is-active">Characters</a></li>
                         <li><a href="/use-cases" class="">Use Cases</a></li>
@@ -82,6 +81,14 @@
                     
                         <h1 id="characters"><a class="zola-anchor" href="#characters" aria-label="Anchor link for: characters">🔗</a>Characters</h1>
 <p>Instead of interacting with a faceless LLM, every =BoxxyClaw= character has a <strong>personality, avatar, and color</strong>. Characters are per-pane — you can run different characters in different splits, each with its own tone and expertise.</p>
+<hr />
+<h2 id="your-profile-you"><a class="zola-anchor" href="#your-profile-you" aria-label="Anchor link for: your-profile-you">🔗</a>Your Profile ("You")</h2>
+<p>At the top of =Preferences= → =Characters=, you can customize your own identity under the <strong>You</strong> section:</p>
+<ul>
+<li>Upload your own <strong>Avatar</strong> (automatically cropped and resized Locally).</li>
+<li>Set <strong>What the model calls you</strong> so your characters address you by name.</li>
+<li>Pick your personal <strong>Accent Color</strong> for your messages in the overlay.</li>
+</ul>
 <hr />
 <h2 id="the-default-characters"><a class="zola-anchor" href="#the-default-characters" aria-label="Anchor link for: the-default-characters">🔗</a>The Default Characters</h2>
 <p>Boxxy ships with three bundled characters:</p>
@@ -119,7 +126,7 @@
 <li>Select a different character to reassign.</li>
 </ol>
 <blockquote>
-<p>The session restarts with the new personality. Your conversation history is preserved and rehydrated automatically.</p>
+<p>The session updates with the new personality while preserving and rehydrating your conversation history automatically. If you send a pane to the background (<strong>Run in Background</strong>), your character stays claimed and active in the daemon until you restore or close the session.</p>
 </blockquote>
 <hr />
 <h2 id="creating-custom-characters"><a class="zola-anchor" href="#creating-custom-characters" aria-label="Anchor link for: creating-custom-characters">🔗</a>Creating Custom Characters</h2>
@@ -132,18 +139,18 @@
 <span class="giallo-l"><span>color</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#7B61FF&quot;</span></span>
 <span class="giallo-l"><span>duties</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Expert in Python backend development and Docker orchestration.&quot;</span></span>
 <span class="giallo-l"><span>personality</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Patient and thorough. Always explains the &#39;why&#39; behind every suggestion.&quot;</span></span></code></pre><table><thead><tr><th style="text-align: left">Field</th><th style="text-align: left">Description</th></tr></thead><tbody>
-<tr><td style="text-align: left"><code>display_name</code></td><td style="text-align: left">Name shown in the badge, sidebar, and swarm tools.</td></tr>
+<tr><td style="text-align: left"><code>display_name</code></td><td style="text-align: left">Name shown in the badge, sidebar, notifications, and swarm tools.</td></tr>
 <tr><td style="text-align: left"><code>color</code></td><td style="text-align: left">CSS hex color for the pane badge and UI accents.</td></tr>
 <tr><td style="text-align: left"><code>duties</code></td><td style="text-align: left">Short role description injected into the system prompt.</td></tr>
 <tr><td style="text-align: left"><code>personality</code></td><td style="text-align: left">Behavioral guidelines that shape how the character communicates.</td></tr>
 </tbody></table>
 <p>A stable UUID is auto-generated on first load. You can safely share character directories — Boxxy detects and resolves any ID collisions automatically.</p>
 <h3 id="hot-reload"><a class="zola-anchor" href="#hot-reload" aria-label="Anchor link for: hot-reload">🔗</a>Hot Reload</h3>
-<p>You don't need to restart anything. The =boxxy-agent= daemon watches the characters directory for changes and picks up edits to <code>CHARACTER.toml</code> or <code>AVATAR.png</code> within seconds. Active sessions whose character's personality changed will apply the new prompt on the very next turn.</p>
+<p>You don't need to restart anything. The =boxxy-agent= daemon watches the characters directory for changes and picks up edits to <code>CHARACTER.toml</code> or <code>AVATAR.png</code> within half a second. Active sessions whose character's personality changed will apply the new prompt on the very next turn.</p>
 <h3 id="sorting"><a class="zola-anchor" href="#sorting" aria-label="Anchor link for: sorting">🔗</a>Sorting</h3>
 <p>Create a <code>characters.json</code> in the characters directory to control the display order:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="json"><span class="giallo-l"><span style="color: #9399B2;">[</span><span style="color: #A6E3A1;">&quot;niko-una&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;levi-kujo&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;my-custom-character&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;kuro&quot;</span><span style="color: #9399B2;">]</span></span></code></pre>
-<p>You can also drag and drop characters directly in =Preferences= to reorder them.</p>
+<p>You can also reorder characters directly in =Preferences=.</p>
 <hr />
 <h2 id="resetting-to-defaults"><a class="zola-anchor" href="#resetting-to-defaults" aria-label="Anchor link for: resetting-to-defaults">🔗</a>Resetting to Defaults</h2>
 <p>Open =Preferences= (<code>Ctrl+,</code>), navigate to =Characters=, and click <strong>Reset to Defaults</strong>. This wipes all custom characters and re-extracts the three bundled defaults.</p>
