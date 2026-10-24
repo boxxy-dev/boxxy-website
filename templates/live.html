@@ -22,6 +22,46 @@
                             0%, 100% { opacity: 1; }
                             50% { opacity: .5; }
                         }
+                        .live-scroll-list {
+                            max-height: 530px;
+                            overflow-y: auto;
+                            padding: 0 12px 0 0 !important;
+                            margin: 0 !important;
+                            list-style: none;
+                        }
+                        .live-scroll-models {
+                            max-height: 820px;
+                            overflow-y: auto;
+                            padding: 0 12px 0 0 !important;
+                        }
+                        .live-scroll-list::-webkit-scrollbar,
+                        .live-scroll-models::-webkit-scrollbar {
+                            width: 6px;
+                        }
+                        .live-scroll-list::-webkit-scrollbar-track,
+                        .live-scroll-models::-webkit-scrollbar-track {
+                            background: transparent;
+                        }
+                        .live-scroll-list::-webkit-scrollbar-thumb,
+                        .live-scroll-models::-webkit-scrollbar-thumb {
+                            background-color: #45475a;
+                            border-radius: 6px;
+                        }
+                        .alltime-link {
+                            color: #89b4fa;
+                            font-size: 0.85rem;
+                            font-weight: 600;
+                            cursor: pointer;
+                            background: none;
+                            border: none;
+                            padding: 0;
+                            font-family: inherit;
+                            transition: color 0.15s ease;
+                        }
+                        .alltime-link:hover {
+                            color: #b4befe;
+                            text-decoration: underline;
+                        }
                     </style>
                 </div>
 
@@ -60,15 +100,21 @@
                                 <div class="column is-6">
                                     <div class="content-area" style="margin-bottom: 1.5rem;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">OS Usage</h3>
-                                        <ul id="os-container" style="list-style: none; margin: 0; padding: 0;">
+                                        <ul id="os-container" class="live-scroll-list">
                                             <!-- Populated by JS -->
                                         </ul>
+                                        <div class="has-text-right mt-3">
+                                            <button type="button" class="alltime-link" data-alltime="os">Top 10 of all time</button>
+                                        </div>
                                     </div>
                                     <div class="content-area">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Desktop Environment</h3>
-                                        <ul id="desktop-container" style="list-style: none; margin: 0; padding: 0;">
+                                        <ul id="desktop-container" class="live-scroll-list">
                                             <!-- Populated by JS -->
                                         </ul>
+                                        <div class="has-text-right mt-3">
+                                            <button type="button" class="alltime-link" data-alltime="desktop">Top 10 of all time</button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -76,15 +122,18 @@
                                 <div class="column is-6">
                                     <div class="content-area" style="margin-bottom: 1.5rem;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Native vs Flatpak</h3>
-                                        <ul id="pkg-container" style="list-style: none; margin: 0; padding: 0;">
+                                        <ul id="pkg-container" class="live-scroll-list">
                                             <!-- Populated by JS -->
                                         </ul>
                                     </div>
                                     <div class="content-area">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Shell Usage</h3>
-                                        <ul id="shell-container" style="list-style: none; margin: 0; padding: 0;">
+                                        <ul id="shell-container" class="live-scroll-list">
                                             <!-- Populated by JS -->
                                         </ul>
+                                        <div class="has-text-right mt-3">
+                                            <button type="button" class="alltime-link" data-alltime="shell">Top 10 of all time</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +147,7 @@
                                 <div class="column is-6">
                                     <div class="content-area" style="height: 100%;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Claw Providers</h3>
-                                        <ul id="providers-container" style="list-style: none; margin: 0; padding: 0;">
+                                        <ul id="providers-container" class="live-scroll-list">
                                             <!-- Populated by JS -->
                                         </ul>
                                     </div>
@@ -109,7 +158,7 @@
                                     <div class="content-area" style="height: 100%;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: 1px;">Models usage</h3>
                                         <p style="color: #a6adc8; font-size: 0.9em; margin-bottom: 1.5rem; font-style: italic;">Note: Ollama models are excluded for privacy reasons.</p>
-                                        <div id="models-container">
+                                        <div id="models-container" class="live-scroll-models">
                                             <!-- Populated by JS -->
                                         </div>
                                     </div>
@@ -121,7 +170,7 @@
                         <div class="column is-12 mt-5">
                             <div class="content-area">
                                 <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Tools usage</h3>
-                                <div id="tools-container">
+                                <div id="tools-container" class="live-scroll-list">
                                     <!-- Populated by JS -->
                                 </div>
                             </div>
@@ -130,6 +179,19 @@
                     </div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- All-Time Top 10 Modal -->
+    <div id="alltime-modal" style="display: none; position: fixed; inset: 0; background-color: rgba(17, 17, 27, 0.8); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
+        <div style="background-color: #1e1e2e; border: 2px solid #45475a; border-radius: 16px; width: 100%; max-width: 520px; padding: 2rem; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
+            <div class="is-flex is-justify-content-space-between is-align-items-center mb-4">
+                <h3 id="alltime-modal-title" style="color: #f5e0dc !important; font-size: 1.15rem; font-weight: 800; margin: 0;">Top 10 of All Time</h3>
+                <button id="alltime-modal-close" type="button" style="background-color: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center;">✕</button>
+            </div>
+            <ul id="alltime-modal-list" style="list-style: none; margin: 0; padding: 0;">
+                <!-- Populated by JS -->
+            </ul>
         </div>
     </div>
 </section>
@@ -164,9 +226,9 @@
         };
 
         try {
-            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes, stats7dRes] = await Promise.all([
+            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes, stats7dRes, osAllTimeRes, desktopAllTimeRes, shellAllTimeRes] = await Promise.all([
                 supabase.from('public_stats_daily').select('*').order('day', { ascending: false }).limit(30),
-                supabase.from('tool_usage_stats_7d').select('*').order('usage_count', { ascending: false }).limit(10),
+                supabase.from('tool_usage_stats_7d').select('*').order('usage_count', { ascending: false }),
                 supabase.from('os_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
                 supabase.from('shell_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
                 supabase.from('claw_provider_stats_7d').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }),
@@ -175,7 +237,10 @@
                 supabase.from('pkg_type_usage_stats_all_time').select('*').order('user_count', { ascending: false }),
                 supabase.from('claw_model_stats_7d').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }),
                 supabase.from('desktop_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
-                supabase.from('public_stats_7d').select('*').maybeSingle()
+                supabase.from('public_stats_7d').select('*').maybeSingle(),
+                supabase.from('os_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
+                supabase.from('desktop_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
+                supabase.from('shell_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10)
             ]);
 
             const daily = statsRes.data || [];
@@ -189,6 +254,9 @@
             const models = modelRes.data || [];
             const desktopData = desktopRes.data || [];
             const stats7d = stats7dRes && !stats7dRes.error ? stats7dRes.data : null;
+            const osAllTimeData = osAllTimeRes && !osAllTimeRes.error ? (osAllTimeRes.data || []) : [];
+            const desktopAllTimeData = desktopAllTimeRes && !desktopAllTimeRes.error ? (desktopAllTimeRes.data || []) : [];
+            const shellAllTimeData = shellAllTimeRes && !shellAllTimeRes.error ? (shellAllTimeRes.data || []) : [];
 
             // Calculate totals and date range
             const last7Days = daily.slice(0, 7);
@@ -387,6 +455,65 @@
                     });
                 }
             }
+
+            // All-Time Top 10 Modal wiring
+            const modal = document.getElementById('alltime-modal');
+            const modalTitle = document.getElementById('alltime-modal-title');
+            const modalList = document.getElementById('alltime-modal-list');
+            const modalClose = document.getElementById('alltime-modal-close');
+
+            const openAllTimeModal = (type) => {
+                let title = 'Top 10 of All Time';
+                let items = [];
+                if (type === 'os') {
+                    title = 'Top 10 OS Usage — All Time';
+                    items = osAllTimeData.map(r => ({ name: r.os_name, users: r.unique_users }));
+                } else if (type === 'desktop') {
+                    title = 'Top 10 Desktop Environments — All Time';
+                    items = desktopAllTimeData.map(r => ({ name: r.desktop_name, users: r.unique_users }));
+                } else if (type === 'shell') {
+                    title = 'Top 10 Shells — All Time';
+                    items = shellAllTimeData.map(r => ({ name: r.shell_name, users: r.unique_users }));
+                }
+
+                modalTitle.innerText = title;
+                modalList.innerHTML = '';
+
+                if (items.length === 0) {
+                    modalList.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No all-time data available yet.</li>';
+                } else {
+                    items.slice(0, 10).forEach((item, idx) => {
+                        const safeName = escapeHtml(item.name);
+                        const safeUsers = (Number(item.users) || 0).toLocaleString();
+                        modalList.innerHTML += `
+                            <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
+                                <div class="is-flex is-align-items-center" style="gap: 0.75rem;">
+                                    <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #6c7086; font-weight: 700; min-width: 1.5rem;">#${idx + 1}</span>
+                                    <span style="color: #cdd6f4; font-weight: 700;">${safeName}</span>
+                                </div>
+                                <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
+                            </li>
+                        `;
+                    });
+                }
+
+                modal.style.display = 'flex';
+            };
+
+            const closeAllTimeModal = () => {
+                modal.style.display = 'none';
+            };
+
+            document.querySelectorAll('.alltime-link').forEach(btn => {
+                btn.addEventListener('click', () => openAllTimeModal(btn.getAttribute('data-alltime')));
+            });
+            modalClose.addEventListener('click', closeAllTimeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeAllTimeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.style.display === 'flex') closeAllTimeModal();
+            });
 
             // Show dashboard, hide loading
             document.getElementById('loading-state').style.display = 'none';

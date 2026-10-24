@@ -23,7 +23,7 @@ We welcome contributions! For the best results, check the root `AGENTS.md` and c
 
 ## Requirements, Building & Testing
 
-Boxxy is built with =Rust 2024 (v1.98+)= and requires =GTK 4.24+= and =Libadwaita 1.9+=. For standard development and local testing, use =Cargo= directly:
+Boxxy is built with =Rust 2024 (v1.98+)= and requires =GTK 4.24+= and =Libadwaita 1.10+=. For standard development and local testing, use =Cargo= directly:
 
 ```bash
 cargo build -p boxxy-agent -p boxxy-app
