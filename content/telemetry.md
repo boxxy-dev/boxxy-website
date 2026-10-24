@@ -14,7 +14,7 @@ We believe in =complete transparency= regarding the data we collect, so we publi
 ## Privacy Principles
 
 *   **Opt-In/Opt-Out:** Telemetry is strictly configurable. While it may be enabled by default during preview phases to gather initial feedback, you can easily disable it at any time via =Preferences=. Disabling telemetry takes effect immediately across both the UI and background daemon and purges any unsent local telemetry events.
-*   **Zero PII (Personally Identifiable Information):** We **never** collect file paths, file contents, usernames, IP addresses, prompt contents, terminal outputs, or custom MCP server names.
+*   **Zero PII (Personally Identifiable Information):** We **never** collect file paths, file contents, usernames, IP addresses, prompt contents, terminal outputs, custom MCP server names, or custom AI endpoint names.
 *   **Anonymous Identifiers:**
     *   `install_id`: A random, anonymous identifier generated once when you first run the app. This helps us count unique installations without knowing who you are.
     *   `session_id`: A random identifier generated each time you launch the app, kept only in memory for that session. This helps us understand session lengths and distinguish between many users vs. a single user launching the app multiple times.
@@ -31,8 +31,8 @@ Here is the exhaustive list of the metrics we track when telemetry is enabled:
 | Category | Metric Name | Description | Data Attributes Collected |
 | :--- | :--- | :--- | :--- |
 | **Growth & Usage** | `app.launch` | Triggered once per application startup. | `os`, `arch`, `pkg_type` (e.g., flatpak, native), `version`, `shell` (e.g., bash, zsh, fish), `desktop` (e.g., GNOME, KDE) |
-| **AI Usage** | `ai.tokens` | The number of tokens consumed during an AI interaction. | `model_provider`, `model_name`, `role` (input/output), `feature` |
-| **AI Performance** | `ai.invocations` | A count of AI requests initiated by the user. | `model_provider`, `model_name`, `feature` |
+| **AI Usage** | `ai.tokens` | The number of tokens consumed during an AI interaction (custom OpenAI-compatible endpoints are grouped anonymously as `Custom Endpoints`). | `model_provider`, `model_name`, `role` (input/output), `feature` |
+| **AI Performance** | `ai.invocations` | A count of AI requests initiated by the user (custom OpenAI-compatible endpoints are grouped anonymously as `Custom Endpoints`). | `model_provider`, `model_name`, `feature` |
 | **AI Quality** | `ai.latency` | The time it takes (in milliseconds) to receive a response from the AI model. | `model_provider`, `model_name`, `feature` |
 | **Product Features** | `tool.use` | A count of which built-in AI tools are being utilized by the agent (custom MCP tools are grouped anonymously as `external_mcp_tool`). | `tool_name` (e.g., `sys_shell_exec`, `file_read`, `external_mcp_tool`) |
 | **Retention** | `claw.session_resume`| Triggered when a previous BoxxyClaw session is restored. | `session_type` (e.g., normal, pinned) |

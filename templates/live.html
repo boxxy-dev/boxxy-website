@@ -151,6 +151,18 @@
                 .replace(/'/g, "&#039;");
         };
 
+        const formatProviderName = (raw) => {
+            switch (String(raw ?? '').trim().toLowerCase()) {
+                case 'gemini': return 'Gemini';
+                case 'ollama': return 'Ollama';
+                case 'anthropic': return 'Anthropic';
+                case 'openai': return 'OpenAI';
+                case 'openrouter': return 'OpenRouter';
+                case 'deepseek': return 'DeepSeek';
+                default: return 'Custom Endpoints';
+            }
+        };
+
         try {
             const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes, stats7dRes] = await Promise.all([
                 supabase.from('public_stats_daily').select('*').order('day', { ascending: false }).limit(30),
@@ -248,8 +260,7 @@
                 const totalProviderUsers = providers.reduce((acc, p) => acc + (Number(p.unique_users) || 0), 0);
 
                 providers.forEach(p => {
-                    const rawName = String(p.provider_name || '');
-                    const name = escapeHtml(rawName.toLowerCase() === 'openai' ? 'OpenAI' : rawName.charAt(0).toUpperCase() + rawName.slice(1));
+                    const name = escapeHtml(formatProviderName(p.provider_name));
                     const uniqueUsers = Number(p.unique_users) || 0;
                     const totalInvocations = Number(p.total_invocations) || 0;
 
@@ -354,8 +365,7 @@
                      modelsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No public model usage data available yet.</p>';
                 } else {
                     filteredModels.forEach(model => {
-                        const rawProv = String(model.provider_name || '');
-                        const providerName = escapeHtml(rawProv.toLowerCase() === 'openai' ? 'OpenAI' : rawProv.charAt(0).toUpperCase() + rawProv.slice(1));
+                        const providerName = escapeHtml(formatProviderName(model.provider_name));
                         const safeModelName = escapeHtml(model.model_name);
                         const safeUsers = (Number(model.unique_users) || 0).toLocaleString();
                         const safeQueries = (Number(model.total_invocations) || 0).toLocaleString();

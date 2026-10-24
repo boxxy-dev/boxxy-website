@@ -47,7 +47,7 @@
         <!-- Installation Code Block -->
         <div class="columns is-centered mt-6">
             <div class="column is-10">
-                <p class="has-text-centered mb-3" style="color: #a6adc8; font-weight: 600; font-size: 0.9rem;">Native Nightlies (Requires GTK 4.22+)</p>
+                <p class="has-text-centered mb-3" style="color: #a6adc8; font-weight: 600; font-size: 0.9rem;">Native Nightlies (Requires GTK 4.24+)</p>
                 <div class="installation-code fancy-box mt-0 mb-6" style="position: relative; text-align: left; display: flex; align-items: center;">
                     <pre style="flex-grow: 1;"><code id="install-command" class="language-bash">curl -sSf https://raw.githubusercontent.com/boxxy-dev/boxxy/main/scripts/install.sh | sh</code></pre>
                     <button id="copy-button" class="button is-small" style="position: absolute; right: 0.75rem; background-color: #313244; color: #cdd6f4; border: none; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Copy to clipboard">
@@ -67,6 +67,13 @@
                         <svg id="flatpak-check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#11111b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </button>
                 </div>
+
+                <p class="has-text-centered mt-5" style="color: #a6adc8; font-size: 0.9rem;">
+                    Desktop integrations:
+                    <a href="https://github.com/boxxy-dev/gnome-shell-boxxy-companion" target="_blank" style="color: #89b4fa; font-weight: 600; margin-left: 0.35rem;">GNOME Shell Extension</a>
+                    <span style="color: #45475a; margin: 0 0.4rem;">•</span>
+                    <a href="https://github.com/boxxy-dev/cosmic-boxxy-companion" target="_blank" style="color: #89b4fa; font-weight: 600;">COSMIC Desktop Applet</a>
+                </p>
             </div>
         </div>
 
@@ -80,6 +87,46 @@
                 <p class="is-size-5 has-text-weight-bold mt-4" style="color: #a6e3a1;">
                     Just press <span class="quoted-text">Control + /</span> and you're ready to go!
                 </p>
+            </div>
+        </div>
+
+        <!-- Everyday Use Cases Section -->
+        <div class="columns is-centered mt-6 mb-6">
+            <div class="column is-8">
+                <div style="background-color: #1e1e2e; border: 2px solid #313244; border-radius: 16px; padding: 2.5rem;">
+                    <h2 class="title is-4 mb-2" style="color: #f5e0dc !important;">What You Can Use Boxxy For Every Day</h2>
+                    <p style="color: #a6adc8; margin-bottom: 2rem; font-size: 0.95rem;">Practical ways Boxxy fits into your daily Linux workflow:</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="border-bottom: 1px solid #313244; padding-bottom: 1.25rem;">
+                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Debug Your Linux System</div>
+                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
+                                Hit a broken package update, a failing <code>systemd</code> service, or a full disk? Press <code>Ctrl + /</code> and ask <em>'fix this'</em>. Boxxy reads your terminal output, checks logs, and proposes the exact commands for your approval.
+                            </p>
+                        </div>
+
+                        <div style="border-bottom: 1px solid #313244; padding-bottom: 1.25rem;">
+                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Send Tasks to the Background</div>
+                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
+                                Running a long build, dev server, or distro upgrade? Close the tab or quit the app with <strong>Run in Background</strong>. Your shells and AI characters stay alive in the background daemon and restore with their full split-pane layout whenever you return.
+                            </p>
+                        </div>
+
+                        <div style="border-bottom: 1px solid #313244; padding-bottom: 1.25rem;">
+                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Set Reminders &amp; Scheduled Tasks</div>
+                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
+                                Tell your character <em>'Remind me to check the deploy in 20 minutes'</em>. Even if you close Boxxy, the background daemon keeps counting down and sends a native desktop notification right on time.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Chat with Your Favorite Character</div>
+                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
+                                Pair up with Niko, Levi, or Kuro — or create your own persona. Each character has their own personality, remembers your preferences across sessions via Memories &amp; Dreams, and addresses you by name.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -102,7 +149,7 @@
                     <div class="column">
                         <div class="feature-item fancy-box" style="border-color: #cba6f7; box-shadow: 1px 1px 0 #cba6f7, 2px 2px 0 #cba6f7, 3px 3px 0 #cba6f7, 4px 4px 0 #cba6f7, 5px 5px 0 #cba6f7, 6px 6px 0 #cba6f7; background: linear-gradient(rgba(30, 30, 46, 0.85), rgba(30, 30, 46, 0.85)), url('/3_privacy.png'); background-size: cover; background-position: center;">
                             <h3>Total Privacy</h3>
-                            <p>Connect to local LLMs like <span class="quoted-text">Ollama</span> to keep your code, data, and terminal history entirely on your machine.</p>
+                            <p>Connect to local LLMs like <span class="quoted-text">Ollama</span> or custom endpoints to keep your code, data, and terminal history entirely on your machine.</p>
                         </div>
                     </div>
                 </div>

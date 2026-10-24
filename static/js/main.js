@@ -131,9 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Highlight regex: look for =text= but ensure it's not inside an HTML tag.
                 // We do this by ensuring there is a space or start-of-line before it, 
                 // and a space, punctuation, or end-of-line after it to avoid matching HTML attributes.
-                const highlightRegex = /(^|\s)=([^ \n=](?:[^=]*?[^ \n=])?)=($|\s|[.,!?;:])/g;
+                const highlightRegex = /(^|[\s(])=([^ \n=](?:[^=]*?[^ \n=])?)=($|[\s.,!?;:)])/g;
 
-                if (quoteRegex.test(val) || /(^|\s)=([^ \n=](?:[^=]*?[^ \n=])?)=($|\s|[.,!?;:])/.test(val)) {
+                if (quoteRegex.test(val) || /(^|[\s(])=([^ \n=](?:[^=]*?[^ \n=])?)=($|[\s.,!?;:)])/.test(val)) {
                     const span = document.createElement('span');
                     quoteRegex.lastIndex = 0;
                     

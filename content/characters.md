@@ -9,6 +9,15 @@ Instead of interacting with a faceless LLM, every =BoxxyClaw= character has a **
 
 ---
 
+## Your Profile ("You")
+
+At the top of =Preferences= → =Characters=, you can customize your own identity under the **You** section:
+- Upload your own **Avatar** (automatically cropped and resized Locally).
+- Set **What the model calls you** so your characters address you by name.
+- Pick your personal **Accent Color** for your messages in the overlay.
+
+---
+
 ## The Default Characters
 
 Boxxy ships with three bundled characters:
@@ -52,7 +61,7 @@ Boxxy ships with three bundled characters:
 2. Type `@` to open the character picker.
 3. Select a different character to reassign.
 
-> The session restarts with the new personality. Your conversation history is preserved and rehydrated automatically.
+> The session updates with the new personality while preserving and rehydrating your conversation history automatically. If you send a pane to the background (**Run in Background**), your character stays claimed and active in the daemon until you restore or close the session.
 
 ---
 
@@ -77,7 +86,7 @@ personality = "Patient and thorough. Always explains the 'why' behind every sugg
 
 | Field | Description |
 | :--- | :--- |
-| `display_name` | Name shown in the badge, sidebar, and swarm tools. |
+| `display_name` | Name shown in the badge, sidebar, notifications, and swarm tools. |
 | `color` | CSS hex color for the pane badge and UI accents. |
 | `duties` | Short role description injected into the system prompt. |
 | `personality` | Behavioral guidelines that shape how the character communicates. |
@@ -86,7 +95,7 @@ A stable UUID is auto-generated on first load. You can safely share character di
 
 ### Hot Reload
 
-You don't need to restart anything. The =boxxy-agent= daemon watches the characters directory for changes and picks up edits to `CHARACTER.toml` or `AVATAR.png` within seconds. Active sessions whose character's personality changed will apply the new prompt on the very next turn.
+You don't need to restart anything. The =boxxy-agent= daemon watches the characters directory for changes and picks up edits to `CHARACTER.toml` or `AVATAR.png` within half a second. Active sessions whose character's personality changed will apply the new prompt on the very next turn.
 
 ### Sorting
 
@@ -96,7 +105,7 @@ Create a `characters.json` in the characters directory to control the display or
 ["niko-una", "levi-kujo", "my-custom-character", "kuro"]
 ```
 
-You can also drag and drop characters directly in =Preferences= to reorder them.
+You can also reorder characters directly in =Preferences=.
 
 ---
 

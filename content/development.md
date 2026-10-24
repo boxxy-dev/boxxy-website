@@ -11,29 +11,26 @@ Boxxy is largely developed using =AI Agents=. The most efficient way to start co
 
 ## Workflow & Committing
 
-Boxxy is currently in an early, high-velocity development phase. To maintain maximum speed, we utilize a private =dev= branch for active development. 
-
-Once a major task or feature is finalized, we squash all related commits into a single =consolidated commit= before merging into the =main= branch. While this results in larger individual commits, the logic remains easy to parse and understand when analyzed by an =Agent=.
+Boxxy is in a high-velocity development phase. Once a task or feature is finalized and verified with unit tests and `scenario-runner`, changes are merged into the =main= branch with clear, user-readable commit summaries.
 
 ---
 
 ## Contributing
 
-We welcome code contributions! However, due to the rapid pace of downstream development, traditional PRs can be difficult to merge if they fall out of sync. 
-
-For the best results, we prefer =agentic-style= contributions: clear prompts accompanied by code examples or detailed implementation strategies that our internal agents can help integrate seamlessly.
+We welcome contributions! For the best results, check the root `AGENTS.md` and crate-level `AGENTS.md` files before opening an issue or pull request so your changes match Boxxy's modular crate boundaries.
 
 ---
 
-## Building & Testing
+## Requirements, Building & Testing
 
-Boxxy is built with =Rust 1.94=. For standard development and local testing, you can use =Cargo= directly:
+Boxxy is built with =Rust 2024 (v1.98+)= and requires =GTK 4.24+= and =Libadwaita 1.9+=. For standard development and local testing, use =Cargo= directly:
 
 ```bash
-cargo build -p boxxy-agent -p boxxy-terminal
+cargo build -p boxxy-agent -p boxxy-app
+cargo test
 ```
 
-Please note that a successful Cargo build does not always guarantee identical behavior within a =Flatpak= environment, especially for components involving `boxxy-agent`.
+Please note that a standard Cargo build runs natively on your host; if you are working on sandbox-specific features, test inside a =Flatpak= build as well.
 
 ### Building the Flatpak
 
@@ -57,15 +54,15 @@ flatpak-builder --user --install --force-clean build-dir flatpak/dev.boxxy.Boxxy
 
 ---
 
-## Context
+## Context Debugging
 
-One of the most important things to monitor is the exact context Boxxy sends to the model. You can inspect this by enabling context logging:
+One of the most useful things to inspect during AI development is the exact context Boxxy sends to the model. Enable high-signal context logging with:
 
 ```bash
-BOXXY_DEBUG_CONTEXT=1 cargo run -p boxxy-agent
+BOXXY_DEBUG_CONTEXT=1 cargo run
 ```
 
-(This works in both debug and release builds, but will remain completely silent unless the variable is set to 1.)
+(This works in both debug and release builds and remains completely silent unless `BOXXY_DEBUG_CONTEXT=1` is set.)
 
 ---
 
@@ -79,6 +76,6 @@ Build with the `disable-self-update` Cargo feature:
 cargo build --release --features disable-self-update
 ```
 
-This compiles `boxxy-app` → `boxxy-window` → `boxxy-ai-core` with the feature propagated through the entire crate hierarchy. The resulting binary will never attempt to update itself, regardless of the environment it runs in.
+This compiles `boxxy-app` → `boxxy-window` with the feature propagated through the crate hierarchy. The resulting binary will never attempt to update itself, regardless of the environment it runs in.
 
 The self-update UI and version-check network requests are fully compiled out, so there are no runtime flags or config files to manage — the package build alone is sufficient.

@@ -5,110 +5,82 @@ template = "docs.html"
 
 # How it Works
 
-Boxxy is designed to be more than just a terminal with a chat window. It is built from the ground up to be a truly agentic environment that learns from you as you work.
+Boxxy is designed to be more than just a terminal with a chat window. It is built from the ground up to be a truly agentic environment that learns from you as you work and stays alive in the background when you need it.
 
 Below is a breakdown of the core components that make Boxxy tick.
 
 ---
 
-## Terminals & Characters
+## Terminals, Characters & Swarm Coordination
 
-When =BoxxyClaw= is enabled, every terminal instance is paired with a =Character=. Each character is a dedicated session from your chosen =LLM Model=.
+When =BoxxyClaw= is enabled, every terminal pane claims a unique =Character= from the central `CharacterRegistry` managed by `boxxy-agent`.
 
-The core philosophy here is isolation: users typically spawn a new terminal to tackle a specific task. By assigning a unique character to each terminal, we ensure that the context for that specific task remains isolated from your other ongoing work.
-
-To provide assistance, the character tracks your terminal's activity — what commands were run in the past and what is currently executing. When necessary, they can also read directly from the terminal buffer using a smart paging system (see [Terminal Buffer](#terminal-buffer) below).
-
-However, it's very common to use multiple terminals simultaneously for a single, complex project. In these scenarios, you can explicitly ask a character (by name) to collaborate with another. When linked this way, they will share their context, allowing them to work together seamlessly across multiple terminal panes or windows.
+Each pane is isolated by default so that context for one task never pollutes another. However, all active panes are connected through Boxxy's **Global Workspace Radar**:
+- You can ask one character (by name) to read another pane's output, delegate subtasks, or coordinate across splits.
+- Characters also see any **detached background shells** in their radar and can restore them back into a tab whenever you ask.
 
 ---
 
-## Self-Improving
+## Self-Improving Memory & Dreaming
 
-Boxxy doesn't just forget everything when you close a tab. It is designed to learn your preferences, project structures, and "lessons learned" through a sophisticated, dual-layered memory system.
+Boxxy doesn't forget everything when you close a tab. It learns your preferences, project structures, and environment through a fast, two-tier memory system:
 
-### A Mirror of Your Brain
-While you work, Boxxy silently extracts facts—like your favorite editor or local environment specs—and mirrors them to a human-readable file at `~/.config/boxxy-terminal/boxxyclaw/MEMORY.md`. You are always in control of what the AI knows:
+### 1. Sub-Millisecond Recall & Batch Extraction
+- **Zero-Lag Turn Recall:** Before every turn, Boxxy queries a local SQLite FTS5 index in under `1ms` — injecting relevant memories and core system facts (OS, shell, package manager) with **zero extra LLM calls** on the critical path.
+- **Batch Flush:** As conversation history slides past the active window or when a session goes to sleep/closes, a background pass extracts candidate facts and a concise episodic summary without slowing down your live chat.
 
-- **Verification**: New facts appear in  =Pending= until you move them to =Active.=
-- **Manual Edits**: You can open the file and type your own facts directly into your character's "brain" at any time.
-- **Smart Scoping**: Memories can be =Global= (applying everywhere) or =Project-Specific= (only active when you are working in a specific folder).
-- **Pinning (📌)**: Add a 📌 emoji to any memory in the file to ensure it is always injected into the character's context, regardless of what you are doing.
-
----
-
-## Terminal Buffer
-
-Your characters aren't disconnected chatbots; they are deeply integrated into your terminal environment. Each pane has its own dedicated character, and you can see their name displayed directly in the terminal interface.
-
-### Intelligent Paging
-To provide the best assistance, characters have "eyes" on your terminal's activity. When necessary, they can read directly from the active terminal buffer to understand exactly what error you are seeing.
-
-To optimize resource usage and radically reduce token consumption, Boxxy employs a smart **paging system**:
-1. When you ask a question or an error occurs, the character initially requests only a small snapshot of the last **50 lines** of output.
-2. If that snapshot isn't sufficient to understand the context, they will dynamically request the *preceding* 50 lines.
-3. They iterate backwards through the buffer history until identifying the root cause of the issue.
-
-This ensures the character gets the precise context needed without unnecessarily flooding the model with thousands of lines of irrelevant history.
+### 2. The Dream Cycle & `MEMORY.md`
+When your PC is on AC power and all Boxxy windows are closed (Ghost Mode), the `boxxy-agent` daemon runs a low-priority **Dream Cycle**:
+- **Reinforcement:** Candidate facts that have been observed multiple times with high confidence are promoted to verified long-term memories.
+- **Conflict Resolution:** Outdated facts are automatically demoted when your habits change, while your explicit preferences and manual edits are strictly protected.
+- **Human-Readable Sync:** Verified memories are mirrored to `~/.config/boxxy-terminal/boxxyclaw/MEMORY.md` and logged in `DREAMS.md`.
 
 ---
 
-## Resume Session 
+## Terminal Buffer & Origin-Aware Diagnosis
 
-Boxxy supports a stateless =Resume Session= model that allows you to restore any of your last 10 active sessions—or any session you've explicitly pinned—into any terminal pane.
+Your characters have "eyes" on your terminal grid powered by **OSC 133** semantic prompt markers (`[PROMPT]`, `[COMMAND]`, `[OUTPUT]`):
 
-### Stateless Resumption
-Unlike other AI tools that rely on provider-side "Threads," Boxxy stores your entire conversation history locally in its SQLite database. When you use `/resume`:
-- **Rehydration:** Boxxy loads the previous messages and "cleans" them of transient data (like old terminal snapshots).
-- **Visual Logs:** Your entire sidebar history—diagnoses, proposed actions, and tool results—is re-rendered instantly.
-- **Environment Sync:** Boxxy attempts to restore the terminal's =Working Directory= and re-activates any pending scheduled tasks.
-
-### Switching Brains on the Fly
-Because Boxxy's resumption is stateless, you can start a session with one model (e.g., "Gemini 3.1" ) and resume it with another (e.g., "Claude 4.6"). The new model simply reads the previous exchange and continues as if it were there all along.
-
-### Persistent Analytics
-Resuming a session also restores its =Cumulative Context Analytics=. Your sidebar will accurately reflect the total token spend for the entire life of that session, even if you've switched model providers or restarted the application.
+- **Smart Snapshot Deduplication & Paging:** If the terminal hasn't changed since the last turn, Boxxy sends a tiny `[NO_CHANGE]` token instead of re-sending the buffer. When investigating long logs, the character pages backwards 50 lines at a time (`read_scrollback_page`) only as needed.
+- **Origin-Aware Errors:** If an agent-proposed command exits with an error, the character auto-diagnoses it immediately. If a command *you* typed fails, Boxxy shows a zero-token **"Error Detected"** pill in the corner so typos never waste tokens unless you click it.
 
 ---
 
-## Toolbox
+## Resume Session
 
-Think of the **Toolbox** as your character's set of "superpowers." Instead of simply guessing and typing commands into your terminal, they use a library of highly reliable, structured tools to interact with your computer.
+Boxxy stores your conversation history, tool logs, and token analytics locally in SQLite so you can pick up any session in any pane:
 
-These tools are grouped into specialized categories:
-- **File Operations**: Safely read, write, and list directories. The AI can even read specific line ranges to save time and tokens.
-- **System Monitoring**: View active processes and hardware specs as clean, structured data.
-- **Web & Network**: Fetch documentation or look up code examples directly from the web with built-in safety limits.
-- **Clipboard Access**: Securely read from and write to your system clipboard.
-
-### Safety First: The Approval Protocol
-We believe in **Supervised Autonomy**. Boxxy never performs a "dangerous" action (like deleting a file, killing a process, or reading your clipboard) without your explicit permission. 
-
-When a character wants to use a sensitive tool, they will pause and present their plan to you in a popover. Only after you click **Approve** will the tool execute. This ensures you are always in control of what your character is doing on your machine.
+- **Sidebar & `/resume`:** Browse your recent and **Pinned** conversations directly in the =Claw Sidebar= on any new pane (with quick actions to pin, unpin, or delete), or press `Ctrl+/` and type `/resume`.
+- **Switch Models Anytime:** Because history is stored locally in a provider-agnostic format, you can start a session with Gemini, switch to Claude or a custom OpenAI-compatible endpoint mid-conversation, and keep your full context and cumulative token/cost stats intact.
 
 ---
 
-## Boxxy Agent
+## Toolbox & Supervised Autonomy
 
-The =Boxxy Agent= is a persistent host-level daemon that manages all privileged operations on your machine. It started as a workaround for Flatpak sandboxing — sandboxed applications cannot normally see or interact with the host OS — but has since grown into the backbone of the entire application.
+Instead of blindly guessing shell commands, characters use a structured toolbox:
+- **File & Workspace Tools**: `file_read`, `file_write`, `replace_in_file` (with unified diff preview), `file_delete`, `list_directory`, `glob_search`, and `grep_search`.
+- **System & Background Tools**: `list_processes`, `kill_process`, `get_system_info`, and `run_background_command` (for launching detached GUI apps, dev servers, and scripts).
+- **Web & Clipboard Tools**: Native server-side web search, Tavily `web_search`, `http_fetch`, and clipboard read/write.
 
-The agent runs as a **single shared instance** for all open Boxxy windows. When Boxxy launches, it starts the daemon (or detects an already-running one) and claims a fixed name on your D-Bus session bus. All UI processes then communicate with it over this private, fast D-Bus connection.
+### The Approval Protocol
+Boxxy enforces **Supervised Autonomy**. Sensitive actions (running shell commands, modifying files, killing processes, or accessing the clipboard) always pause and present an in-terminal **Approve / Reject** card first. Nothing executes without your say-so.
+
+---
+
+## Boxxy Agent & Background Persistence
+
+The =Boxxy Agent= (`boxxy-agent`) is a lightweight, host-privileged daemon that powers all terminal shells and AI sessions over a fast D-Bus connection — allowing Boxxy to work seamlessly both natively and inside a **Flatpak** sandbox (such as Fedora Silverblue).
 
 ### What the daemon manages
+- **Detached Background Shells**: Owns all PTY sessions with a 4 MB ring buffer and full ANSI/TUI screen snapshots. When you choose **Run in Background** on tab or window close, your processes keep running and can be restored individually or in their original split-pane layout.
+- **Persistent AI Sessions & Timers**: Keeps backgrounded `ClawSession` actors and their scheduled **reminders/tasks** alive even when all UI windows are closed, firing native desktop notifications via `org.freedesktop.Notifications` right on time.
+- **Desktop Companion D-Bus API**: Broadcasts real-time signals (`DetachedSessionsChanged`, `PendingTasksChanged`) consumed by the [GNOME Shell Extension](https://github.com/boxxy-dev/gnome-shell-boxxy-companion) and [COSMIC Desktop Applet](https://github.com/boxxy-dev/cosmic-boxxy-companion).
 
-- **PTY sessions**: Spawns and owns all your terminal shells. Each session is tracked with a ring buffer, so context survives even if a pane is closed and resumed later.
-- **Claw toolbox**: Handles the privileged side of all character tools — shell execution, file I/O (with path blacklisting), process management, and clipboard access.
-- **Character claims**: Tracks which character is assigned to which terminal pane. Claims are held in memory only; nothing is written to disk.
-- **Background maintenance**: Monitors system state (power source, ghost mode) and coordinates background work like the =Dreams= consolidation pipeline.
-
-### Lifecycle
-
-The agent can be controlled directly from the command line:
+### CLI Control
+You can inspect or control the daemon anytime from your shell:
 ```bash
-boxxy-agent start       # run the daemon
-boxxy-agent stop        # clean shutdown
-boxxy-agent restart     # reload without downtime
-boxxy-agent list-sessions  # show active PTY sessions
+boxxy-agent status         # inspect daemon, dreaming status & active sessions
+boxxy-agent list-sessions  # list active and background PTY sessions
+boxxy-agent restart        # reload the daemon cleanly
+boxxy-agent stop           # shut down the daemon
 ```
-
-In short: Boxxy's UI is a thin, sandboxed frontend. The Boxxy Agent is where everything actually runs.

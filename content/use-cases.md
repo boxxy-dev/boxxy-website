@@ -5,24 +5,28 @@ template = "docs.html"
 
 # Use Cases
 
-Boxxy is built to handle everything from daily terminal tasks to complex Linux system administration. Think of it as your ultimate Linuxbox assistant. Here are five ways Boxxy can supercharge your workflow:
+Boxxy is built to handle everything from everyday reminders and background jobs to deep Linux system administration. Think of it as your ultimate Linux companion. Here are the most popular ways people use Boxxy every day:
 
-### 1. Fixing Broken Dependencies
-* **The Scenario:** You try to install a package with `apt` or `dnf`, but it fails due to a nightmare of conflicting dependencies or missing GPG keys.
-* **The Boxxy Way:** Instead of hunting through StackOverflow, press `Control + /` and type "fix this." Boxxy automatically reads the failure from your terminal buffer, uses its Toolbox to check your package manager's state, and proposes the exact commands needed to resolve the conflicts or import the missing keys.
+### 1. Debugging & Fixing Your Linux Box
+* **The Scenario:** You try to run a system update or start a service, and it fails with conflicting packages, broken GPG keys, or a cryptic `systemd` error.
+* **The Boxxy Way:** Instead of hunting through forum threads, press `Control + /` (or click the **Error Detected** pill) and type "fix this." Boxxy reads the failure straight from your terminal buffer, checks your OS and package manager state, and proposes the exact commands to fix it — waiting for your click on **Approve**.
 
-### 2. Complex System Configuration
-* **The Scenario:** You need to configure a new Nginx site with SSL, set up a complicated `systemd` service, or tweak your firewall rules.
-* **The Boxxy Way:** Press `Control + /` and ask: "Help me set up an Nginx site for example.com with SSL." Boxxy checks your OS version, verifies if Nginx is installed, proposes the necessary configuration file writes in `/etc/nginx`, and guides you through the SSL generation—all while you simply click "Approve" for each step.
+### 2. Sending Long Tasks to the Background
+* **The Scenario:** You're compiling a huge Rust workspace, running a full distro upgrade, or hosting a local dev server, and you need to close your terminal window to declutter your desktop.
+* **The Boxxy Way:** Close the tab or window and click **Run in Background**. Boxxy's background daemon keeps your shell and AI character running safely. You can monitor or reattach it from the **GNOME Shell** or **COSMIC** top-panel companion, or reopen Boxxy later and click **Restore All** to get your exact split-pane layout and TUI screen back instantly.
 
-### 3. System Cleanup & Maintenance
-* **The Scenario:** Your root partition is at 99% capacity and you have no idea where the space went.
-* **The Boxxy Way:** Press `Control + /` and type: "My disk is full, help me clean it up safely." Because Boxxy can execute host-level commands, it runs `du` or `ncdu` in the background, analyzes the largest directories, and safely proposes the deletion of old Docker images, stale package caches, or orphaned logs.
+### 3. Persistent Reminders & Scheduled Tasks
+* **The Scenario:** You're deep in code and want to remember to check a deployment in 20 minutes, take a break in an hour, or run a cleanup task later.
+* **The Boxxy Way:** Press `Control + /` and tell your character: "Remind me to check the staging deploy in 20 minutes." Even if you close the terminal into the background, your character's timer keeps ticking in the daemon and sends a native desktop notification with their avatar right on schedule.
 
-### 4. Interactive Scripting with Bookmarks
-* **The Scenario:** You have a common deployment or cleanup script you run frequently, but it requires different parameters each time.
-* **The Boxxy Way:** Save the script as a **Bookmark** using <code>&#123;&#123;&#123;project_name&#125;&#125;&#125;</code> variables. When you run it from the Command Palette, Boxxy natively prompts you for the dynamic inputs, executes the script, and your character monitors the output to ensure everything ran successfully.
+### 4. Chatting & Pairing with Your Favorite Character
+* **The Scenario:** Standard AI assistants feel robotic, forget your setup between tabs, and don't know whether you prefer `fish` over `bash` or `podman` over `docker`.
+* **The Boxxy Way:** Pair up with **Niko**, **Levi**, or **Kuro** — or create your own character in seconds. Your character knows your name, keeps their unique personality, and automatically learns your tools and project habits over time through **Memories & Dreams**.
 
-### 5. Context-Aware Log Analysis
-* **The Scenario:** You're tailing `journalctl` or a production log file and spot a recurring system error that makes no sense.
-* **The Boxxy Way:** Press `Control + /` and ask: "What does this kernel panic mean?" Boxxy analyzes the surrounding log context in your terminal buffer, looks up documentation using its Web Search tool, and explains the root cause without you ever leaving the terminal.
+### 5. System Cleanup & Disk Maintenance
+* **The Scenario:** Your root partition hits 98% capacity and you aren't sure what is eating up your drive.
+* **The Boxxy Way:** Ask your character: "My disk is almost full, help me clean it up safely." They will inspect disk usage, identify heavy caches, old container images, or orphaned packages, and propose safe cleanup steps one by one for your approval.
+
+### 6. One-Click Parameterized Scripts with Bookmarks
+* **The Scenario:** You have deployment, backup, or SSH tunnel scripts that you run often, but you always have to edit flags or hostnames by hand.
+* **The Boxxy Way:** Save the script in **Bookmarks** using <code>&#123;&#123;&#123;environment&#125;&#125;&#125;</code> or <code>&#123;&#123;&#123;host&#125;&#125;&#125;</code> variables (or ask Boxxy to generate the script for you). Whenever you run it, Boxxy prompts you for those variables in a clean overlay form and executes it right in your pane.
