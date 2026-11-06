@@ -155,7 +155,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Right Column: Native/Flatpak and Shell Usage -->
+                                <!-- Right Column: Native/Flatpak, Shell Usage, and Theme Usage -->
                                 <div class="column is-6">
                                     <div class="content-area" style="margin-bottom: 1.5rem;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Native vs Flatpak</h3>
@@ -163,13 +163,22 @@
                                             <!-- Populated by JS -->
                                         </ul>
                                     </div>
-                                    <div class="content-area">
+                                    <div class="content-area" style="margin-bottom: 1.5rem;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Shell Usage</h3>
                                         <ul id="shell-container" class="live-scroll-list">
                                             <!-- Populated by JS -->
                                         </ul>
                                         <div class="has-text-right mt-3">
                                             <button type="button" class="alltime-link" data-alltime="shell">Top 10 of all time</button>
+                                        </div>
+                                    </div>
+                                    <div class="content-area">
+                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Theme Usage</h3>
+                                        <ul id="theme-container" class="live-scroll-list">
+                                            <!-- Populated by JS -->
+                                        </ul>
+                                        <div class="has-text-right mt-3">
+                                            <button type="button" class="alltime-link" data-alltime="theme">All time</button>
                                         </div>
                                     </div>
                                 </div>
@@ -263,7 +272,7 @@
         };
 
         try {
-            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes, stats7dRes, osAllTimeRes, desktopAllTimeRes, shellAllTimeRes] = await Promise.all([
+            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes, stats7dRes, osAllTimeRes, desktopAllTimeRes, shellAllTimeRes, themeRes, themeAllTimeRes] = await Promise.all([
                 supabase.from('public_stats_daily').select('*').order('day', { ascending: false }).limit(30),
                 supabase.from('tool_usage_stats_7d').select('*').order('usage_count', { ascending: false }),
                 supabase.from('os_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
@@ -277,7 +286,9 @@
                 supabase.from('public_stats_7d').select('*').maybeSingle(),
                 supabase.from('os_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
                 supabase.from('desktop_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
-                supabase.from('shell_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10)
+                supabase.from('shell_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
+                supabase.from('theme_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
+                supabase.from('theme_usage_stats').select('*').order('unique_users', { ascending: false })
             ]);
 
             const daily = statsRes.data || [];
@@ -294,6 +305,8 @@
             const osAllTimeData = osAllTimeRes && !osAllTimeRes.error ? (osAllTimeRes.data || []) : [];
             const desktopAllTimeData = desktopAllTimeRes && !desktopAllTimeRes.error ? (desktopAllTimeRes.data || []) : [];
             const shellAllTimeData = shellAllTimeRes && !shellAllTimeRes.error ? (shellAllTimeRes.data || []) : [];
+            const themeData = themeRes && !themeRes.error ? (themeRes.data || []) : [];
+            const themeAllTimeData = themeAllTimeRes && !themeAllTimeRes.error ? (themeAllTimeRes.data || []) : [];
 
             // Calculate totals and date range
             const last7Days = daily.slice(0, 7);
@@ -460,6 +473,27 @@
                 });
             }
 
+            const themeContainer = document.getElementById('theme-container');
+            themeContainer.innerHTML = '';
+            if (themeData.length === 0) {
+                themeContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No theme data yet — populates on next launch.</li>';
+            } else {
+                const totalThemeUsers = themeData.reduce((acc, t) => acc + (Number(t.unique_users) || 0), 0);
+                themeData.forEach(th => {
+                    const safeTheme = escapeHtml(th.theme_name);
+                    const userCount = Number(th.unique_users) || 0;
+                    const percentage = totalThemeUsers > 0 ? ((userCount / totalThemeUsers) * 100).toFixed(1) : 0;
+                    themeContainer.innerHTML += `
+                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
+                            <span style="color: #cdd6f4; font-weight: 700;">${safeTheme}</span>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
+                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${userCount.toLocaleString()} devs)</small>
+                            </span>
+                        </li>
+                    `;
+                });
+            }
+
             const modelsContainer = document.getElementById('models-container');
             modelsContainer.innerHTML = '';
             if (models.length === 0) {
@@ -511,6 +545,9 @@
                 } else if (type === 'shell') {
                     title = 'Top 10 Shells — All Time';
                     items = shellAllTimeData.map(r => ({ name: r.shell_name, users: r.unique_users }));
+                } else if (type === 'theme') {
+                    title = 'Theme Usage — All Time';
+                    items = themeAllTimeData.map(r => ({ name: r.theme_name, users: r.unique_users }));
                 }
 
                 modalTitle.innerText = title;
