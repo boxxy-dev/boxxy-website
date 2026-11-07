@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxxy Theme API - Boxxy Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="navbar is-dark">
+        <div class="container">
+            <div class="navbar-brand">
+                <div class="navbar-item">
+                    <a class="boxxy-brand-button" href="/">
+                        <strong>Boxxy Terminal</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-live-button" href="/live">
+                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
+                        <span>Live</span>
+                    </a>
+                </div>
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Star</span>
+                        <span class="star-count" id="github-stars">...</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+<link rel="stylesheet" href="/css/theme-api.css">
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <main class="column is-12">
+                <div class="mb-4">
+                    <a href="/development" class="bx-back-link">← Back to Documentation</a>
+                </div>
+                <div class="content content-area theme-api-page">
+                    
+                        <h1 id="boxxy-theme-engine-api"><a class="zola-anchor" href="#boxxy-theme-engine-api" aria-label="Anchor link for: boxxy-theme-engine-api">🔗</a>Boxxy Theme Engine &amp; API</h1>
+<p>Boxxy decouples <strong>Terminal Palettes</strong> (the 16 ANSI colors and canvas background inside the terminal grid) from <strong>Application Chrome Themes</strong> (<code>crates/themes/src/app_theme.rs</code> and <code>resources/themes/boxxy_skeleton.css</code>).</p>
+<p>All widgets below are rendered live in HTML and CSS using Boxxy's exact design tokens, borders, shadows, and padding rules. Use the <strong>Live Theme &amp; Accent Playground</strong> toolbar to switch themes or override the accent color across every widget on this page in real time.</p>
+<div id="bx-theme-scope" class="bx-theme-root">
+<div class="bx-playground-toolbar">
+  <div class="bx-playground-group">
+    <span class="bx-playground-label">Theme Preset:</span>
+    <button type="button" class="bx-preset-chip is-active" onclick="bxSetTheme('boxxy-dark', this)">Boxxy Dark</button>
+    <button type="button" class="bx-preset-chip" onclick="bxSetTheme('boxxy-light', this)">Boxxy Light</button>
+    <button type="button" class="bx-preset-chip" onclick="bxSetTheme('cotton-candy', this)">Cotton Candy</button>
+    <button type="button" class="bx-preset-chip" onclick="bxSetTheme('bauhaus', this)">Bauhaus</button>
+  </div>
+  <div class="bx-playground-group">
+    <span class="bx-playground-label">Accent Override:</span>
+    <button type="button" class="bx-accent-swatch" style="background:#7ec868" title="Peanut Green (#7ec868)" onclick="bxSetAccent('#7ec868','#0d140a',this)"></button>
+    <button type="button" class="bx-accent-swatch" style="background:#00acc1" title="Boxxy Cyan (#00acc1)" onclick="bxSetAccent('#00acc1','#0d1117',this)"></button>
+    <button type="button" class="bx-accent-swatch" style="background:#e87a64" title="Ember Coral (#e87a64)" onclick="bxSetAccent('#e87a64','#111418',this)"></button>
+    <button type="button" class="bx-accent-swatch" style="background:#a78bfa" title="Aurora Violet (#a78bfa)" onclick="bxSetAccent('#a78bfa','#111418',this)"></button>
+    <button type="button" class="bx-accent-swatch" style="background:#ff7eb6" title="Bubblegum Pink (#ff7eb6)" onclick="bxSetAccent('#ff7eb6','#111418',this)"></button>
+    <button type="button" class="bx-accent-swatch" style="background:#f59e0b" title="Solar Amber (#f59e0b)" onclick="bxSetAccent('#f59e0b','#111418',this)"></button>
+  </div>
+</div>
+<hr />
+<h2 id="live-widget-gallery"><a class="zola-anchor" href="#live-widget-gallery" aria-label="Anchor link for: live-widget-gallery">🔗</a>Live Widget Gallery</h2>
+<h3 id="1-headerbar-terminal-tabs-unified-window-controls"><a class="zola-anchor" href="#1-headerbar-terminal-tabs-unified-window-controls" aria-label="Anchor link for: 1-headerbar-terminal-tabs-unified-window-controls">🔗</a>1. HeaderBar, Terminal Tabs &amp; Unified Window Controls</h3>
+<p>The main window headerbar (<code>.content-header</code>) hosts the tab bar in the center, the Sidebar Toggle icon button on the left, and the Hamburger Menu button + Window Controls (<code>×</code>) on the right.</p>
+<ul>
+<li><strong>Flush Terminal Tabs:</strong> Use crisp 2px <code>@boxxy_ink</code> outlines and <code>@accent_bg_color</code> when selected, with <strong>no drop-shadow</strong> (<code>box-shadow: none</code>) so tabs sit flush inside the 28px headerbar strip without clipping.</li>
+<li><strong>Unified Icon Button Sizing:</strong> After stripping internal image padding on <code>windowcontrols &gt; button &gt; image</code>, both <code>.content-header button.image-button:not(.flat)</code> and <code>.content-header windowcontrols &gt; button</code> share one single CSS rule (<code>min-width: 24px; min-height: 24px; padding: 0px 6px; margin-top: 6px; margin-bottom: 6px;</code>).</li>
+</ul>
+<div class="bx-widget-stage">
+  <div class="bx-widget-caption">
+    <span>.content-header + tabbar tab + windowcontrols &gt; button</span>
+    <span>Click tabs or buttons to test active states</span>
+  </div>
+  <div class="bx-demo-headerbar">
+    <div class="bx-demo-header-side">
+      <button type="button" class="bx-demo-icon-btn" title="Toggle Sidebar">◧</button>
+    </div>
+    <div class="bx-demo-tabbar">
+      <div class="bx-demo-tab is-selected" onclick="bxSelectTab(this)">
+        <span>boxxy-terminal</span>
+        <span class="bx-demo-tab-close">×</span>
+      </div>
+      <div class="bx-demo-tab" onclick="bxSelectTab(this)">
+        <span>nvim · themes</span>
+        <span class="bx-demo-tab-close">×</span>
+      </div>
+      <div class="bx-demo-tab" onclick="bxSelectTab(this)">
+        <span>cargo test</span>
+        <span class="bx-demo-tab-close">×</span>
+      </div>
+    </div>
+    <div class="bx-demo-header-side">
+      <button type="button" class="bx-demo-icon-btn" title="Menu (.image-button)">☰</button>
+      <button type="button" class="bx-demo-icon-btn" title="Close (windowcontrols > button)">✕</button>
+    </div>
+  </div>
+</div>
+<h3 id="2-sidebar-viewswitcher-navigation-capsule-pills"><a class="zola-anchor" href="#2-sidebar-viewswitcher-navigation-capsule-pills" aria-label="Anchor link for: 2-sidebar-viewswitcher-navigation-capsule-pills">🔗</a>2. Sidebar ViewSwitcher &amp; Navigation Capsule Pills</h3>
+<p>Unlike terminal tabs, the sidebar header switcher buttons (<code>viewswitcher &gt; button</code>) and selected sidebar rows (<code>.navigation-sidebar &gt; row:selected</code>) float on <code>@sidebar_bg_color</code> and cast tactile <code>2px 3px 0px @boxxy_shadow</code> offset drop-shadows.</p>
+<div class="bx-widget-stage">
+  <div class="bx-widget-caption">
+    <span>viewswitcher &gt; button + .navigation-sidebar &gt; row</span>
+    <span>Click switcher buttons or list rows</span>
+  </div>
+  <div class="bx-demo-sidebar">
+    <div class="bx-demo-viewswitcher">
+      <div class="bx-demo-switcher-btn" onclick="bxSelectSibling(this, 'is-checked')">
+        <span>✦</span>
+        <span>AI Chat</span>
+      </div>
+      <div class="bx-demo-switcher-btn is-checked" onclick="bxSelectSibling(this, 'is-checked')">
+        <span>🦖</span>
+        <span>Claw</span>
+      </div>
+      <div class="bx-demo-switcher-btn" onclick="bxSelectSibling(this, 'is-checked')">
+        <span>🔖</span>
+        <span>Bookmarks</span>
+      </div>
+      <div class="bx-demo-switcher-btn" onclick="bxSelectSibling(this, 'is-checked')">
+        <span>🎨</span>
+        <span>Colors</span>
+      </div>
+    </div>
+    <div class="bx-demo-nav-list">
+      <div class="bx-demo-nav-row is-selected" onclick="bxSelectSibling(this, 'is-selected')">
+        <span>Polishing Boxxy Theme Engine</span>
+        <span style="font-size:0.74rem;opacity:0.8">Niko · 2m</span>
+      </div>
+      <div class="bx-demo-nav-row" onclick="bxSelectSibling(this, 'is-selected')">
+        <span>Trending GitHub CLI Apps</span>
+        <span style="font-size:0.74rem;opacity:0.65">Niko · 1h</span>
+      </div>
+      <div class="bx-demo-nav-row" onclick="bxSelectSibling(this, 'is-selected')">
+        <span>Workspace Refactoring Plan</span>
+        <span style="font-size:0.74rem;opacity:0.65">Levi · 4h</span>
+      </div>
+    </div>
+  </div>
+</div>
+<h3 id="3-tactile-buttons-single-source-of-truth-padding"><a class="zola-anchor" href="#3-tactile-buttons-single-source-of-truth-padding" aria-label="Anchor link for: 3-tactile-buttons-single-source-of-truth-padding">🔗</a>3. Tactile Buttons (Single Source of Truth Padding)</h3>
+<p>All standard buttons, action buttons (<code>.suggested-action</code>, <code>.destructive-action</code>), popover menu text rows (<code>modelbutton</code>), and popover segmented buttons (<code>box.linked &gt; button.model</code>) share <strong>one single CSS padding rule</strong>: <code>min-height: 24px; padding: 5px 10px;</code>. To make a button smaller, apply <code>.compact-btn</code> (<code>min-height: 20px; padding: 2px 8px;</code>) instead of writing per-widget rules.</p>
+<div class="bx-widget-stage">
+  <div class="bx-widget-caption">
+    <span>min-height: 24px; padding: 5px 10px; · box-shadow: 2px 3px 0px @boxxy_shadow</span>
+    <span>Click and hold to test active press translation</span>
+  </div>
+  <div class="bx-demo-btn-row">
+    <button type="button" class="bx-demo-btn">Standard Button</button>
+    <button type="button" class="bx-demo-btn is-suggested">Accept &amp; Run (.suggested-action)</button>
+    <button type="button" class="bx-demo-btn is-destructive">Reject (.destructive-action)</button>
+    <button type="button" class="bx-demo-btn is-compact">Compact (.compact-btn)</button>
+  </div>
+</div>
+<h3 id="4-terminal-context-menu-popover-terminal-menu"><a class="zola-anchor" href="#4-terminal-context-menu-popover-terminal-menu" aria-label="Anchor link for: 4-terminal-context-menu-popover-terminal-menu">🔗</a>4. Terminal Context Menu (<code>popover.terminal-menu</code>)</h3>
+<p>The terminal context menu (<code>popover.terminal-menu &gt; contents</code>) uses <code>@popover_bg_color</code>, which matches <code>@sidebar_bg_color</code> (<code>#2e2e32</code> in <code>Boxxy Dark</code>), while inner linked button strips (<code>popover.menu box.linked</code>) use <code>@card_bg_color</code> (<code>#26262a</code>) for crisp contrast. Both text items (<code>modelbutton</code>) and segmented buttons (<code>box.linked &gt; button.model</code>) share the exact <code>min-height: 24px; padding: 5px 10px;</code> geometry.</p>
+<div class="bx-widget-stage">
+  <div class="bx-widget-caption">
+    <span>popover.terminal-menu &gt; contents (@popover_bg_color == @sidebar_bg_color)</span>
+    <span>Hover menu rows and segmented buttons</span>
+  </div>
+  <div class="bx-demo-popover">
+    <div class="bx-demo-linked-strip">
+      <button type="button" class="bx-demo-linked-btn">Copy</button>
+      <button type="button" class="bx-demo-linked-btn">Copy Link</button>
+    </div>
+    <div class="bx-demo-modelbutton">Paste</div>
+    <div class="bx-demo-modelbutton">Select All</div>
+    <div class="bx-demo-linked-strip">
+      <button type="button" class="bx-demo-linked-btn" title="Split Vertical">⇹</button>
+      <button type="button" class="bx-demo-linked-btn" title="Split Horizontal">⇳</button>
+      <button type="button" class="bx-demo-linked-btn" title="Maximize Pane">⤢</button>
+      <button type="button" class="bx-demo-linked-btn" title="Close Pane">☒</button>
+    </div>
+    <div class="bx-demo-modelbutton is-hovered">New Tab</div>
+    <div class="bx-demo-modelbutton">New Window</div>
+    <div class="bx-demo-menu-sep"></div>
+    <div class="bx-demo-modelbutton">Open in Files</div>
+    <div class="bx-demo-modelbutton">Reset</div>
+    <div class="bx-demo-menu-sep"></div>
+    <div class="bx-demo-modelbutton">Preferences</div>
+  </div>
+</div>
+<h3 id="5-preference-rows-boxed-lists-listbox-boxed-list"><a class="zola-anchor" href="#5-preference-rows-boxed-lists-listbox-boxed-list" aria-label="Anchor link for: 5-preference-rows-boxed-lists-listbox-boxed-list">🔗</a>5. Preference Rows &amp; Boxed Lists (<code>listbox.boxed-list</code>)</h3>
+<p>Preference group cards (<code>listbox.boxed-list</code>), action rows, switch rows, and theme selector rows use <code>@card_bg_color</code> with a <code>2px solid @boxxy_ink</code> outline and a <code>3px 4px 0px @boxxy_shadow</code> offset shadow.</p>
+<div class="bx-widget-stage">
+  <div class="bx-widget-caption">
+    <span>preferencesgroup listbox.boxed-list + ActionRow + SwitchRow</span>
+    <span>Click the switch to toggle state</span>
+  </div>
+  <div class="bx-demo-boxed-list">
+    <div class="bx-demo-action-row">
+      <div class="bx-demo-row-titles">
+        <span class="bx-demo-row-title">Boxxy Dark</span>
+        <span class="bx-demo-row-subtitle">Carbon dark surfaces with crisp ink borders and peanut green accents.</span>
+      </div>
+      <div class="bx-demo-row-suffix">
+        <span class="bx-demo-tag-pill">dark</span>
+        <span class="bx-demo-tag-pill">default</span>
+        <span class="bx-demo-dot" style="background:#7ec868"></span>
+        <span class="bx-demo-dot" style="background:#1d1d20"></span>
+        <span class="bx-demo-dot" style="background:#26262a"></span>
+        <span class="bx-demo-dot" style="background:#050505"></span>
+        <span style="font-weight:900;margin-left:4px">✓</span>
+      </div>
+    </div>
+    <div class="bx-demo-action-row">
+      <div class="bx-demo-row-titles">
+        <span class="bx-demo-row-title">Smart Tab Naming</span>
+        <span class="bx-demo-row-subtitle">Automatically show active command or directory in tab titles</span>
+      </div>
+      <div class="bx-demo-row-suffix">
+        <div class="bx-demo-switch is-checked" onclick="this.classList.toggle('is-checked')">
+          <div class="bx-demo-switch-knob"></div>
+        </div>
+      </div>
+    </div>
+    <div class="bx-demo-action-row">
+      <div class="bx-demo-row-titles">
+        <span class="bx-demo-row-title">Open Themes Folder</span>
+        <span class="bx-demo-row-subtitle">Add or edit .toml community themes in your file manager</span>
+      </div>
+      <div class="bx-demo-row-suffix">
+        <span style="font-size:1.05rem">📂</span>
+      </div>
+    </div>
+  </div>
+</div>
+<h3 id="6-search-entries-claw-msgbar-searchentry-boxxy-msgbar"><a class="zola-anchor" href="#6-search-entries-claw-msgbar-searchentry-boxxy-msgbar" aria-label="Anchor link for: 6-search-entries-claw-msgbar-searchentry-boxxy-msgbar">🔗</a>6. Search Entries &amp; Claw MsgBar (<code>searchentry</code>, <code>.boxxy-msgbar</code>)</h3>
+<p>Input fields (<code>searchentry</code>, <code>entry:not(.flat)</code>, <code>.claw-drawer .boxxy-msgbar</code>) rest on <code>@card_bg_color</code> with a <code>2px solid @boxxy_ink</code> outline, and switch their outline to <code>@accent_color</code> on <code>:focus-within</code>.</p>
+<div class="bx-widget-stage">
+  <div class="bx-widget-caption">
+    <span>searchentry / .claw-drawer .boxxy-msgbar (:focus-within -&gt; @accent_color)</span>
+    <span>Click inside the input to see the focus outline</span>
+  </div>
+  <div class="bx-demo-entry">
+    <span>🦖</span>
+    <input type="text" value="Ask Niko or reference @crates/themes/src/app_theme.rs..." aria-label="Demo MsgBar Input" />
+  </div>
+</div>
+</div>
+<script>
+const BX_THEMES = {
+  'boxxy-dark': {
+    '--window-bg': '#1d1d20', '--window-fg': '#f2f4f2',
+    '--sidebar-bg': '#2e2e32', '--sidebar-fg': '#f2f4f2',
+    '--card-bg': '#26262a', '--card-fg': '#f2f4f2',
+    '--headerbar-bg': '#1d1d20', '--headerbar-fg': '#f2f4f2',
+    '--popover-bg': '#2e2e32', '--popover-fg': '#f2f4f2',
+    '--accent-bg': '#7ec868', '--accent-fg': '#0d140a',
+    '--boxxy-ink': '#050505', '--boxxy-shadow': '#050505',
+    '--destructive-bg': '#c01c28', '--destructive-fg': '#ffffff'
+  },
+  'boxxy-light': {
+    '--window-bg': '#ecfafb', '--window-fg': '#111418',
+    '--sidebar-bg': '#ffffff', '--sidebar-fg': '#111418',
+    '--card-bg': '#ffffff', '--card-fg': '#111418',
+    '--headerbar-bg': '#ffffff', '--headerbar-fg': '#111418',
+    '--popover-bg': '#ffffff', '--popover-fg': '#111418',
+    '--accent-bg': '#00acc1', '--accent-fg': '#0d1117',
+    '--boxxy-ink': '#111418', '--boxxy-shadow': '#111418',
+    '--destructive-bg': '#e01b24', '--destructive-fg': '#ffffff'
+  },
+  'cotton-candy': {
+    '--window-bg': '#fff5f8', '--window-fg': '#1e1b24',
+    '--sidebar-bg': '#fce8ef', '--sidebar-fg': '#1e1b24',
+    '--card-bg': '#ffffff', '--card-fg': '#1e1b24',
+    '--headerbar-bg': '#fce8ef', '--headerbar-fg': '#1e1b24',
+    '--popover-bg': '#fce8ef', '--popover-fg': '#1e1b24',
+    '--accent-bg': '#ff7eb6', '--accent-fg': '#1e1b24',
+    '--boxxy-ink': '#1e1b24', '--boxxy-shadow': '#1e1b24',
+    '--destructive-bg': '#e01b24', '--destructive-fg': '#ffffff'
+  },
+  'bauhaus': {
+    '--window-bg': '#f7f3e8', '--window-fg': '#141413',
+    '--sidebar-bg': '#ede6d3', '--sidebar-fg': '#141413',
+    '--card-bg': '#fffdf7', '--card-fg': '#141413',
+    '--headerbar-bg': '#ede6d3', '--headerbar-fg': '#141413',
+    '--popover-bg': '#ede6d3', '--popover-fg': '#141413',
+    '--accent-bg': '#e63946', '--accent-fg': '#ffffff',
+    '--boxxy-ink': '#141413', '--boxxy-shadow': '#141413',
+    '--destructive-bg': '#e01b24', '--destructive-fg': '#ffffff'
+  }
+};
+
+function bxSetTheme(id, btn) {
+  const scope = document.getElementById('bx-theme-scope');
+  const vars = BX_THEMES[id];
+  if (!scope || !vars) return;
+  Object.entries(vars).forEach(([k, v]) => scope.style.setProperty(k, v));
+  document.querySelectorAll('.bx-preset-chip').forEach(el => el.classList.remove('is-active'));
+  document.querySelectorAll('.bx-accent-swatch').forEach(el => el.classList.remove('is-active'));
+  if (btn) btn.classList.add('is-active');
+}
+
+function bxSetAccent(hex, fg, btn) {
+  const scope = document.getElementById('bx-theme-scope');
+  if (!scope) return;
+  scope.style.setProperty('--accent-bg', hex);
+  scope.style.setProperty('--accent-fg', fg);
+  document.querySelectorAll('.bx-accent-swatch').forEach(el => el.classList.remove('is-active'));
+  if (btn) btn.classList.add('is-active');
+}
+
+function bxSelectTab(el) {
+  el.parentElement.querySelectorAll('.bx-demo-tab').forEach(t => t.classList.remove('is-selected'));
+  el.classList.add('is-selected');
+}
+
+function bxSelectSibling(el, cls) {
+  Array.from(el.parentElement.children).forEach(c => c.classList.remove(cls));
+  el.classList.add(cls);
+}
+</script>
+<hr />
+<h2 id="the-4-layer-gtk-cssprovider-cascade"><a class="zola-anchor" href="#the-4-layer-gtk-cssprovider-cascade" aria-label="Anchor link for: the-4-layer-gtk-cssprovider-cascade">🔗</a>The 4-Layer GTK CssProvider Cascade</h2>
+<p>Boxxy styles application chrome using four prioritized GTK 4 CssProvider layers so custom themes can be toggled or hot-reloaded at runtime without restarting the application:</p>
+<table><thead><tr><th style="text-align: left">Layer</th><th style="text-align: left">GTK Priority</th><th style="text-align: left">Source</th><th style="text-align: left">Lifecycle</th><th style="text-align: left">Responsibility</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>Layer 1 (Base)</strong></td><td style="text-align: left">600 (PRIORITY_APPLICATION)</td><td style="text-align: left"><code>resources/style.css</code></td><td style="text-align: left">Always loaded</td><td style="text-align: left">Base widget geometry, spacing, layout rules, and fallback <code>@define-color</code> tokens for Legacy Adwaita.</td></tr>
+<tr><td style="text-align: left"><strong>Layer 1b (Palette)</strong></td><td style="text-align: left">610 (PRIORITY_APPLICATION + 10)</td><td style="text-align: left"><code>build.rs</code> (<code>generate_gtk_css</code>)</td><td style="text-align: left">Loaded when a terminal palette is selected</td><td style="text-align: left">Terminal-coupled <code>.terminal-header</code> and <code>.claw-drawer</code> colors when running in Legacy Adwaita mode.</td></tr>
+<tr><td style="text-align: left"><strong>Layer 2 (Skeleton)</strong></td><td style="text-align: left">800 (PRIORITY_USER)</td><td style="text-align: left"><code>resources/themes/boxxy_skeleton.css</code></td><td style="text-align: left">Loaded only in Boxxy Theme mode</td><td style="text-align: left">Playful neo-brutalist outlines (<code>@boxxy_ink</code>), tactile offset drop-shadows (<code>@boxxy_shadow</code>), capsule navigation pills, and active button press states.</td></tr>
+<tr><td style="text-align: left"><strong>Layer 3 (Theme Tokens)</strong></td><td style="text-align: left">810 (PRIORITY_USER + 10)</td><td style="text-align: left"><code>AppThemeColors::to_gtk_css()</code></td><td style="text-align: left">Loaded only in Boxxy Theme mode</td><td style="text-align: left">Defines all semantic <code>@define-color</code> variables from the active built-in or community <code>.toml</code> theme.</td></tr>
+<tr><td style="text-align: left"><strong>Layer 4 (Accent Override)</strong></td><td style="text-align: left">820 (PRIORITY_USER + 20)</td><td style="text-align: left"><code>generate_accent_override_css()</code></td><td style="text-align: left">Loaded when a custom accent is set</td><td style="text-align: left">Overrides <code>@accent_color</code>, <code>@accent_bg_color</code>, and auto-contrasted <code>@accent_fg_color</code> on top of any active theme.</td></tr>
+</tbody></table>
+<hr />
+<h2 id="official-built-in-palettes-boxxy-dark-boxxy-light"><a class="zola-anchor" href="#official-built-in-palettes-boxxy-dark-boxxy-light" aria-label="Anchor link for: official-built-in-palettes-boxxy-dark-boxxy-light">🔗</a>Official Built-in Palettes (<code>Boxxy Dark</code> &amp; <code>Boxxy Light</code>)</h2>
+<table><thead><tr><th style="text-align: left">Token (<code>AppThemeColors</code>)</th><th style="text-align: left"><code>Boxxy Dark</code> (<code>boxxy-dark</code>)</th><th style="text-align: left"><code>Boxxy Light</code> (<code>boxxy-light</code>)</th><th style="text-align: left">Surface Role</th></tr></thead><tbody>
+<tr><td style="text-align: left"><span class="bx-var-name">window_bg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#1d1d20"></span>#1d1d20</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ecfafb"></span>#ecfafb</span></td><td style="text-align: left">Primary window, dialog, and Claw overlay drawer canvas background.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">window_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Primary text and icon foreground on <code>window_bg</code>.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">sidebar_bg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#2e2e32"></span>#2e2e32</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span></td><td style="text-align: left">Left sidebar (AI Chat, Claw, Bookmarks, Colors) and Preferences navigation sidebar.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">sidebar_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Text and icon foreground on <code>sidebar_bg</code>.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">card_bg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#26262a"></span>#26262a</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span></td><td style="text-align: left">Tactile buttons, unselected tabs, preference cards, entries, and linked button strips inside menus.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">card_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Text and icon foreground on <code>card_bg</code>.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">headerbar_bg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#1d1d20"></span>#1d1d20</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span></td><td style="text-align: left">Main content headerbar, dialog headerbars, and non-frosted terminal headerbar.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">headerbar_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Text and icon foreground on <code>headerbar_bg</code>.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">popover_bg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#2e2e32"></span>#2e2e32</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span></td><td style="text-align: left">Matches <code>sidebar_bg</code>. Used by the terminal right-click menu, hamburger menu, command palette, and autocomplete popover.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">popover_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Text and icon foreground on <code>popover_bg</code>.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">accent</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#7ec868"></span>#7ec868</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#00acc1"></span>#00acc1</span></td><td style="text-align: left">Selected tabs, active sidebar rows, active switcher buttons, suggested-action buttons, checked switches, and focus rings.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">accent_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#0d140a"></span>#0d140a</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#0d1117"></span>#0d1117</span></td><td style="text-align: left">High-contrast ink text and icons rendered on top of <code>accent</code> surfaces.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">ink_border</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#050505"></span>#050505</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Crisp 2px neo-brutalist outlines and structural pane dividers (<code>@boxxy_ink</code>).</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">shadow</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#050505"></span>#050505</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Solid offset drop-shadows (<code>@boxxy_shadow</code>).</td></tr>
+</tbody></table>
+<hr />
+<h2 id="complete-define-color-variable-catalog-component-mapping"><a class="zola-anchor" href="#complete-define-color-variable-catalog-component-mapping" aria-label="Anchor link for: complete-define-color-variable-catalog-component-mapping">🔗</a>Complete <code>@define-color</code> Variable Catalog &amp; Component Mapping</h2>
+<p>Components never hardcode hex or RGB values for surfaces, borders, or semantic states. Every stylesheet rule references the semantic <code>@define-color</code> variables below:</p>
+<table><thead><tr><th style="text-align: left">CSS Variable</th><th style="text-align: left">Source Field / Formula</th><th style="text-align: left">Where It Is Used</th></tr></thead><tbody>
+<tr><td style="text-align: left"><span class="bx-var-name">@window_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.window_bg</span></td><td style="text-align: left">Main window background, dialog sheets (<code>@dialog_bg_color</code>), Claw overlay drawer background (<code>.claw-drawer</code>), OSD overlays, bookmark preview frames, and avatar status badges.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@window_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.window_fg</span></td><td style="text-align: left">Primary text inside windows, dialogs (<code>@dialog_fg_color</code>), Claw overlay conversation rows, and OSD overlays.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@sidebar_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.sidebar_bg</span></td><td style="text-align: left">Left workspace sidebar (<code>.sidebar-toolbar</code>, <code>.sidebar-pane</code>) and the Preferences navigation sidebar.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@sidebar_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.sidebar_fg</span></td><td style="text-align: left">All text, icons, and <code>.sidebar-header</code> inside the left sidebar and Preferences sidebar.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@headerbar_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.headerbar_bg</span></td><td style="text-align: left">Main window headerbar (<code>.content-header</code>), <code>.terminal-header</code>, and dialog headerbars.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@headerbar_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.headerbar_fg</span></td><td style="text-align: left">Titles, buttons, and icons inside <code>.terminal-header</code>, <code>.content-header</code>, and dialog headerbars.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@card_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.card_bg</span></td><td style="text-align: left">Unselected terminal tabs, standard tactile buttons, preference boxed-list groups, search &amp; text entries, Claw message bar (<code>.boxxy-msgbar</code>), diagnosis/diff viewer cards, character selector pills, status pills, and linked button strips inside menus (<code>popover.menu box.linked</code>).</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@card_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.card_fg</span></td><td style="text-align: left">Text, labels, and icons inside all <code>@card_bg_color</code> widgets above.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@popover_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.popover_bg</span></td><td style="text-align: left">Terminal right-click menu (<code>popover.terminal-menu</code>), hamburger menu (<code>popover.menu</code>), command palette, search popover, and <code>@file</code> autocomplete popover.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@popover_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.popover_fg</span></td><td style="text-align: left">Menu items (<code>modelbutton</code>) and labels inside all popovers.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@accent_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent</span></td><td style="text-align: left">Selected terminal tab, selected sidebar row, active sidebar switcher button, pressed tactile buttons, <code>.suggested-action</code> buttons, hovered popover menu items, checked switches &amp; checkboxes, selected character pills, and theme tag pills.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@accent_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent_fg</span></td><td style="text-align: left">High-contrast text and icons inside all <code>@accent_bg_color</code> surfaces.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@accent_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent</span></td><td style="text-align: left">Focus outlines on search entries, text inputs, and the Claw message bar (<code>.boxxy-msgbar:focus-within</code>), plus bookmark variable chips and Vibe badges.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_ink</span></td><td style="text-align: left"><span class="bx-source-name">colors.ink_border</span></td><td style="text-align: left">2px solid outlines on tabs, sidebar rows, tactile buttons, window controls, entries, boxed lists, cards, popovers, dialogs, switches, checkboxes, and structural pane dividers.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_shadow</span></td><td style="text-align: left"><span class="bx-source-name">colors.shadow</span></td><td style="text-align: left">Hard-edge offset drop-shadows (<code>2px 3px 0px</code>, <code>3px 4px 0px</code>, <code>4px 5px 0px</code>) on tactile buttons, selected sidebar pills, boxed lists, cards, popovers, and dialogs.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_surface_hover</span></td><td style="text-align: left"><span class="bx-source-name">mix(@card_bg_color, @accent_bg_color, 0.82)</span></td><td style="text-align: left">Vibrant hover background (82% accent + 18% card, paired with <code>@accent_fg_color</code> ink text) for unselected tabs, unselected sidebar rows, tactile buttons, character selector pills, and What's New stat tiles.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@destructive_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">Dark: #c01c28 · Light: #e01b24</span></td><td style="text-align: left">Destructive action buttons (<code>.destructive-action</code>), error progress bars, avatar remove badge hover, and diff deletion ratio bars.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@success_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">Dark: #26a269 · Light: #2ec27e</span></td><td style="text-align: left">Terminal progress bars, model ready status titles, What's New hero badge, and diff addition counters/bars.</td></tr>
+</tbody></table>
+<hr />
+<h2 id="visual-hierarchy-shadow-vs-non-shadow-matrix"><a class="zola-anchor" href="#visual-hierarchy-shadow-vs-non-shadow-matrix" aria-label="Anchor link for: visual-hierarchy-shadow-vs-non-shadow-matrix">🔗</a>Visual Hierarchy: Shadow vs. Non-Shadow Matrix</h2>
+<table><thead><tr><th style="text-align: left">Component</th><th style="text-align: left">Has <code>@boxxy_shadow</code>?</th><th style="text-align: left">Shadow Offset</th><th style="text-align: left">Rationale</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>Sidebar Switcher Buttons</strong> (<code>viewswitcher &gt; button</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>2px 3px 0px @boxxy_shadow</code></td><td style="text-align: left">Top-level mode switchers (AI Chat, Claw, Bookmarks, Colors) sit in the spacious sidebar header with a 2px inter-button gap and act as tactile physical toggles.</td></tr>
+<tr><td style="text-align: left"><strong>Sidebar &amp; Command Palette Rows</strong> (<code>.navigation-sidebar &gt; row:selected</code>, <code>:hover</code>, <code>.menu-open</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>2px 3px 0px @boxxy_shadow</code></td><td style="text-align: left">Lifts the active or hovered conversation, command palette item, bookmark, or preferences category above the flat list. Depresses to <code>1px 1px 0px</code> on click.</td></tr>
+<tr><td style="text-align: left"><strong>Terminal Tabs</strong> (<code>tabbar tab</code>, <code>tabbar tab:selected</code>)</td><td style="text-align: left"><strong>No</strong> (<code>box-shadow: none</code>)</td><td style="text-align: left"><code>none</code></td><td style="text-align: left">Tabs live inside the compact 28px tab bar strip. Keeping <code>box-shadow: none</code> (while retaining the 2px <code>@boxxy_ink</code> outline and <code>@accent_bg_color</code> active fill) prevents bottom shadow clipping inside <code>AdwTabBox</code>.</td></tr>
+<tr><td style="text-align: left"><strong>Standalone Tactile Buttons</strong> (<code>headerbar button</code>, <code>windowcontrols &gt; button</code>, <code>dialog button</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>2px 3px 0px @boxxy_shadow</code></td><td style="text-align: left">Primary interactive buttons. Depress by <code>translate(1px, 1px)</code> with <code>1px 1px 0px @boxxy_shadow</code> when clicked.</td></tr>
+<tr><td style="text-align: left"><strong>Popover Linked Button Container</strong> (<code>popover.menu box.linked</code>)</td><td style="text-align: left"><strong>Yes (Container only)</strong></td><td style="text-align: left"><code>2px 3px 0px @boxxy_shadow</code></td><td style="text-align: left">The outer segmented bar (<code>Copy | Copy Link</code>, split/close bar) casts a single unified shadow.</td></tr>
+<tr><td style="text-align: left"><strong>Individual Linked Buttons</strong> (<code>popover.menu box.linked &gt; button.model</code>)</td><td style="text-align: left"><strong>No</strong> (<code>box-shadow: none</code>)</td><td style="text-align: left"><code>none</code></td><td style="text-align: left">Inner segments are separated by <code>border-right: 2px solid @boxxy_ink</code> inside the shared container; per-segment shadows would overlap adjacent buttons.</td></tr>
+<tr><td style="text-align: left"><strong>Preference Groups &amp; Cards</strong> (<code>listbox.boxed-list</code>, <code>.card</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>3px 4px 0px @boxxy_shadow</code></td><td style="text-align: left">Large elevated content containers.</td></tr>
+<tr><td style="text-align: left"><strong>Popovers &amp; Dialog Sheets</strong> (<code>popover &gt; contents</code>, <code>dialog sheet</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>4px 5px 0px @boxxy_shadow</code></td><td style="text-align: left">Highest elevation layer floating above the window canvas.</td></tr>
+</tbody></table>
+<hr />
+<h2 id="community-theme-toml-api-specification"><a class="zola-anchor" href="#community-theme-toml-api-specification" aria-label="Anchor link for: community-theme-toml-api-specification">🔗</a>Community Theme <code>.toml</code> API Specification</h2>
+<p>Users and community authors can drop <code>.toml</code> files into <code>~/.config/boxxy-terminal/themes/</code> (or <code>$BOXXY_CONFIG_DIR/themes/</code>). On first launch, Boxxy seeds <code>README.md</code>, <code>cotton-candy.toml</code>, and <code>bauhaus.toml</code> into this folder. While <strong>Preferences → Themes</strong> is open, Boxxy polls the folder every 500 ms (using a zero-I/O <code>(filename, mtime, size)</code> metadata stamp) and live-reloads any edits immediately.</p>
+<h3 id="full-toml-schema"><a class="zola-anchor" href="#full-toml-schema" aria-label="Anchor link for: full-toml-schema">🔗</a>Full <code>.toml</code> Schema</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span style="color: #9399B2;">[</span><span>meta</span><span style="color: #9399B2;">]</span></span>
+<span class="giallo-l"><span>name</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Cotton Candy&quot;</span><span style="color: #9399B2;font-style: italic;">                                  # Optional (defaults to filename stem with spaces)</span></span>
+<span class="giallo-l"><span>author</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;nukeop&quot;</span><span style="color: #9399B2;font-style: italic;">                                      # Optional (defaults to &quot;community&quot;)</span></span>
+<span class="giallo-l"><span>description</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Soft pastels in baby pink and blue&quot;</span><span style="color: #9399B2;font-style: italic;">     # Optional (defaults to &quot;&quot;)</span></span>
+<span class="giallo-l"><span>mode</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;light&quot;</span><span style="color: #9399B2;font-style: italic;">                                         # Optional: &quot;light&quot; or &quot;dark&quot; (auto-detected from window_bg luminance if omitted)</span></span>
+<span class="giallo-l"><span>tags</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;pastel&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;pink&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;cute&quot;</span><span style="color: #9399B2;">]</span><span style="color: #9399B2;font-style: italic;">                      # Optional: up to 6 tags (first 3 shown as pills in Preferences)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;">[</span><span>colors</span><span style="color: #9399B2;">]</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># --- REQUIRED (3 fields) ---</span></span>
+<span class="giallo-l"><span>window_bg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#fff5f8&quot;</span></span>
+<span class="giallo-l"><span>window_fg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span></span>
+<span class="giallo-l"><span>accent</span><span style="color: #94E2D5;">    =</span><span style="color: #A6E3A1;"> &quot;#ff7eb6&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># --- OPTIONAL (11 fields — automatically derived if omitted) ---</span></span>
+<span class="giallo-l"><span>sidebar_bg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#fce8ef&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `window_bg`</span></span>
+<span class="giallo-l"><span>sidebar_fg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `window_fg`</span></span>
+<span class="giallo-l"><span>card_bg</span><span style="color: #94E2D5;">      =</span><span style="color: #A6E3A1;"> &quot;#ffffff&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `window_bg`</span></span>
+<span class="giallo-l"><span>card_fg</span><span style="color: #94E2D5;">      =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `window_fg`</span></span>
+<span class="giallo-l"><span>headerbar_bg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#fce8ef&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `sidebar_bg`</span></span>
+<span class="giallo-l"><span>headerbar_fg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `sidebar_fg`</span></span>
+<span class="giallo-l"><span>popover_bg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#fce8ef&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `sidebar_bg` (matches sidebar surface!)</span></span>
+<span class="giallo-l"><span>popover_fg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `sidebar_fg`</span></span>
+<span class="giallo-l"><span>accent_fg</span><span style="color: #94E2D5;">    =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `contrast_fg_for_hex(accent)` (#ffffff or #111418)</span></span>
+<span class="giallo-l"><span>ink_border</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to &quot;#07080c&quot; (dark mode) or &quot;#111418&quot; (light mode)</span></span>
+<span class="giallo-l"><span>shadow</span><span style="color: #94E2D5;">       =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `ink_border`</span></span></code></pre><h3 id="automatic-fallback-derivation-chain"><a class="zola-anchor" href="#automatic-fallback-derivation-chain" aria-label="Anchor link for: automatic-fallback-derivation-chain">🔗</a>Automatic Fallback Derivation Chain</h3>
+<p>A valid community theme only requires <strong>3 colors</strong> (<code>window_bg</code>, <code>window_fg</code>, <code>accent</code>). All remaining tokens derive automatically in <code>parse_community_theme_toml()</code>:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="plain"><span class="giallo-l"><span>window_bg ──┬──► sidebar_bg ──┬──► headerbar_bg</span></span>
+<span class="giallo-l"><span>            │                 └──► popover_bg</span></span>
+<span class="giallo-l"><span>            └──► card_bg</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>window_fg ──┬──► sidebar_fg ──┬──► headerbar_fg</span></span>
+<span class="giallo-l"><span>            │                 └──► popover_fg</span></span>
+<span class="giallo-l"><span>            └──► card_fg</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>accent ────────► accent_fg (via relative luminance: &lt; 0.38 → #ffffff, &gt;= 0.38 → #111418)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>mode (is_dark) ► ink_border (#07080c if dark, #111418 if light) ──► shadow</span></span></code></pre><h3 id="security-validation-sanitize-hex-color"><a class="zola-anchor" href="#security-validation-sanitize-hex-color" aria-label="Anchor link for: security-validation-sanitize-hex-color">🔗</a>Security &amp; Validation (<code>sanitize_hex_color</code>)</h3>
+<ul>
+<li>Every color string in <code>[colors]</code> (and any user <code>custom_accent_color</code>) is validated through <code>sanitize_hex_color(raw: &amp;str) -&gt; Option&lt;String&gt;</code>.</li>
+<li>Only exact 6-digit (<code>#RRGGBB</code>) or 8-digit (<code>#RRGGBBAA</code>) ASCII hexadecimal strings are accepted.</li>
+<li>Any invalid hex or CSS injection attempt (e.g., <code>#ffffff; @import ...</code> or arbitrary CSS rules) returns <code>None</code>, guaranteeing community themes can never break widget geometry or inject arbitrary CSS.</li>
+</ul>
+
+                    
+
+                    <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">
+                    <div class="has-text-right">
+                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/theme-api.md" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Improve this page
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
+
+
+    <footer class="footer">
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html>
