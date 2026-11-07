@@ -1,0 +1,694 @@
+/* ==========================================================================
+   Boxxy Theme Engine & API — Page Layout & Live HTML Widget Showcase
+   ========================================================================== */
+
+.bx-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #89b4fa !important;
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none !important;
+    transition: color 140ms ease;
+}
+
+.bx-back-link:hover {
+    color: #b4befe !important;
+}
+
+/* Strip the global boxed inline `<code>` styling on the Theme API page so prose
+   and reference tables stay clean, breathable, and easy to read. */
+.theme-api-page :not(pre) > code {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    color: #89dceb !important;
+    font-weight: 600 !important;
+    font-size: 0.94em !important;
+}
+
+/* Clean, spacious tables for the Theme API specification */
+.theme-api-page table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1.5rem 0 2.5rem 0;
+    border: 1px solid #313244;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #181825;
+}
+
+.theme-api-page table thead th {
+    background-color: #11111b;
+    color: #f9e2af !important;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #313244 !important;
+}
+
+.theme-api-page table tbody td {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(49, 50, 68, 0.65) !important;
+    vertical-align: top;
+    line-height: 1.65;
+    color: #cdd6f4;
+    font-size: 0.95rem;
+}
+
+.theme-api-page table tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+.theme-api-page table tbody tr:hover td {
+    background-color: rgba(49, 50, 68, 0.28);
+}
+
+.bx-var-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: #89b4fa;
+    font-weight: 700;
+    font-size: 0.92rem;
+    white-space: nowrap;
+}
+
+.bx-source-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: #a6e3a1;
+    font-size: 0.88rem;
+}
+
+/* ── Live Widget Theme Variables ────────────────────────────────────────── */
+.bx-theme-root {
+    --window-bg: #1d1d20;
+    --window-fg: #f2f4f2;
+    --sidebar-bg: #2e2e32;
+    --sidebar-fg: #f2f4f2;
+    --card-bg: #26262a;
+    --card-fg: #f2f4f2;
+    --headerbar-bg: #1d1d20;
+    --headerbar-fg: #f2f4f2;
+    --popover-bg: #2e2e32;
+    --popover-fg: #f2f4f2;
+    --accent-bg: #7ec868;
+    --accent-fg: #0d140a;
+    --boxxy-ink: #050505;
+    --boxxy-shadow: #050505;
+    --surface-hover: color-mix(in srgb, var(--accent-bg) 82%, var(--card-bg));
+    --destructive-bg: #c01c28;
+    --destructive-fg: #ffffff;
+    --success-color: #8ff0a4;
+}
+
+.bx-playground-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background-color: #11111b;
+    border: 2px solid #313244;
+    border-radius: 12px;
+    padding: 0.9rem 1.25rem;
+    margin: 1.5rem 0 2rem 0;
+    position: sticky;
+    top: 12px;
+    z-index: 20;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+.bx-playground-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.bx-playground-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #a6adc8;
+    margin-right: 0.35rem;
+}
+
+.bx-preset-chip {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    border: 2px solid #45475a;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 120ms ease;
+}
+
+.bx-preset-chip:hover {
+    border-color: #89b4fa;
+}
+
+.bx-preset-chip.is-active {
+    background-color: #a6e3a1;
+    color: #11111b;
+    border-color: #050505;
+    box-shadow: 2px 2px 0px #050505;
+}
+
+.bx-accent-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 9999px;
+    border: 2px solid #050505;
+    box-shadow: 2px 2px 0px #050505;
+    cursor: pointer;
+    transition: transform 100ms ease;
+}
+
+.bx-accent-swatch:hover {
+    transform: scale(1.12);
+}
+
+.bx-accent-swatch.is-active {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.bx-widget-stage {
+    background-color: var(--window-bg);
+    color: var(--window-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 14px;
+    box-shadow: 4px 5px 0px var(--boxxy-shadow);
+    padding: 1.5rem 1.75rem;
+    margin: 1rem 0 2.25rem 0;
+    transition: background-color 160ms ease, color 160ms ease;
+    font-family: 'Lexend', sans-serif;
+}
+
+.bx-widget-caption {
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.72;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* ── 1. HeaderBar, Tabs & Unified Icon Buttons ─────────────────────────── */
+.bx-demo-headerbar {
+    background-color: var(--headerbar-bg);
+    color: var(--headerbar-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 10px;
+    min-height: 40px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.bx-demo-header-side {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bx-demo-icon-btn {
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 8px;
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0 6px;
+    margin: 6px 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 0.9rem;
+    transition: background-color 120ms ease, transform 80ms ease, box-shadow 80ms ease;
+    user-select: none;
+}
+
+.bx-demo-icon-btn:hover {
+    background-color: var(--surface-hover);
+    color: var(--accent-fg);
+}
+
+.bx-demo-icon-btn:active {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--boxxy-shadow);
+}
+
+.bx-demo-tabbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.bx-demo-tab {
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 8px;
+    box-shadow: none;
+    min-height: 28px;
+    padding: 2px 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 140ms ease;
+    user-select: none;
+}
+
+.bx-demo-tab:hover:not(.is-selected) {
+    background-color: var(--surface-hover);
+    color: var(--accent-fg);
+}
+
+.bx-demo-tab.is-selected {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    font-weight: 700;
+    box-shadow: none;
+}
+
+.bx-demo-tab-close {
+    opacity: 0.85;
+    font-weight: 800;
+    font-size: 0.85rem;
+    width: 19px;
+    height: 19px;
+    border-radius: 9999px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.bx-demo-tab-close:hover {
+    opacity: 1.0;
+    background-color: var(--window-bg);
+    color: var(--window-fg);
+}
+
+/* ── 2. Sidebar ViewSwitcher & Navigation Capsule Rows ─────────────────── */
+.bx-demo-sidebar {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 12px;
+    padding: 12px;
+    max-width: 360px;
+}
+
+.bx-demo-viewswitcher {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 12px;
+}
+
+.bx-demo-switcher-btn {
+    flex: 1;
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 8px;
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+    padding: 5px 6px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+    user-select: none;
+}
+
+.bx-demo-switcher-btn:hover:not(.is-checked) {
+    background-color: var(--surface-hover);
+    color: var(--accent-fg);
+}
+
+.bx-demo-switcher-btn.is-checked {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    font-weight: 800;
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+}
+
+.bx-demo-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bx-demo-nav-row {
+    border-radius: 10px;
+    padding: 7px 10px;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition: background-color 140ms ease, box-shadow 140ms ease, transform 100ms ease;
+    user-select: none;
+}
+
+.bx-demo-nav-row:hover:not(.is-selected) {
+    background-color: var(--surface-hover);
+    color: var(--accent-fg);
+    border-color: var(--boxxy-ink);
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+}
+
+.bx-demo-nav-row.is-selected {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    border: 2px solid var(--boxxy-ink);
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+    font-weight: 700;
+}
+
+.bx-demo-nav-row.is-selected:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--boxxy-shadow);
+}
+
+/* ── 3. Tactile Buttons (Single Source of Truth `min-height: 24px; padding: 5px 10px`) ── */
+.bx-demo-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.bx-demo-btn {
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 8px;
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+    min-height: 24px;
+    padding: 5px 10px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background-color 120ms ease, transform 80ms ease, box-shadow 80ms ease;
+    user-select: none;
+}
+
+.bx-demo-btn:hover {
+    background-color: var(--surface-hover);
+    color: var(--accent-fg);
+}
+
+.bx-demo-btn:active {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--boxxy-shadow);
+}
+
+.bx-demo-btn.is-suggested {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    font-weight: 700;
+}
+
+.bx-demo-btn.is-suggested:hover {
+    background-color: color-mix(in srgb, var(--accent-bg) 86%, white);
+}
+
+.bx-demo-btn.is-destructive {
+    background-color: var(--destructive-bg);
+    color: var(--destructive-fg);
+    font-weight: 700;
+}
+
+.bx-demo-btn.is-compact {
+    min-height: 20px;
+    padding: 2px 8px;
+    font-size: 0.78rem;
+}
+
+/* ── 4. Terminal Popover Menu (`popover.terminal-menu`) ─────────────────── */
+.bx-demo-popover {
+    background-color: var(--popover-bg);
+    color: var(--popover-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 12px;
+    box-shadow: 4px 5px 0px var(--boxxy-shadow);
+    padding: 6px;
+    width: 245px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bx-demo-linked-strip {
+    background-color: var(--card-bg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 9px;
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+    margin: 2px 4px 4px 2px;
+    display: flex;
+    overflow: hidden;
+}
+
+.bx-demo-linked-btn {
+    flex: 1;
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    min-height: 24px;
+    padding: 5px 10px;
+    border: none;
+    border-right: 2px solid var(--boxxy-ink);
+    font-family: 'Lexend', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+    user-select: none;
+}
+
+.bx-demo-linked-btn:last-child {
+    border-right: none;
+}
+
+.bx-demo-linked-btn:hover {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+}
+
+.bx-demo-modelbutton {
+    min-height: 24px;
+    padding: 5px 10px;
+    margin: 0 4px 0 2px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    color: var(--popover-fg);
+    font-size: 0.86rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+    user-select: none;
+}
+
+.bx-demo-modelbutton:hover,
+.bx-demo-modelbutton.is-hovered {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    border: 2px solid var(--boxxy-ink);
+    box-shadow: 2px 2px 0px var(--boxxy-shadow);
+}
+
+.bx-demo-menu-sep {
+    height: 1.5px;
+    background-color: color-mix(in srgb, var(--boxxy-ink) 35%, transparent);
+    margin: 3px 6px;
+}
+
+/* ── 5. Preference Rows & Boxed Lists (`listbox.boxed-list`) ────────────── */
+.bx-demo-boxed-list {
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 12px;
+    box-shadow: 3px 4px 0px var(--boxxy-shadow);
+    overflow: hidden;
+    max-width: 560px;
+}
+
+.bx-demo-action-row {
+    padding: 11px 16px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boxxy-ink) 18%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.bx-demo-action-row:last-child {
+    border-bottom: none;
+}
+
+.bx-demo-row-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bx-demo-row-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.bx-demo-row-subtitle {
+    font-size: 0.78rem;
+    opacity: 0.72;
+}
+
+.bx-demo-row-suffix {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bx-demo-tag-pill {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    border: 1.5px solid var(--boxxy-ink);
+    border-radius: 9999px;
+    padding: 1px 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.bx-demo-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 9999px;
+    border: 1.5px solid var(--boxxy-ink);
+    display: inline-block;
+}
+
+.bx-demo-switch {
+    width: 44px;
+    height: 24px;
+    border-radius: 9999px;
+    border: 2px solid var(--boxxy-ink);
+    background-color: color-mix(in srgb, var(--card-fg) 18%, var(--card-bg));
+    position: relative;
+    cursor: pointer;
+    transition: background-color 140ms ease;
+    flex-shrink: 0;
+}
+
+.bx-demo-switch.is-checked {
+    background-color: var(--accent-bg);
+}
+
+.bx-demo-switch-knob {
+    width: 16px;
+    height: 16px;
+    border-radius: 9999px;
+    background-color: #ffffff;
+    border: 1.5px solid var(--boxxy-ink);
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    transition: transform 140ms ease;
+}
+
+.bx-demo-switch.is-checked .bx-demo-switch-knob {
+    transform: translateX(18px);
+}
+
+/* ── 6. Search Entry & Claw MsgBar ──────────────────────────────────────── */
+.bx-demo-entry {
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 10px;
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 520px;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.bx-demo-entry:focus-within {
+    border-color: var(--accent-bg);
+    box-shadow: 2px 3px 0px var(--boxxy-ink);
+}
+
+.bx-demo-entry input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    font-family: 'Lexend', sans-serif;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+/* Color Token Swatch Chip inside Documentation Tables */
+.bx-color-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.86rem;
+    color: #f5e0dc;
+}
+
+.bx-color-chip-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid #050505;
+    display: inline-block;
+    flex-shrink: 0;
+}
