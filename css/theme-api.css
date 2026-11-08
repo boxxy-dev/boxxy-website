@@ -460,6 +460,19 @@
     font-weight: 700;
 }
 
+.bx-demo-btn.is-pill {
+    min-height: 26px;
+    padding: 6px 22px;
+    border-radius: 10px;
+    box-shadow: 3px 4px 0px var(--boxxy-shadow);
+    font-weight: 700;
+}
+
+.bx-demo-btn.is-pill:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 5px 0px var(--boxxy-shadow);
+}
+
 .bx-demo-btn.is-compact {
     min-height: 20px;
     padding: 2px 8px;
@@ -548,24 +561,32 @@
     margin: 3px 6px;
 }
 
-/* ── 5. Preference Rows & Boxed Lists (`listbox.boxed-list`) ────────────── */
+/* ── 5. Preference Rows & Boxed Lists (`.boxed-list`) ───────────────────── */
 .bx-demo-boxed-list {
     background-color: var(--card-bg);
     color: var(--card-fg);
     border: 2px solid var(--boxxy-ink);
-    border-radius: 12px;
-    box-shadow: 3px 4px 0px var(--boxxy-shadow);
+    border-radius: 8px;
+    box-shadow: 2px 3px 0px var(--boxxy-shadow);
     overflow: hidden;
     max-width: 560px;
 }
 
 .bx-demo-action-row {
     padding: 11px 16px;
-    border-bottom: 1px solid color-mix(in srgb, var(--boxxy-ink) 18%, transparent);
+    border-bottom: 1.5px solid color-mix(in srgb, var(--boxxy-ink) 55%, transparent);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+}
+
+.bx-demo-action-row:hover {
+    background-color: color-mix(in srgb, var(--accent-bg) 14%, transparent);
+}
+
+.bx-demo-action-row:hover .bx-demo-row-title {
+    color: var(--accent-bg);
 }
 
 .bx-demo-action-row:last-child {
