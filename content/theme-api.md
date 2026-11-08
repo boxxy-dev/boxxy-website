@@ -116,19 +116,20 @@ Unlike terminal tabs, the sidebar header switcher buttons (`viewswitcher > butto
   </div>
 </div>
 
-### 3. Tactile Buttons (Single Source of Truth Padding)
+### 3. Tactile Buttons & Hero CTA Buttons (`.pill`)
 
-All standard buttons, action buttons (`.suggested-action`, `.destructive-action`), popover menu text rows (`modelbutton`), and popover segmented buttons (`box.linked > button.model`) share **one single CSS padding rule**: `min-height: 24px; padding: 5px 10px;`. To make a button smaller, apply `.compact-btn` (`min-height: 20px; padding: 2px 8px;`) instead of writing per-widget rules.
+All standard buttons, action buttons (`.suggested-action`, `.destructive-action`), popover menu text rows (`modelbutton`), and popover segmented buttons (`box.linked > button.model`) share **one single CSS padding rule**: `min-height: 24px; padding: 5px 12px;`. Primary dialog footer CTA buttons (`Done`, `Save`, `Apply`, `Read What's New`, `Cancel`, `Close`) use `.pill`, which renders in Boxxy themes as a structured `10px`-radius banner CTA (`min-height: 26px; min-width: 72px; padding: 6px 22px; box-shadow: 3px 4px 0px @boxxy_shadow;`). To make a button smaller, apply `.compact-btn` (`min-height: 20px; padding: 2px 8px;`) instead of writing per-widget rules.
 
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
-    <span>min-height: 24px; padding: 5px 10px; · box-shadow: 2px 3px 0px @boxxy_shadow</span>
+    <span>min-height: 24px; padding: 5px 12px; · .pill CTA: padding: 6px 22px; border-radius: 10px</span>
     <span>Click and hold to test active press translation</span>
   </div>
   <div class="bx-demo-btn-row">
     <button type="button" class="bx-demo-btn">Standard Button</button>
     <button type="button" class="bx-demo-btn is-suggested">Accept &amp; Run (.suggested-action)</button>
     <button type="button" class="bx-demo-btn is-destructive">Reject (.destructive-action)</button>
+    <button type="button" class="bx-demo-btn is-suggested is-pill">Read What's New (.pill)</button>
     <button type="button" class="bx-demo-btn is-compact">Compact (.compact-btn)</button>
   </div>
 </div>
@@ -165,14 +166,14 @@ The terminal context menu (`popover.terminal-menu > contents`) uses `@popover_bg
   </div>
 </div>
 
-### 5. Preference Rows & Boxed Lists (`listbox.boxed-list`)
+### 5. Preference Rows & Boxed Lists (`.boxed-list`, `.boxed-list-separate`)
 
-Preference group cards (`listbox.boxed-list`), action rows, switch rows, and theme selector rows use `@card_bg_color` with a `2px solid @boxxy_ink` outline and a `3px 4px 0px @boxxy_shadow` offset shadow.
+Preference group cards (`.boxed-list`, `.boxed-list-separate`, `preferencesgroup listbox`) use `@card_bg_color` with structured `8px` corners, a `2px solid @boxxy_ink` outline, a `2px 3px 0px @boxxy_shadow` offset shadow, and recessed `1.5px solid alpha(@boxxy_ink, 0.55)` dark ink row grooves (no grey hairlines). Clickable rows (`row.activatable:hover`) highlight with a soft `@accent_bg_color` wash and tint their title and trailing icon to `@accent_color`.
 
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
-    <span>preferencesgroup listbox.boxed-list + ActionRow + SwitchRow</span>
-    <span>Click the switch to toggle state</span>
+    <span>.boxed-list (border-radius: 8px; border: 2px solid @boxxy_ink) + ActionRow + SwitchRow</span>
+    <span>Hover rows or click the switch to toggle state</span>
   </div>
   <div class="bx-demo-boxed-list">
     <div class="bx-demo-action-row">
@@ -372,13 +373,16 @@ Components never hardcode hex or RGB values for surfaces, borders, or semantic s
 
 | Component | Has `@boxxy_shadow`? | Shadow Offset | Rationale |
 | :--- | :--- | :--- | :--- |
-| **Sidebar Switcher Buttons** (`viewswitcher > button`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Top-level mode switchers (AI Chat, Claw, Bookmarks, Colors) sit in the spacious sidebar header with a 2px inter-button gap and act as tactile physical toggles. |
+| **Sidebar & Dialog Switcher Buttons** (`viewswitcher > button`, `stackswitcher > button`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Top-level mode switchers (AI Chat, Claw, Bookmarks, Colors in the sidebar; AI Chat, Boxxy Claw, Memories and Dreams in Models Selection) sit in spacious headers with inter-button gaps (`2px` / `6px`) and act as tactile physical toggles. |
+| **Hero / Advertising CTA Buttons** (`button.pill:not(.flat)`) | **Yes** | `3px 4px 0px @boxxy_shadow` (`4px 5px 0px` on `:hover`) | Primary dialog footer actions (`Done`, `Save`, `Apply`, `Read What's New`, `Cancel`/`Close`) use boxy-rounded `10px` corners, `6px 22px` padding, and a slight hover lift (`translate(-1px, -1px)`). |
 | **Sidebar & Command Palette Rows** (`.navigation-sidebar > row:selected`, `:hover`, `.menu-open`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Lifts the active or hovered conversation, command palette item, bookmark, or preferences category above the flat list. Depresses to `1px 1px 0px` on click. |
 | **Terminal Tabs** (`tabbar tab`, `tabbar tab:selected`) | **No** (`box-shadow: none`) | `none` | Tabs live inside the compact 28px tab bar strip. Keeping `box-shadow: none` (while retaining the 2px `@boxxy_ink` outline and `@accent_bg_color` active fill) prevents bottom shadow clipping inside `AdwTabBox`. |
 | **Standalone Tactile Buttons** (`headerbar button`, `windowcontrols > button`, `dialog button`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Primary interactive buttons. Depress by `translate(1px, 1px)` with `1px 1px 0px @boxxy_shadow` when clicked. |
 | **Popover Linked Button Container** (`popover.menu box.linked`) | **Yes (Container only)** | `2px 3px 0px @boxxy_shadow` | The outer segmented bar (`Copy \| Copy Link`, split/close bar) casts a single unified shadow. |
 | **Individual Linked Buttons** (`popover.menu box.linked > button.model`) | **No** (`box-shadow: none`) | `none` | Inner segments are separated by `border-right: 2px solid @boxxy_ink` inside the shared container; per-segment shadows would overlap adjacent buttons. |
-| **Preference Groups & Cards** (`listbox.boxed-list`, `.card`) | **Yes** | `3px 4px 0px @boxxy_shadow` | Large elevated content containers. |
+| **Dropdown & Menu List Rows** (`dropdown > popover.menu > contents listview > row`, `popover.menu modelbutton`) | **On Hover (`2px 2px 0px @boxxy_shadow`)** | `2px 2px 0px @boxxy_shadow` | Hovered menu and dropdown items snap instantly (`transition: none`) into `@accent_bg_color` with a `2px solid @boxxy_ink` border and `2px 2px 0px` offset shadow. |
+| **Preference Boxed Lists** (`.boxed-list`, `.boxed-list-separate`, `preferencesgroup listbox`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Structured `8px`-radius preference groups with a `2px solid @boxxy_ink` frame, recessed `1.5px solid alpha(@boxxy_ink, 0.55)` row grooves, and accent-tinted `row.activatable:hover` states. |
+| **Scale Sliders & Squared Scrollbars** (`scale > trough > slider`, `scrollbar.overlay-indicator`) | **Yes (Slider) / Inset (Scrollbar)** | `1.5px 2px 0px @boxxy_shadow` | `scale` uses a `24×20px` `@card_fg_color` block grabber (`border-radius: 6px`). Overlay scrollbars use a squared `3px`-radius thumb with zero-allocation `inset 0 0 0 1.5px @boxxy_ink` borders. |
 | **Popovers & Dialog Sheets** (`popover > contents`, `dialog sheet`) | **Yes** | `4px 5px 0px @boxxy_shadow` | Highest elevation layer floating above the window canvas. |
 
 ---
