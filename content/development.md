@@ -54,12 +54,45 @@ flatpak-builder --user --install --force-clean build-dir flatpak/dev.boxxy.Boxxy
 
 ---
 
-## Context Debugging
+## Developing Boxxy Inside Boxxy (`--dev` Mode)
 
-One of the most useful things to inspect during AI development is the exact context Boxxy sends to the model. Enable high-signal context logging with:
+You can use your daily =Stable Boxxy= installation to develop, run, and test source builds of Boxxy side-by-side without colliding on GTK or D-Bus singletons.
+
+Passing `--dev` (or setting `BOXXY_DEV=1`) launches an isolated host daemon (`dev.boxxy.BoxxyAgent.Devel`) and client window (`dev.boxxy.BoxxyTerminal.Devel`), marked with a warning-colored `[dev]` badge in the headerbar while disabling self-updates and telemetry.
+
+### Two-Pane Split Workflow
+
+Open two split panes inside Stable Boxxy and use the workspace Cargo aliases:
 
 ```bash
-BOXXY_DEBUG_CONTEXT=1 cargo run
+# Pane 1 — Run the isolated dev daemon in the foreground
+BOXXY_DEBUG_CONTEXT=1 cargo dev-agent
+
+# Pane 2 — Launch the isolated dev client window
+cargo dev-app
+```
+
+### Configuration & Profile Modes
+
+- **Seeded Dev Profile (Default — `--dev`):** Uses `~/.config/boxxy-terminal-dev/`. On first launch, it automatically copies your `settings.json`, API keys, themes, profile avatar, bookmarks, characters, and skills from `~/.config/boxxy-terminal/` while keeping a separate SQLite database (`boxxy.db`) so schema changes never affect Stable. To pull updated settings from Stable later, run:
+  ```bash
+  cargo dev-sync
+  ```
+- **Clean Factory Defaults (`--ephemeral`):** Starts with a fresh, lock-coordinated temporary directory (`$XDG_RUNTIME_DIR/boxxy-terminal-ephemeral-dev`) to test default settings and first-run behavior:
+  ```bash
+  # Optional Pane 1 (foreground logs): BOXXY_DEBUG_CONTEXT=1 cargo dev-agent-ephemeral
+  cargo dev-ephemeral
+  ```
+- **Named Parallel Instances (`--instance <slug>` / `BOXXY_INSTANCE=<slug>`):** Spawns completely separate D-Bus/GTK namespaces (`[dev:<slug>]`) when testing multiple branches or Git worktrees simultaneously.
+
+---
+
+## Context Debugging
+
+One of the most useful things to inspect during AI development is the exact context Boxxy sends to the model. Since prompt assembly runs inside `boxxy-agent`, enable high-signal context logging on the daemon with:
+
+```bash
+BOXXY_DEBUG_CONTEXT=1 cargo dev-agent
 ```
 
 (This works in both debug and release builds and remains completely silent unless `BOXXY_DEBUG_CONTEXT=1` is set.)
