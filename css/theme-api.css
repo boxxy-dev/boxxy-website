@@ -97,6 +97,10 @@
     --popover-fg: #f2f4f2;
     --accent-bg: #7ec868;
     --accent-fg: #0d140a;
+    --secondary-bg: #7dc4e4;
+    --secondary-fg: #0b1620;
+    --highlight-bg: #f5b971;
+    --highlight-fg: #201407;
     --boxxy-ink: #050505;
     --boxxy-shadow: #050505;
     --surface-hover: color-mix(in srgb, var(--accent-bg) 82%, var(--card-bg));
@@ -225,6 +229,28 @@
     display: flex;
     align-items: center;
     gap: 6px;
+}
+
+.bx-demo-detached-pill {
+    background-color: var(--secondary-bg);
+    color: var(--secondary-fg);
+    border: 1.5px solid var(--boxxy-ink);
+    border-radius: 9999px;
+    padding: 1px 9px;
+    min-height: 20px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    box-shadow: none;
+    user-select: none;
+}
+
+.bx-demo-detached-pill:hover {
+    background-color: color-mix(in srgb, var(--secondary-bg) 84%, white);
 }
 
 .bx-demo-icon-btn {
@@ -454,6 +480,108 @@
     background-color: color-mix(in srgb, var(--accent-bg) 86%, white);
 }
 
+.bx-demo-btn.is-secondary {
+    background-color: var(--secondary-bg);
+    color: var(--secondary-fg);
+    font-weight: 700;
+}
+
+.bx-demo-btn.is-secondary:hover {
+    background-color: color-mix(in srgb, var(--secondary-bg) 84%, white);
+    color: var(--secondary-fg);
+}
+
+.bx-demo-btn.is-flat {
+    background-color: transparent;
+    color: var(--window-fg);
+    border: 1.5px solid transparent;
+    box-shadow: none;
+    font-weight: 600;
+}
+
+.bx-demo-btn.is-flat:hover {
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border-color: color-mix(in srgb, var(--boxxy-ink) 80%, transparent);
+    box-shadow: none;
+}
+
+.bx-demo-btn.is-flat:active {
+    background-color: color-mix(in srgb, var(--card-bg) 80%, var(--boxxy-ink) 20%);
+    color: var(--card-fg);
+    border-color: var(--boxxy-ink);
+    transform: none;
+    box-shadow: none;
+}
+
+.bx-demo-highlight-badge {
+    background-color: var(--highlight-bg);
+    color: var(--highlight-fg);
+    border: 1.5px solid var(--boxxy-ink);
+    box-shadow: 1.5px 2px 0px var(--boxxy-shadow);
+    border-radius: 9999px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bx-demo-round-strip {
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border: 2px solid var(--boxxy-ink);
+    border-radius: 8px;
+    padding: 8px 12px;
+    max-width: 360px;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bx-demo-round-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.bx-demo-lap-pill {
+    background-color: var(--secondary-bg);
+    color: var(--secondary-fg);
+    border: 1.5px solid var(--boxxy-ink);
+    border-radius: 6px;
+    padding: 1px 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.bx-demo-pips {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bx-demo-pip {
+    width: 9px;
+    height: 9px;
+    border-radius: 9999px;
+    background-color: var(--window-bg);
+    border: 1.5px solid var(--boxxy-ink);
+}
+
+.bx-demo-pip.is-done {
+    background-color: var(--accent-bg);
+}
+
+.bx-demo-pip.is-active {
+    width: 24px;
+    background-color: var(--highlight-bg);
+}
+
 .bx-demo-btn.is-destructive {
     background-color: var(--destructive-bg);
     color: var(--destructive-fg);
@@ -582,11 +710,7 @@
 }
 
 .bx-demo-action-row:hover {
-    background-color: color-mix(in srgb, var(--accent-bg) 14%, transparent);
-}
-
-.bx-demo-action-row:hover .bx-demo-row-title {
-    color: var(--accent-bg);
+    background-color: var(--window-bg);
 }
 
 .bx-demo-action-row:last-child {
@@ -616,8 +740,8 @@
 }
 
 .bx-demo-tag-pill {
-    background-color: var(--accent-bg);
-    color: var(--accent-fg);
+    background-color: var(--secondary-bg);
+    color: var(--secondary-fg);
     border: 1.5px solid var(--boxxy-ink);
     border-radius: 9999px;
     padding: 1px 8px;

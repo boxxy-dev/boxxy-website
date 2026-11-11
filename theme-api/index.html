@@ -51,7 +51,7 @@
                 <div class="content content-area theme-api-page">
                     
                         <h1 id="boxxy-theme-engine-api"><a class="zola-anchor" href="#boxxy-theme-engine-api" aria-label="Anchor link for: boxxy-theme-engine-api">🔗</a>Boxxy Theme Engine &amp; API</h1>
-<p>Boxxy decouples <strong>Terminal Palettes</strong> (the 16 ANSI colors and canvas background inside the terminal grid) from <strong>Application Chrome Themes</strong> (<code>crates/themes/src/app_theme.rs</code> and <code>resources/themes/boxxy_skeleton.css</code>).</p>
+<p>Boxxy decouples <strong>Terminal Palettes</strong> (the 16 ANSI colors and canvas background inside the terminal grid) from <strong>Application Chrome Themes</strong> (<code>crates/themes/src/app_theme/</code> and <code>resources/themes/boxxy_skeleton.css</code>). Each Boxxy App Theme defines surface tokens, neo-brutalist ink borders, and a <strong>3-color identity triad</strong>: <strong><code>accent</code></strong> (primary selection &amp; active controls), <strong><code>secondary</code></strong> (supporting tags, metadata pills, and acknowledgment actions), and <strong><code>highlight</code></strong> (discovery badges, live active markers, and search matches)—with perceptual <strong>OKLCH</strong> lightness clamping for readable standalone text on any card surface.</p>
 <p>All widgets below are rendered live in HTML and CSS using Boxxy's exact design tokens, borders, shadows, and padding rules. Use the <strong>Live Theme &amp; Accent Playground</strong> toolbar to switch themes or override the accent color across every widget on this page in real time.</p>
 <div id="bx-theme-scope" class="bx-theme-root">
 <div class="bx-playground-toolbar">
@@ -104,6 +104,7 @@
       </div>
     </div>
     <div class="bx-demo-header-side">
+      <span class="bx-demo-detached-pill" title="Background Shells (.detached-shells-pill)">&gt;_ 1</span>
       <button type="button" class="bx-demo-icon-btn" title="Menu (.image-button)">☰</button>
       <button type="button" class="bx-demo-icon-btn" title="Close (windowcontrols > button)">✕</button>
     </div>
@@ -151,19 +152,38 @@
     </div>
   </div>
 </div>
-<h3 id="3-tactile-buttons-hero-cta-buttons-pill"><a class="zola-anchor" href="#3-tactile-buttons-hero-cta-buttons-pill" aria-label="Anchor link for: 3-tactile-buttons-hero-cta-buttons-pill">🔗</a>3. Tactile Buttons &amp; Hero CTA Buttons (<code>.pill</code>)</h3>
-<p>All standard buttons, action buttons (<code>.suggested-action</code>, <code>.destructive-action</code>), popover menu text rows (<code>modelbutton</code>), and popover segmented buttons (<code>box.linked &gt; button.model</code>) share <strong>one single CSS padding rule</strong>: <code>min-height: 24px; padding: 5px 12px;</code>. Primary dialog footer CTA buttons (<code>Done</code>, <code>Save</code>, <code>Apply</code>, <code>Read What's New</code>, <code>Cancel</code>, <code>Close</code>) use <code>.pill</code>, which renders in Boxxy themes as a structured <code>10px</code>-radius banner CTA (<code>min-height: 26px; min-width: 72px; padding: 6px 22px; box-shadow: 3px 4px 0px @boxxy_shadow;</code>). To make a button smaller, apply <code>.compact-btn</code> (<code>min-height: 20px; padding: 2px 8px;</code>) instead of writing per-widget rules.</p>
+<h3 id="3-tactile-buttons-identity-triad-badges-flat-utility-controls"><a class="zola-anchor" href="#3-tactile-buttons-identity-triad-badges-flat-utility-controls" aria-label="Anchor link for: 3-tactile-buttons-identity-triad-badges-flat-utility-controls">🔗</a>3. Tactile Buttons, Identity Triad Badges &amp; Flat Utility Controls</h3>
+<p>All standard buttons, action buttons (<code>.suggested-action</code>, <code>.secondary-action</code>, <code>.destructive-action</code>), popover menu text rows (<code>modelbutton</code>), and popover segmented buttons (<code>box.linked &gt; button.model</code>) share <strong>one single CSS padding rule</strong>: <code>min-height: 24px; padding: 5px 12px;</code>. Primary dialog footer CTA buttons (<code>Done</code>, <code>Save</code>, <code>Apply</code>, <code>Read What's New</code>, <code>Cancel</code>, <code>Close</code>) use <code>.pill</code> (<code>10px</code> radius, <code>padding: 6px 22px</code>, <code>3px 4px 0px @boxxy_shadow</code>). Quiet utility buttons (<code>button.flat</code>, such as <code>Ask Another AI</code>, <code>← Back</code>, and inline icons) stay transparent at rest and snap into a <strong>shadowless recessed surface cutout + <code>1.5px</code> <code>@boxxy_ink</code> hairline</strong> on hover instead of a foggy grey veil.</p>
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
-    <span>min-height: 24px; padding: 5px 12px; · .pill CTA: padding: 6px 22px; border-radius: 10px</span>
-    <span>Click and hold to test active press translation</span>
+    <span>accent (.suggested-action) · secondary (.secondary-action) · highlight (.whats-new-badge &amp; live lap) · button.flat cutout</span>
+    <span>Switch theme presets above to see all 3 color roles update live</span>
   </div>
   <div class="bx-demo-btn-row">
     <button type="button" class="bx-demo-btn">Standard Button</button>
     <button type="button" class="bx-demo-btn is-suggested">Accept &amp; Run (.suggested-action)</button>
+    <button type="button" class="bx-demo-btn is-secondary">Okay (.secondary-action)</button>
     <button type="button" class="bx-demo-btn is-destructive">Reject (.destructive-action)</button>
     <button type="button" class="bx-demo-btn is-suggested is-pill">Read What's New (.pill)</button>
-    <button type="button" class="bx-demo-btn is-compact">Compact (.compact-btn)</button>
+    <button type="button" class="bx-demo-btn is-flat">⧉ Ask Another AI (button.flat)</button>
+    <span class="bx-demo-highlight-badge">✪ FRESH UPDATE</span>
+  </div>
+  <div class="bx-demo-round-strip">
+    <div class="bx-demo-round-top">
+      <span style="font-weight:700;font-size:0.86rem">🔔 Boxing</span>
+      <span class="bx-demo-lap-pill">● LAP 2/6</span>
+    </div>
+    <div class="bx-demo-round-top">
+      <div class="bx-demo-pips" title="Done = accent, Active = highlight, Upcoming = window_bg">
+        <span class="bx-demo-pip is-done"></span>
+        <span class="bx-demo-pip is-active"></span>
+        <span class="bx-demo-pip"></span>
+        <span class="bx-demo-pip"></span>
+        <span class="bx-demo-pip"></span>
+        <span class="bx-demo-pip"></span>
+      </div>
+      <span style="font-size:0.78rem;font-weight:800;color:var(--accent-bg)">00:19 left</span>
+    </div>
   </div>
 </div>
 <h3 id="4-terminal-context-menu-popover-terminal-menu"><a class="zola-anchor" href="#4-terminal-context-menu-popover-terminal-menu" aria-label="Anchor link for: 4-terminal-context-menu-popover-terminal-menu">🔗</a>4. Terminal Context Menu (<code>popover.terminal-menu</code>)</h3>
@@ -196,25 +216,25 @@
   </div>
 </div>
 <h3 id="5-preference-rows-boxed-lists-boxed-list-boxed-list-separate"><a class="zola-anchor" href="#5-preference-rows-boxed-lists-boxed-list-boxed-list-separate" aria-label="Anchor link for: 5-preference-rows-boxed-lists-boxed-list-boxed-list-separate">🔗</a>5. Preference Rows &amp; Boxed Lists (<code>.boxed-list</code>, <code>.boxed-list-separate</code>)</h3>
-<p>Preference group cards (<code>.boxed-list</code>, <code>.boxed-list-separate</code>, <code>preferencesgroup listbox</code>) use <code>@card_bg_color</code> with structured <code>8px</code> corners, a <code>2px solid @boxxy_ink</code> outline, a <code>2px 3px 0px @boxxy_shadow</code> offset shadow, and recessed <code>1.5px solid alpha(@boxxy_ink, 0.55)</code> dark ink row grooves (no grey hairlines). Clickable rows (<code>row.activatable:hover</code>) highlight with a soft <code>@accent_bg_color</code> wash and tint their title and trailing icon to <code>@accent_color</code>.</p>
+<p>Preference group cards (<code>.boxed-list</code>, <code>.boxed-list-separate</code>, <code>preferencesgroup listbox</code>) use <code>@card_bg_color</code> with structured <code>8px</code> corners, a <code>2px solid @boxxy_ink</code> outline, a <code>2px 3px 0px @boxxy_shadow</code> offset shadow, and recessed <code>1.5px solid alpha(@boxxy_ink, 0.55)</code> dark ink row grooves (no grey hairlines). Clickable rows (<code>row.activatable:hover</code>) recess cleanly into <code>@window_bg_color</code> while keeping default readable text, and theme tag pills (<code>.boxxy-theme-tag-pill</code>) use <code>@boxxy_secondary_bg_color</code> so metadata never competes with selected controls.</p>
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
     <span>.boxed-list (border-radius: 8px; border: 2px solid @boxxy_ink) + ActionRow + SwitchRow</span>
-    <span>Hover rows or click the switch to toggle state</span>
+    <span>Hover rows to see the recessed @window_bg_color cutout</span>
   </div>
   <div class="bx-demo-boxed-list">
     <div class="bx-demo-action-row">
       <div class="bx-demo-row-titles">
         <span class="bx-demo-row-title">Boxxy Dark</span>
-        <span class="bx-demo-row-subtitle">Carbon dark surfaces with crisp ink borders and peanut green accents.</span>
+        <span class="bx-demo-row-subtitle">Carbon dark surfaces with peanut green accents, sky cyan tags, and warm solar highlights.</span>
       </div>
       <div class="bx-demo-row-suffix">
         <span class="bx-demo-tag-pill">dark</span>
         <span class="bx-demo-tag-pill">default</span>
-        <span class="bx-demo-dot" style="background:#7ec868"></span>
-        <span class="bx-demo-dot" style="background:#1d1d20"></span>
-        <span class="bx-demo-dot" style="background:#26262a"></span>
-        <span class="bx-demo-dot" style="background:#050505"></span>
+        <span class="bx-demo-dot" style="background:#1d1d20" title="window_bg"></span>
+        <span class="bx-demo-dot" style="background:#7ec868" title="accent"></span>
+        <span class="bx-demo-dot" style="background:#7dc4e4" title="secondary"></span>
+        <span class="bx-demo-dot" style="background:#f5b971" title="highlight"></span>
         <span style="font-weight:900;margin-left:4px">✓</span>
       </div>
     </div>
@@ -262,6 +282,8 @@ const BX_THEMES = {
     '--headerbar-bg': '#1d1d20', '--headerbar-fg': '#f2f4f2',
     '--popover-bg': '#2e2e32', '--popover-fg': '#f2f4f2',
     '--accent-bg': '#7ec868', '--accent-fg': '#0d140a',
+    '--secondary-bg': '#7dc4e4', '--secondary-fg': '#0b1620',
+    '--highlight-bg': '#f5b971', '--highlight-fg': '#201407',
     '--boxxy-ink': '#050505', '--boxxy-shadow': '#050505',
     '--destructive-bg': '#c01c28', '--destructive-fg': '#ffffff'
   },
@@ -272,6 +294,8 @@ const BX_THEMES = {
     '--headerbar-bg': '#ffffff', '--headerbar-fg': '#111418',
     '--popover-bg': '#ffffff', '--popover-fg': '#111418',
     '--accent-bg': '#00acc1', '--accent-fg': '#0d1117',
+    '--secondary-bg': '#a594f9', '--secondary-fg': '#111418',
+    '--highlight-bg': '#ff9f43', '--highlight-fg': '#111418',
     '--boxxy-ink': '#111418', '--boxxy-shadow': '#111418',
     '--destructive-bg': '#e01b24', '--destructive-fg': '#ffffff'
   },
@@ -282,6 +306,8 @@ const BX_THEMES = {
     '--headerbar-bg': '#fce8ef', '--headerbar-fg': '#1e1b24',
     '--popover-bg': '#fce8ef', '--popover-fg': '#1e1b24',
     '--accent-bg': '#ff7eb6', '--accent-fg': '#1e1b24',
+    '--secondary-bg': '#7cc6fe', '--secondary-fg': '#1e1b24',
+    '--highlight-bg': '#ffe066', '--highlight-fg': '#1e1b24',
     '--boxxy-ink': '#1e1b24', '--boxxy-shadow': '#1e1b24',
     '--destructive-bg': '#e01b24', '--destructive-fg': '#ffffff'
   },
@@ -292,6 +318,8 @@ const BX_THEMES = {
     '--headerbar-bg': '#ede6d3', '--headerbar-fg': '#141413',
     '--popover-bg': '#ede6d3', '--popover-fg': '#141413',
     '--accent-bg': '#e63946', '--accent-fg': '#ffffff',
+    '--secondary-bg': '#1d4ed8', '--secondary-fg': '#ffffff',
+    '--highlight-bg': '#f4b400', '--highlight-fg': '#141413',
     '--boxxy-ink': '#141413', '--boxxy-shadow': '#141413',
     '--destructive-bg': '#e01b24', '--destructive-fg': '#ffffff'
   }
@@ -349,8 +377,12 @@ function bxSelectSibling(el, cls) {
 <tr><td style="text-align: left"><span class="bx-var-name">headerbar_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Text and icon foreground on <code>headerbar_bg</code>.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">popover_bg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#2e2e32"></span>#2e2e32</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span></td><td style="text-align: left">Matches <code>sidebar_bg</code>. Used by the terminal right-click menu, hamburger menu, command palette, and autocomplete popover.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">popover_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Text and icon foreground on <code>popover_bg</code>.</td></tr>
-<tr><td style="text-align: left"><span class="bx-var-name">accent</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#7ec868"></span>#7ec868</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#00acc1"></span>#00acc1</span></td><td style="text-align: left">Selected tabs, active sidebar rows, active switcher buttons, suggested-action buttons, checked switches, and focus rings.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">accent</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#7ec868"></span>#7ec868</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#00acc1"></span>#00acc1</span></td><td style="text-align: left"><strong>Primary interaction:</strong> Selected tabs, active sidebar rows, active switcher buttons, <code>.suggested-action</code> buttons, checked switches, focus rings, and <code>@boxxy_surface_hover</code>.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">accent_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#0d140a"></span>#0d140a</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#0d1117"></span>#0d1117</span></td><td style="text-align: left">High-contrast ink text and icons rendered on top of <code>accent</code> surfaces.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">secondary</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#7dc4e4"></span>#7dc4e4</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#a594f9"></span>#a594f9</span></td><td style="text-align: left"><strong>Supporting identity:</strong> <code>.secondary-action</code> (<code>Okay</code> button), <code>.claw-round-phase-work</code> (<code>● LAP X/N</code> pill), <code>.detached-shells-pill</code>, theme tag pills, bookmark variable chips, task kind badges, and <code>@file</code> input tags.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">secondary_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#0b1620"></span>#0b1620</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">High-contrast ink text and icons rendered on top of solid <code>secondary</code> surfaces.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">highlight</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f5b971"></span>#f5b971</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ff9f43"></span>#ff9f43</span></td><td style="text-align: left"><strong>Attention &amp; discovery:</strong> <code>.whats-new-badge</code> (<code>FRESH UPDATE</code>), <code>.claw-round-pip-active</code> (live active lap capsule), <code>.avatar-vibe-badge</code>, search matches, and <code>:character</code> mention tags.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">highlight_fg</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#201407"></span>#201407</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">High-contrast ink text and icons rendered on top of solid <code>highlight</code> badges.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">ink_border</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#050505"></span>#050505</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Crisp 2px neo-brutalist outlines and structural pane dividers (<code>@boxxy_ink</code>).</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">shadow</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#050505"></span>#050505</span></td><td style="text-align: left"><span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span></td><td style="text-align: left">Solid offset drop-shadows (<code>@boxxy_shadow</code>).</td></tr>
 </tbody></table>
@@ -368,14 +400,22 @@ function bxSelectSibling(el, cls) {
 <tr><td style="text-align: left"><span class="bx-var-name">@card_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.card_fg</span></td><td style="text-align: left">Text, labels, and icons inside all <code>@card_bg_color</code> widgets above.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">@popover_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.popover_bg</span></td><td style="text-align: left">Terminal right-click menu (<code>popover.terminal-menu</code>), hamburger menu (<code>popover.menu</code>), command palette, search popover, and <code>@file</code> autocomplete popover.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">@popover_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.popover_fg</span></td><td style="text-align: left">Menu items (<code>modelbutton</code>) and labels inside all popovers.</td></tr>
-<tr><td style="text-align: left"><span class="bx-var-name">@accent_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent</span></td><td style="text-align: left">Selected terminal tab, selected sidebar row, active sidebar switcher button, pressed tactile buttons, <code>.suggested-action</code> buttons, hovered popover menu items, checked switches &amp; checkboxes, selected character pills, and theme tag pills.</td></tr>
-<tr><td style="text-align: left"><span class="bx-var-name">@accent_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent_fg</span></td><td style="text-align: left">High-contrast text and icons inside all <code>@accent_bg_color</code> surfaces.</td></tr>
-<tr><td style="text-align: left"><span class="bx-var-name">@accent_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent</span></td><td style="text-align: left">Focus outlines on search entries, text inputs, and the Claw message bar (<code>.boxxy-msgbar:focus-within</code>), plus bookmark variable chips and Vibe badges.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@accent_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent</span></td><td style="text-align: left">Selected terminal tab, selected sidebar row, active sidebar switcher button, pressed tactile buttons, <code>.suggested-action</code> buttons, hovered popover menu items, checked switches &amp; checkboxes, completed interval lap dots, and selected character pills.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@accent_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent_fg</span></td><td style="text-align: left">High-contrast text and icons inside all <code>@accent_bg_color</code> and <code>@boxxy_surface_hover</code> surfaces.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@accent_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.accent</span></td><td style="text-align: left">Focus outlines on search entries, text inputs, and the Claw message bar (<code>.boxxy-msgbar:focus-within</code>), plus task countdown timers and inline links.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_secondary_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.secondary</span></td><td style="text-align: left">Solid comic fill for <code>button.secondary-action</code> (<code>Okay</code> button), <code>.claw-round-phase-work</code> (<code>● LAP X/N</code>), <code>.detached-shells-pill</code>, <code>.boxxy-theme-tag-pill</code>, <code>.bookmark-var-chip</code>, <code>.claw-task-kind-badge</code>, and <code>.boxxy-badge-secondary</code>.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_secondary_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.secondary_fg</span></td><td style="text-align: left">High-contrast text and icons inside <code>@boxxy_secondary_bg_color</code> buttons and pills.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_secondary_color</span></td><td style="text-align: left"><span class="bx-source-name">OKLCH clamped on card_bg</span></td><td style="text-align: left">Contrast-safe standalone secondary text/border color on <code>@card_bg_color</code> and live <code>@file</code> input highlighting.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_secondary_subtle</span></td><td style="text-align: left"><span class="bx-source-name">alpha(@boxxy_secondary_bg_color, 0.16)</span></td><td style="text-align: left">Subtle translucent secondary wash for Default GTK fallback chips.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_highlight_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.highlight</span></td><td style="text-align: left">Solid discovery &amp; spotlight fill for <code>.whats-new-badge</code>, <code>.claw-round-pip-active</code> (current live lap), <code>.avatar-vibe-badge</code>, <code>.detached-shells-pill.warning</code>, and <code>.boxxy-badge-highlight</code>.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_highlight_fg_color</span></td><td style="text-align: left"><span class="bx-source-name">colors.highlight_fg</span></td><td style="text-align: left">High-contrast text and symbolic icons inside <code>@boxxy_highlight_bg_color</code> badges.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_highlight_color</span></td><td style="text-align: left"><span class="bx-source-name">OKLCH clamped on card_bg</span></td><td style="text-align: left">Contrast-safe standalone discovery text/border color on <code>@card_bg_color</code> and live <code>:character</code> mention highlighting.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_search_match_bg</span></td><td style="text-align: left"><span class="bx-source-name">alpha(@boxxy_highlight_bg_color, 0.32)</span></td><td style="text-align: left"><code>.boxxy-search-match</code> text and filter match highlight background.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">@boxxy_ink</span></td><td style="text-align: left"><span class="bx-source-name">colors.ink_border</span></td><td style="text-align: left">2px solid outlines on tabs, sidebar rows, tactile buttons, window controls, entries, boxed lists, cards, popovers, dialogs, switches, checkboxes, and structural pane dividers.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">@boxxy_shadow</span></td><td style="text-align: left"><span class="bx-source-name">colors.shadow</span></td><td style="text-align: left">Hard-edge offset drop-shadows (<code>2px 3px 0px</code>, <code>3px 4px 0px</code>, <code>4px 5px 0px</code>) on tactile buttons, selected sidebar pills, boxed lists, cards, popovers, and dialogs.</td></tr>
-<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_surface_hover</span></td><td style="text-align: left"><span class="bx-source-name">mix(@card_bg_color, @accent_bg_color, 0.82)</span></td><td style="text-align: left">Vibrant hover background (82% accent + 18% card, paired with <code>@accent_fg_color</code> ink text) for unselected tabs, unselected sidebar rows, tactile buttons, character selector pills, and What's New stat tiles.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@boxxy_surface_hover</span></td><td style="text-align: left"><span class="bx-source-name">mix(@card_bg_color, @accent_bg_color, 0.82)</span></td><td style="text-align: left">Vibrant hover background (82% accent + 18% card, paired with <code>@accent_fg_color</code> ink text) for unselected tabs, shadowed <code>.navigation-sidebar &gt; row</code> items, raised tactile buttons, character selector pills, and What's New stat tiles.</td></tr>
 <tr><td style="text-align: left"><span class="bx-var-name">@destructive_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">Dark: #c01c28 · Light: #e01b24</span></td><td style="text-align: left">Destructive action buttons (<code>.destructive-action</code>), error progress bars, avatar remove badge hover, and diff deletion ratio bars.</td></tr>
-<tr><td style="text-align: left"><span class="bx-var-name">@success_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">Dark: #26a269 · Light: #2ec27e</span></td><td style="text-align: left">Terminal progress bars, model ready status titles, What's New hero badge, and diff addition counters/bars.</td></tr>
+<tr><td style="text-align: left"><span class="bx-var-name">@success_bg_color</span></td><td style="text-align: left"><span class="bx-source-name">Dark: #26a269 · Light: #2ec27e</span></td><td style="text-align: left">Terminal progress bars, model ready status titles, and diff addition counters/bars.</td></tr>
 </tbody></table>
 <hr />
 <h2 id="visual-hierarchy-shadow-vs-non-shadow-matrix"><a class="zola-anchor" href="#visual-hierarchy-shadow-vs-non-shadow-matrix" aria-label="Anchor link for: visual-hierarchy-shadow-vs-non-shadow-matrix">🔗</a>Visual Hierarchy: Shadow vs. Non-Shadow Matrix</h2>
@@ -388,7 +428,8 @@ function bxSelectSibling(el, cls) {
 <tr><td style="text-align: left"><strong>Popover Linked Button Container</strong> (<code>popover.menu box.linked</code>)</td><td style="text-align: left"><strong>Yes (Container only)</strong></td><td style="text-align: left"><code>2px 3px 0px @boxxy_shadow</code></td><td style="text-align: left">The outer segmented bar (<code>Copy | Copy Link</code>, split/close bar) casts a single unified shadow.</td></tr>
 <tr><td style="text-align: left"><strong>Individual Linked Buttons</strong> (<code>popover.menu box.linked &gt; button.model</code>)</td><td style="text-align: left"><strong>No</strong> (<code>box-shadow: none</code>)</td><td style="text-align: left"><code>none</code></td><td style="text-align: left">Inner segments are separated by <code>border-right: 2px solid @boxxy_ink</code> inside the shared container; per-segment shadows would overlap adjacent buttons.</td></tr>
 <tr><td style="text-align: left"><strong>Dropdown &amp; Menu List Rows</strong> (<code>dropdown &gt; popover.menu &gt; contents listview &gt; row</code>, <code>popover.menu modelbutton</code>)</td><td style="text-align: left"><strong>On Hover (<code>2px 2px 0px @boxxy_shadow</code>)</strong></td><td style="text-align: left"><code>2px 2px 0px @boxxy_shadow</code></td><td style="text-align: left">Hovered menu and dropdown items snap instantly (<code>transition: none</code>) into <code>@accent_bg_color</code> with a <code>2px solid @boxxy_ink</code> border and <code>2px 2px 0px</code> offset shadow.</td></tr>
-<tr><td style="text-align: left"><strong>Preference Boxed Lists</strong> (<code>.boxed-list</code>, <code>.boxed-list-separate</code>, <code>preferencesgroup listbox</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>2px 3px 0px @boxxy_shadow</code></td><td style="text-align: left">Structured <code>8px</code>-radius preference groups with a <code>2px solid @boxxy_ink</code> frame, recessed <code>1.5px solid alpha(@boxxy_ink, 0.55)</code> row grooves, and accent-tinted <code>row.activatable:hover</code> states.</td></tr>
+<tr><td style="text-align: left"><strong>Preference Boxed Lists</strong> (<code>.boxed-list</code>, <code>.boxed-list-separate</code>, <code>preferencesgroup listbox</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>2px 3px 0px @boxxy_shadow</code></td><td style="text-align: left">Structured <code>8px</code>-radius preference groups with a <code>2px solid @boxxy_ink</code> frame, recessed <code>1.5px solid alpha(@boxxy_ink, 0.55)</code> row grooves, and recessed <code>@window_bg_color</code> <code>row.activatable:hover</code> states.</td></tr>
+<tr><td style="text-align: left"><strong>Flat Utility Buttons, Links &amp; Commit Rows</strong> (<code>button.flat</code>, <code>.boxxy-link</code>, <code>.whats-new-commit-row</code>)</td><td style="text-align: left"><strong>No</strong> (<code>box-shadow: none</code>)</td><td style="text-align: left"><code>none</code></td><td style="text-align: left">Quiet inline utility actions stay transparent at rest and snap into a shadowless recessed surface cutout (<code>@window_bg_color</code> / <code>@card_bg_color</code>) + <code>1.5px</code> <code>@boxxy_ink</code> hairline on <code>:hover</code>, never competing with raised buttons.</td></tr>
 <tr><td style="text-align: left"><strong>Scale Sliders &amp; Squared Scrollbars</strong> (<code>scale &gt; trough &gt; slider</code>, <code>scrollbar.overlay-indicator</code>)</td><td style="text-align: left"><strong>Yes (Slider) / Inset (Scrollbar)</strong></td><td style="text-align: left"><code>1.5px 2px 0px @boxxy_shadow</code></td><td style="text-align: left"><code>scale</code> uses a <code>24×20px</code> <code>@card_fg_color</code> block grabber (<code>border-radius: 6px</code>). Overlay scrollbars use a squared <code>3px</code>-radius thumb with zero-allocation <code>inset 0 0 0 1.5px @boxxy_ink</code> borders.</td></tr>
 <tr><td style="text-align: left"><strong>Popovers &amp; Dialog Sheets</strong> (<code>popover &gt; contents</code>, <code>dialog sheet</code>)</td><td style="text-align: left"><strong>Yes</strong></td><td style="text-align: left"><code>4px 5px 0px @boxxy_shadow</code></td><td style="text-align: left">Highest elevation layer floating above the window canvas.</td></tr>
 </tbody></table>
@@ -397,19 +438,21 @@ function bxSelectSibling(el, cls) {
 <p>Users and community authors can drop <code>.toml</code> files into <code>~/.config/boxxy-terminal/themes/</code> (or <code>$BOXXY_CONFIG_DIR/themes/</code>). On first launch, Boxxy seeds <code>README.md</code>, <code>cotton-candy.toml</code>, and <code>bauhaus.toml</code> into this folder. While <strong>Preferences → Themes</strong> is open, Boxxy polls the folder every 500 ms (using a zero-I/O <code>(filename, mtime, size)</code> metadata stamp) and live-reloads any edits immediately.</p>
 <h3 id="full-toml-schema"><a class="zola-anchor" href="#full-toml-schema" aria-label="Anchor link for: full-toml-schema">🔗</a>Full <code>.toml</code> Schema</h3>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span style="color: #9399B2;">[</span><span>meta</span><span style="color: #9399B2;">]</span></span>
-<span class="giallo-l"><span>name</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Cotton Candy&quot;</span><span style="color: #9399B2;font-style: italic;">                                  # Optional (defaults to filename stem with spaces)</span></span>
-<span class="giallo-l"><span>author</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;nukeop&quot;</span><span style="color: #9399B2;font-style: italic;">                                      # Optional (defaults to &quot;community&quot;)</span></span>
-<span class="giallo-l"><span>description</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Soft pastels in baby pink and blue&quot;</span><span style="color: #9399B2;font-style: italic;">     # Optional (defaults to &quot;&quot;)</span></span>
-<span class="giallo-l"><span>mode</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;light&quot;</span><span style="color: #9399B2;font-style: italic;">                                         # Optional: &quot;light&quot; or &quot;dark&quot; (auto-detected from window_bg luminance if omitted)</span></span>
-<span class="giallo-l"><span>tags</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;pastel&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;pink&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;cute&quot;</span><span style="color: #9399B2;">]</span><span style="color: #9399B2;font-style: italic;">                      # Optional: up to 6 tags (first 3 shown as pills in Preferences)</span></span>
+<span class="giallo-l"><span>name</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Cotton Candy&quot;</span><span style="color: #9399B2;font-style: italic;">                                         # Optional (defaults to filename stem with spaces)</span></span>
+<span class="giallo-l"><span>author</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;nukeop&quot;</span><span style="color: #9399B2;font-style: italic;">                                             # Optional (defaults to &quot;community&quot;)</span></span>
+<span class="giallo-l"><span>description</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Soft pastels in baby pink, sky blue, and lemon candy&quot;</span><span style="color: #9399B2;font-style: italic;"> # Optional (defaults to &quot;&quot;)</span></span>
+<span class="giallo-l"><span>mode</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;light&quot;</span><span style="color: #9399B2;font-style: italic;">                                                # Optional: &quot;light&quot; or &quot;dark&quot; (auto-detected from window_bg WCAG luminance if omitted)</span></span>
+<span class="giallo-l"><span>tags</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;pastel&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;pink&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;cute&quot;</span><span style="color: #9399B2;">]</span><span style="color: #9399B2;font-style: italic;">                             # Optional: up to 6 tags (first 3 shown as pills in Preferences)</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #9399B2;">[</span><span>colors</span><span style="color: #9399B2;">]</span></span>
-<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># --- REQUIRED (3 fields) ---</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># --- REQUIRED (5 fields) ---</span></span>
 <span class="giallo-l"><span>window_bg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#fff5f8&quot;</span></span>
 <span class="giallo-l"><span>window_fg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span></span>
 <span class="giallo-l"><span>accent</span><span style="color: #94E2D5;">    =</span><span style="color: #A6E3A1;"> &quot;#ff7eb6&quot;</span></span>
+<span class="giallo-l"><span>secondary</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#7cc6fe&quot;</span></span>
+<span class="giallo-l"><span>highlight</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#ffe066&quot;</span></span>
 <span class="giallo-l"></span>
-<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># --- OPTIONAL (11 fields — automatically derived if omitted) ---</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># --- OPTIONAL (13 fields — automatically derived if omitted) ---</span></span>
 <span class="giallo-l"><span>sidebar_bg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#fce8ef&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `window_bg`</span></span>
 <span class="giallo-l"><span>sidebar_fg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `window_fg`</span></span>
 <span class="giallo-l"><span>card_bg</span><span style="color: #94E2D5;">      =</span><span style="color: #A6E3A1;"> &quot;#ffffff&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `window_bg`</span></span>
@@ -419,9 +462,11 @@ function bxSelectSibling(el, cls) {
 <span class="giallo-l"><span>popover_bg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#fce8ef&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `sidebar_bg` (matches sidebar surface!)</span></span>
 <span class="giallo-l"><span>popover_fg</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `sidebar_fg`</span></span>
 <span class="giallo-l"><span>accent_fg</span><span style="color: #94E2D5;">    =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `contrast_fg_for_hex(accent)` (#ffffff or #111418)</span></span>
+<span class="giallo-l"><span>secondary_fg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `contrast_fg_for_hex(secondary)`</span></span>
+<span class="giallo-l"><span>highlight_fg</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `contrast_fg_for_hex(highlight)`</span></span>
 <span class="giallo-l"><span>ink_border</span><span style="color: #94E2D5;">   =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to &quot;#07080c&quot; (dark mode) or &quot;#111418&quot; (light mode)</span></span>
-<span class="giallo-l"><span>shadow</span><span style="color: #94E2D5;">       =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `ink_border`</span></span></code></pre><h3 id="automatic-fallback-derivation-chain"><a class="zola-anchor" href="#automatic-fallback-derivation-chain" aria-label="Anchor link for: automatic-fallback-derivation-chain">🔗</a>Automatic Fallback Derivation Chain</h3>
-<p>A valid community theme only requires <strong>3 colors</strong> (<code>window_bg</code>, <code>window_fg</code>, <code>accent</code>). All remaining tokens derive automatically in <code>parse_community_theme_toml()</code>:</p>
+<span class="giallo-l"><span>shadow</span><span style="color: #94E2D5;">       =</span><span style="color: #A6E3A1;"> &quot;#1e1b24&quot;</span><span style="color: #9399B2;font-style: italic;">   # Defaults to `ink_border`</span></span></code></pre><h3 id="automatic-surface-foreground-fallback-chain"><a class="zola-anchor" href="#automatic-surface-foreground-fallback-chain" aria-label="Anchor link for: automatic-surface-foreground-fallback-chain">🔗</a>Automatic Surface &amp; Foreground Fallback Chain</h3>
+<p>A valid community theme requires <strong>5 core colors</strong> (<code>window_bg</code>, <code>window_fg</code>, <code>accent</code>, <code>secondary</code>, <code>highlight</code>). All secondary surfaces, ink borders, and readable foreground tokens derive automatically in <code>parse_community_theme_toml()</code>:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="plain"><span class="giallo-l"><span>window_bg ──┬──► sidebar_bg ──┬──► headerbar_bg</span></span>
 <span class="giallo-l"><span>            │                 └──► popover_bg</span></span>
 <span class="giallo-l"><span>            └──► card_bg</span></span>
@@ -430,12 +475,14 @@ function bxSelectSibling(el, cls) {
 <span class="giallo-l"><span>            │                 └──► popover_fg</span></span>
 <span class="giallo-l"><span>            └──► card_fg</span></span>
 <span class="giallo-l"></span>
-<span class="giallo-l"><span>accent ────────► accent_fg (via relative luminance: &lt; 0.38 → #ffffff, &gt;= 0.38 → #111418)</span></span>
+<span class="giallo-l"><span>accent    ─────► accent_fg    (WCAG linearized relative luminance: Y &lt; 0.22 → #ffffff, &gt;= 0.22 → #111418)</span></span>
+<span class="giallo-l"><span>secondary ─────► secondary_fg (WCAG linearized relative luminance)</span></span>
+<span class="giallo-l"><span>highlight ─────► highlight_fg (WCAG linearized relative luminance)</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span>mode (is_dark) ► ink_border (#07080c if dark, #111418 if light) ──► shadow</span></span></code></pre><h3 id="security-validation-sanitize-hex-color"><a class="zola-anchor" href="#security-validation-sanitize-hex-color" aria-label="Anchor link for: security-validation-sanitize-hex-color">🔗</a>Security &amp; Validation (<code>sanitize_hex_color</code>)</h3>
 <ul>
 <li>Every color string in <code>[colors]</code> (and any user <code>custom_accent_color</code>) is validated through <code>sanitize_hex_color(raw: &amp;str) -&gt; Option&lt;String&gt;</code>.</li>
-<li>Only exact 6-digit (<code>#RRGGBB</code>) or 8-digit (<code>#RRGGBBAA</code>) ASCII hexadecimal strings are accepted.</li>
+<li>Only exact 6-digit (<code>#RRGGBB</code>) or opaque 8-digit (<code>#RRGGBBFF</code>, normalized to <code>#rrggbb</code>) ASCII hexadecimal strings are accepted; translucent <code>#RRGGBBAA</code> strings are rejected so solid surface tokens can never become invisible.</li>
 <li>Any invalid hex or CSS injection attempt (e.g., <code>#ffffff; @import ...</code> or arbitrary CSS rules) returns <code>None</code>, guaranteeing community themes can never break widget geometry or inject arbitrary CSS.</li>
 </ul>
 
