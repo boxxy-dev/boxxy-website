@@ -71,16 +71,24 @@
                             overflow-y: auto;
                             padding: 0 12px 0 0 !important;
                         }
+                        .live-modal-scroll {
+                            max-height: 65vh;
+                            overflow-y: auto;
+                            padding-right: 6px !important;
+                        }
                         .live-scroll-list::-webkit-scrollbar,
-                        .live-scroll-models::-webkit-scrollbar {
+                        .live-scroll-models::-webkit-scrollbar,
+                        .live-modal-scroll::-webkit-scrollbar {
                             width: 6px;
                         }
                         .live-scroll-list::-webkit-scrollbar-track,
-                        .live-scroll-models::-webkit-scrollbar-track {
+                        .live-scroll-models::-webkit-scrollbar-track,
+                        .live-modal-scroll::-webkit-scrollbar-track {
                             background: transparent;
                         }
                         .live-scroll-list::-webkit-scrollbar-thumb,
-                        .live-scroll-models::-webkit-scrollbar-thumb {
+                        .live-scroll-models::-webkit-scrollbar-thumb,
+                        .live-modal-scroll::-webkit-scrollbar-thumb {
                             background-color: #45475a;
                             border-radius: 6px;
                         }
@@ -117,7 +125,7 @@
                             <div class="fancy-box p-5 has-text-centered" style="height: 100%; border-color: #f9e2af; box-shadow: 1px 1px 0 #f9e2af, 2px 2px 0 #f9e2af, 3px 3px 0 #f9e2af, 4px 4px 0 #f9e2af, 5px 5px 0 #f9e2af, 6px 6px 0 #f9e2af;">
                                 <h3 style="color: #a6adc8; text-transform: uppercase; font-size: 0.9rem; font-weight: 800; letter-spacing: 1px;">Claw Adoption</h3>
                                 <p id="claw-adoption" class="mt-3" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 2.5rem; color: #f9e2af; font-weight: 700;">-%</p>
-                                <p style="color: #6c7086; font-size: 0.8rem; font-weight: 600;">of app launches</p>
+                                <p style="color: #6c7086; font-size: 0.8rem; font-weight: 600;">of app launches<span id="claw-adoption-alltime-wrap" style="display: none;"> • All-time: <span id="claw-adoption-alltime">-%</span></span></p>
                             </div>
                         </div>
 
@@ -155,13 +163,16 @@
                                     </div>
                                 </div>
 
-                                <!-- Right Column: Native/Flatpak, Shell Usage, and Theme Usage -->
+                                <!-- Right Column: Installation Type, Shell Usage, and Theme Usage -->
                                 <div class="column is-6">
                                     <div class="content-area" style="margin-bottom: 1.5rem;">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Native vs Flatpak</h3>
+                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Installation Type</h3>
                                         <ul id="pkg-container" class="live-scroll-list">
                                             <!-- Populated by JS -->
                                         </ul>
+                                        <div class="has-text-right mt-3">
+                                            <button type="button" class="alltime-link" data-alltime="pkg">All time</button>
+                                        </div>
                                     </div>
                                     <div class="content-area" style="margin-bottom: 1.5rem;">
                                         <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Shell Usage</h3>
@@ -191,21 +202,31 @@
                             <div class="columns is-multiline">
                                 <!-- Left Column: Providers -->
                                 <div class="column is-6">
-                                    <div class="content-area" style="height: 100%;">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Claw Providers</h3>
-                                        <ul id="providers-container" class="live-scroll-list">
-                                            <!-- Populated by JS -->
-                                        </ul>
+                                    <div class="content-area" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Claw Providers</h3>
+                                            <ul id="providers-container" class="live-scroll-list">
+                                                <!-- Populated by JS -->
+                                            </ul>
+                                        </div>
+                                        <div class="has-text-right mt-3">
+                                            <button type="button" class="alltime-link" data-alltime="providers">All time</button>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Right Column: Models Usage -->
                                 <div class="column is-6">
-                                    <div class="content-area" style="height: 100%;">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: 1px;">Models usage</h3>
-                                        <p style="color: #a6adc8; font-size: 0.9em; margin-bottom: 1.5rem; font-style: italic;">Note: Ollama models are excluded for privacy reasons.</p>
-                                        <div id="models-container" class="live-scroll-models">
-                                            <!-- Populated by JS -->
+                                    <div class="content-area" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: 1px;">Models usage</h3>
+                                            <p style="color: #a6adc8; font-size: 0.9em; margin-bottom: 1.5rem; font-style: italic;">Note: Ollama and Custom Endpoint models are excluded for privacy reasons.</p>
+                                            <div id="models-container" class="live-scroll-models">
+                                                <!-- Populated by JS -->
+                                            </div>
+                                        </div>
+                                        <div class="has-text-right mt-3">
+                                            <button type="button" class="alltime-link" data-alltime="models">Top 20 of all time</button>
                                         </div>
                                     </div>
                                 </div>
@@ -219,6 +240,9 @@
                                 <div id="tools-container" class="live-scroll-list">
                                     <!-- Populated by JS -->
                                 </div>
+                                <div class="has-text-right mt-3">
+                                    <button type="button" class="alltime-link" data-alltime="tools">All time</button>
+                                </div>
                             </div>
                         </div>
 
@@ -228,14 +252,14 @@
         </div>
     </div>
 
-    <!-- All-Time Top 10 Modal -->
+    <!-- All-Time Modal -->
     <div id="alltime-modal" style="display: none; position: fixed; inset: 0; background-color: rgba(17, 17, 27, 0.8); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-        <div style="background-color: #1e1e2e; border: 2px solid #45475a; border-radius: 16px; width: 100%; max-width: 520px; padding: 2rem; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
+        <div style="background-color: #1e1e2e; border: 2px solid #45475a; border-radius: 16px; width: 100%; max-width: 560px; padding: 2rem; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
             <div class="is-flex is-justify-content-space-between is-align-items-center mb-4">
-                <h3 id="alltime-modal-title" style="color: #f5e0dc !important; font-size: 1.15rem; font-weight: 800; margin: 0;">Top 10 of All Time</h3>
+                <h3 id="alltime-modal-title" style="color: #f5e0dc !important; font-size: 1.15rem; font-weight: 800; margin: 0;">All Time</h3>
                 <button id="alltime-modal-close" type="button" style="background-color: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center;">✕</button>
             </div>
-            <ul id="alltime-modal-list" style="list-style: none; margin: 0; padding: 0;">
+            <ul id="alltime-modal-list" class="live-modal-scroll" style="list-style: none; margin: 0; padding: 0;">
                 <!-- Populated by JS -->
             </ul>
         </div>
@@ -261,74 +285,156 @@
 
         const formatProviderName = (raw) => {
             switch (String(raw ?? '').trim().toLowerCase()) {
-                case 'gemini': return 'Gemini';
+                case 'gemini':
+                case 'google': return 'Gemini';
                 case 'ollama': return 'Ollama';
                 case 'anthropic': return 'Anthropic';
                 case 'openai': return 'OpenAI';
                 case 'openrouter': return 'OpenRouter';
                 case 'deepseek': return 'DeepSeek';
+                case 'moonshot': return 'Moonshot';
+                case 'xai': return 'xAI';
+                case 'z.ai':
+                case 'zai': return 'Z.ai';
+                case 'mistral': return 'Mistral';
+                case 'minimax': return 'MiniMax';
+                case 'groq': return 'Groq';
+                case 'opencode zen':
+                case 'opencode-zen':
+                case 'opencode_zen':
+                case 'opencode': return 'OpenCode Zen';
+                case 'opencode go':
+                case 'opencode-go':
+                case 'opencode_go': return 'OpenCode Go';
                 default: return 'Custom Endpoints';
             }
         };
 
-        try {
-            const [statsRes, toolsRes, osRes, shellRes, providerRes, adoptionRes, allTimeRes, pkgAllTimeRes, modelRes, desktopRes, stats7dRes, osAllTimeRes, desktopAllTimeRes, shellAllTimeRes, themeRes, themeAllTimeRes] = await Promise.all([
+        const formatPkgType = (raw) => {
+            switch (String(raw ?? '').trim().toLowerCase()) {
+                case 'flatpak': return 'Flatpak';
+                case 'distro':
+                case 'distro packaged':
+                case 'system-package':
+                case 'nix': return 'Distro Packaged';
+                default: return 'Native';
+            }
+        };
+
+        const isPrivateProvider = (raw) => {
+            const norm = formatProviderName(raw);
+            return norm === 'Ollama' || norm === 'Custom Endpoints';
+        };
+
+        const fetchDashboardPayload = async () => {
+            const rpcRes = await supabase.rpc('get_live_dashboard_stats');
+            if (!rpcRes.error && rpcRes.data) {
+                return rpcRes.data;
+            }
+
+            // Fallback to individual view reads if RPC is unavailable
+            const [
+                statsRes, toolsRes, toolsAllRes, osRes, osAllRes,
+                shellRes, shellAllRes, providerRes, providerAllRes,
+                adoptionRes, adoptionAllRes, allTimeRes, pkgRes, pkgAllRes,
+                modelRes, modelAllRes, desktopRes, desktopAllRes,
+                stats7dRes, themeRes, themeAllRes
+            ] = await Promise.all([
                 supabase.from('public_stats_daily').select('*').order('day', { ascending: false }).limit(30),
                 supabase.from('tool_usage_stats_7d').select('*').order('usage_count', { ascending: false }),
+                supabase.from('tool_usage_stats').select('*').order('usage_count', { ascending: false }),
                 supabase.from('os_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
+                supabase.from('os_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
                 supabase.from('shell_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
+                supabase.from('shell_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
                 supabase.from('claw_provider_stats_7d').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }),
-                supabase.from('claw_usage_per_launch_stats_7d').select('*').limit(1),
-                supabase.from('public_stats_all_time').select('*').single(),
+                supabase.from('claw_provider_stats').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }),
+                supabase.from('claw_usage_per_launch_stats_7d').select('*').maybeSingle(),
+                supabase.from('claw_usage_per_launch_stats').select('*').maybeSingle(),
+                supabase.from('public_stats_all_time').select('*').maybeSingle(),
+                supabase.from('pkg_type_usage_stats_7d').select('*').order('user_count', { ascending: false }),
                 supabase.from('pkg_type_usage_stats_all_time').select('*').order('user_count', { ascending: false }),
                 supabase.from('claw_model_stats_7d').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }),
+                supabase.from('claw_model_stats').select('*').order('unique_users', { ascending: false }).order('total_invocations', { ascending: false }).limit(20),
                 supabase.from('desktop_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
-                supabase.from('public_stats_7d').select('*').maybeSingle(),
-                supabase.from('os_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
                 supabase.from('desktop_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
-                supabase.from('shell_usage_stats').select('*').order('unique_users', { ascending: false }).limit(10),
+                supabase.from('public_stats_7d').select('*').maybeSingle(),
                 supabase.from('theme_usage_stats_7d').select('*').order('unique_users', { ascending: false }),
                 supabase.from('theme_usage_stats').select('*').order('unique_users', { ascending: false })
             ]);
 
-            const daily = statsRes.data || [];
-            const tools = toolsRes.data || [];
-            const osData = osRes.data || [];
-            const shellData = shellRes.data || [];
-            const providers = providerRes.data || [];
-            const adoption = adoptionRes.data && adoptionRes.data.length > 0 ? adoptionRes.data[0] : null;
-            const allTimeData = allTimeRes.data || {};
-            const pkgAllTimeData = pkgAllTimeRes.data || [];
-            const models = modelRes.data || [];
-            const desktopData = desktopRes.data || [];
-            const stats7d = stats7dRes && !stats7dRes.error ? stats7dRes.data : null;
-            const osAllTimeData = osAllTimeRes && !osAllTimeRes.error ? (osAllTimeRes.data || []) : [];
-            const desktopAllTimeData = desktopAllTimeRes && !desktopAllTimeRes.error ? (desktopAllTimeRes.data || []) : [];
-            const shellAllTimeData = shellAllTimeRes && !shellAllTimeRes.error ? (shellAllTimeRes.data || []) : [];
-            const themeData = themeRes && !themeRes.error ? (themeRes.data || []) : [];
-            const themeAllTimeData = themeAllTimeRes && !themeAllTimeRes.error ? (themeAllTimeRes.data || []) : [];
+            return {
+                stats_7d: stats7dRes?.data || null,
+                stats_all_time: allTimeRes?.data || {},
+                daily: statsRes?.data || [],
+                adoption_7d: adoptionRes?.data || null,
+                adoption_all_time: adoptionAllRes?.data || null,
+                os_7d: osRes?.data || [],
+                os_all_time: osAllRes?.data || [],
+                desktop_7d: desktopRes?.data || [],
+                desktop_all_time: desktopAllRes?.data || [],
+                shell_7d: shellRes?.data || [],
+                shell_all_time: shellAllRes?.data || [],
+                theme_7d: themeRes?.data || [],
+                theme_all_time: themeAllRes?.data || [],
+                pkg_7d: pkgRes?.data || [],
+                pkg_all_time: pkgAllRes?.data || [],
+                providers_7d: providerRes?.data || [],
+                providers_all_time: providerAllRes?.data || [],
+                models_7d: modelRes?.data || [],
+                models_all_time: modelAllRes?.data || [],
+                tools_7d: toolsRes?.data || [],
+                tools_all_time: toolsAllRes?.data || []
+            };
+        };
 
-            // Calculate totals and date range
+        try {
+            const payload = await fetchDashboardPayload();
+
+            const daily = payload.daily || [];
+            const stats7d = payload.stats_7d || null;
+            const allTimeData = payload.stats_all_time || {};
+            const adoption = payload.adoption_7d || null;
+            const adoptionAllTime = payload.adoption_all_time || null;
+
+            const osData = payload.os_7d || [];
+            const osAllTimeData = payload.os_all_time || [];
+            const desktopData = payload.desktop_7d || [];
+            const desktopAllTimeData = payload.desktop_all_time || [];
+            const shellData = payload.shell_7d || [];
+            const shellAllTimeData = payload.shell_all_time || [];
+            const themeData = payload.theme_7d || [];
+            const themeAllTimeData = payload.theme_all_time || [];
+            const pkgData = (payload.pkg_7d && payload.pkg_7d.length > 0) ? payload.pkg_7d : (payload.pkg_all_time || []);
+            const pkgAllTimeData = payload.pkg_all_time || [];
+            const providers = payload.providers_7d || [];
+            const providersAllTimeData = payload.providers_all_time || [];
+            const models = payload.models_7d || [];
+            const modelsAllTimeData = payload.models_all_time || [];
+            const tools = payload.tools_7d || [];
+            const toolsAllTimeData = payload.tools_all_time || [];
+
+            // Calculate totals and UTC-accurate date range
             const last7Days = daily.slice(0, 7);
             const tokensLastWeek = stats7d && stats7d.total_tokens_7d !== undefined
                 ? Number(stats7d.total_tokens_7d)
                 : last7Days.reduce((acc, curr) => acc + (Number(curr.total_tokens) || 0), 0);
             const tokensAllTime = Number(allTimeData.total_tokens) || 0;
-            // Use rolling 24h DAU when available; otherwise avoid UTC-midnight drop by considering the most recent completed UTC day
             const currentDau = stats7d && stats7d.dau_24h !== undefined
                 ? Math.max(Number(stats7d.dau_24h) || 0, Number(daily[0]?.dau) || 0)
                 : Math.max(Number(daily[0]?.dau) || 0, Number(daily[1]?.dau) || 0);
             const totalDevsAllTime = Number(allTimeData.total_users) || 0;
 
-            // Date range formatting
             if (last7Days.length > 0) {
-                const formatDate = (dateStr) => {
-                    const date = new Date(dateStr);
-                    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                };
-                const start = formatDate(last7Days[last7Days.length - 1].day);
-                const end = formatDate(last7Days[0].day);
-                document.getElementById('date-range').innerText = `${start} - ${end}, ${new Date().getFullYear()}`;
+                const startDate = new Date(last7Days[last7Days.length - 1].day);
+                const endDate = new Date(last7Days[0].day);
+                const fmtShort = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+                const startYear = startDate.getUTCFullYear();
+                const endYear = endDate.getUTCFullYear();
+                const rangeText = startYear === endYear
+                    ? `${fmtShort(startDate)} - ${fmtShort(endDate)}, ${endYear}`
+                    : `${fmtShort(startDate)}, ${startYear} - ${fmtShort(endDate)}, ${endYear}`;
+                document.getElementById('date-range').innerText = rangeText;
             }
 
             document.getElementById('total-tokens-week').innerText = tokensLastWeek.toLocaleString();
@@ -341,53 +447,74 @@
                 document.getElementById('weekly-devs-wrap').style.display = 'inline';
             }
 
-            if (adoption && adoption.adoption_rate_percent !== null) {
+            if (adoption && adoption.adoption_rate_percent !== null && adoption.adoption_rate_percent !== undefined) {
                 document.getElementById('claw-adoption').innerText = `${Number(adoption.adoption_rate_percent)}%`;
             }
-
-            const toolsContainer = document.getElementById('tools-container');
-            toolsContainer.innerHTML = '';
-
-            if (tools.length === 0) {
-                toolsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No tool usage data available yet.</p>';
-            } else {
-                tools.forEach(tool => {
-                    const safeName = escapeHtml(tool.tool_name);
-                    const safeCount = (Number(tool.usage_count) || 0).toLocaleString();
-                    const isExternalMcp = tool.tool_name === 'external_mcp_tool';
-                    const badgeHtml = isExternalMcp
-                        ? '<span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 8px;">External MCP</span>'
-                        : '';
-                    toolsContainer.innerHTML += `
-                        <div class="is-flex is-justify-content-space-between is-align-items-center mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <div class="is-flex is-align-items-center">
-                                <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1rem !important; padding: 0 !important;">${safeName}</code>${badgeHtml}
-                            </div>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #bac2de; font-weight: 600;">${safeCount} uses</span>
-                        </div>
-                    `;
-                });
+            if (adoptionAllTime && adoptionAllTime.adoption_rate_percent !== null && adoptionAllTime.adoption_rate_percent !== undefined) {
+                document.getElementById('claw-adoption-alltime').innerText = `${Number(adoptionAllTime.adoption_rate_percent)}%`;
+                document.getElementById('claw-adoption-alltime-wrap').style.display = 'inline';
             }
 
+            const renderSimpleDevList = (containerId, rows, nameKey, emptyMsg) => {
+                const el = document.getElementById(containerId);
+                if (!rows || rows.length === 0) {
+                    el.innerHTML = `<li class="has-text-centered" style="color: #a6adc8;">${escapeHtml(emptyMsg)}</li>`;
+                    return;
+                }
+                el.innerHTML = rows.map(row => {
+                    const safeName = escapeHtml(row[nameKey]);
+                    const safeUsers = (Number(row.unique_users) || 0).toLocaleString();
+                    return `
+                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
+                            <span style="color: #cdd6f4; font-weight: 700;">${safeName}</span>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
+                        </li>
+                    `;
+                }).join('');
+            };
+
+            const renderShareList = (containerId, rows, getLabel, getCount, emptyMsg) => {
+                const el = document.getElementById(containerId);
+                if (!rows || rows.length === 0) {
+                    el.innerHTML = `<li class="has-text-centered" style="color: #a6adc8;">${escapeHtml(emptyMsg)}</li>`;
+                    return;
+                }
+                const total = rows.reduce((acc, r) => acc + (Number(getCount(r)) || 0), 0);
+                el.innerHTML = rows.map(row => {
+                    const safeName = escapeHtml(getLabel(row));
+                    const userCount = Number(getCount(row)) || 0;
+                    const percentage = total > 0 ? ((userCount / total) * 100).toFixed(1) : '0.0';
+                    return `
+                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
+                            <span style="color: #cdd6f4; font-weight: 700;">${safeName}</span>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
+                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${userCount.toLocaleString()} devs)</small>
+                            </span>
+                        </li>
+                    `;
+                }).join('');
+            };
+
+            renderSimpleDevList('os-container', osData, 'os_name', 'No OS data available yet.');
+            renderSimpleDevList('shell-container', shellData, 'shell_name', 'No shell data available yet.');
+            renderSimpleDevList('desktop-container', desktopData, 'desktop_name', 'No desktop data yet — populates on next launch.');
+            renderShareList('pkg-container', pkgData, (r) => formatPkgType(r.pkg_type), (r) => r.user_count ?? r.unique_users, 'No package data available yet.');
+            renderShareList('theme-container', themeData, (r) => r.theme_name, (r) => r.unique_users, 'No theme data yet — populates on next launch.');
+
+            // Providers
             const providersContainer = document.getElementById('providers-container');
-            providersContainer.innerHTML = '';
             if (providers.length === 0) {
                 providersContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No provider data available yet.</li>';
             } else {
-                // Calculate the sum of users to get the percentage denominator
                 const totalProviderUsers = providers.reduce((acc, p) => acc + (Number(p.unique_users) || 0), 0);
-
-                providers.forEach(p => {
+                providersContainer.innerHTML = providers.map(p => {
                     const name = escapeHtml(formatProviderName(p.provider_name));
                     const uniqueUsers = Number(p.unique_users) || 0;
                     const totalInvocations = Number(p.total_invocations) || 0;
-
-                    // Calculate the percentage
                     const percentage = totalProviderUsers > 0
                         ? ((uniqueUsers / totalProviderUsers) * 100).toFixed(1)
-                        : 0;
-
-                    providersContainer.innerHTML += `
+                        : '0.0';
+                    return `
                         <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
                             <span style="color: #cdd6f4; font-weight: 700;">${name}</span>
                             <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
@@ -395,180 +522,136 @@
                             </span>
                         </li>
                     `;
-                });
+                }).join('');
             }
 
-            const osContainer = document.getElementById('os-container');
-            osContainer.innerHTML = '';
-            if (osData.length === 0) {
-                osContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No OS data available yet.</li>';
-            } else {
-                osData.forEach(os => {
-                    const safeOs = escapeHtml(os.os_name);
-                    const safeUsers = (Number(os.unique_users) || 0).toLocaleString();
-                    osContainer.innerHTML += `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${safeOs}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
-                        </li>
-                    `;
-                });
-            }
-
-            const pkgContainer = document.getElementById('pkg-container');
-            pkgContainer.innerHTML = '';
-            if (pkgAllTimeData.length === 0) {
-                pkgContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No package data available yet.</li>';
-            } else {
-                const totalPkgUsers = pkgAllTimeData.reduce((acc, p) => acc + (Number(p.user_count) || 0), 0);
-
-                pkgAllTimeData.forEach(p => {
-                    const rawPkg = String(p.pkg_type || '');
-                    const name = escapeHtml(rawPkg.charAt(0).toUpperCase() + rawPkg.slice(1));
-                    const userCount = Number(p.user_count) || 0;
-                    const percentage = totalPkgUsers > 0 ? ((userCount / totalPkgUsers) * 100).toFixed(1) : 0;
-
-                    pkgContainer.innerHTML += `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${name}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
-                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${userCount.toLocaleString()} devs)</small>
-                            </span>
-                        </li>
-                    `;
-                });
-            }
-
-            const shellContainer = document.getElementById('shell-container');
-            shellContainer.innerHTML = '';
-            if (shellData.length === 0) {
-                shellContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No shell data available yet.</li>';
-            } else {
-                shellData.forEach(sh => {
-                    const safeShell = escapeHtml(sh.shell_name);
-                    const safeUsers = (Number(sh.unique_users) || 0).toLocaleString();
-                    shellContainer.innerHTML += `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${safeShell}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
-                        </li>
-                    `;
-                });
-            }
-
-            const desktopContainer = document.getElementById('desktop-container');
-            desktopContainer.innerHTML = '';
-            if (desktopData.length === 0) {
-                desktopContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No desktop data yet — populates on next launch.</li>';
-            } else {
-                desktopData.forEach(de => {
-                    const safeDesktop = escapeHtml(de.desktop_name);
-                    const safeUsers = (Number(de.unique_users) || 0).toLocaleString();
-                    desktopContainer.innerHTML += `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${safeDesktop}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
-                        </li>
-                    `;
-                });
-            }
-
-            const themeContainer = document.getElementById('theme-container');
-            themeContainer.innerHTML = '';
-            if (themeData.length === 0) {
-                themeContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No theme data yet — populates on next launch.</li>';
-            } else {
-                const totalThemeUsers = themeData.reduce((acc, t) => acc + (Number(t.unique_users) || 0), 0);
-                themeData.forEach(th => {
-                    const safeTheme = escapeHtml(th.theme_name);
-                    const userCount = Number(th.unique_users) || 0;
-                    const percentage = totalThemeUsers > 0 ? ((userCount / totalThemeUsers) * 100).toFixed(1) : 0;
-                    themeContainer.innerHTML += `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${safeTheme}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
-                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${userCount.toLocaleString()} devs)</small>
-                            </span>
-                        </li>
-                    `;
-                });
-            }
-
+            // Models
             const modelsContainer = document.getElementById('models-container');
-            modelsContainer.innerHTML = '';
-            if (models.length === 0) {
-                modelsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No model usage data available yet.</p>';
+            const filteredModels = models.filter(m => !isPrivateProvider(m.provider_name) && String(m.model_name || '').toLowerCase() !== 'redacted');
+            if (filteredModels.length === 0) {
+                modelsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No public model usage data available yet.</p>';
             } else {
-                const filteredModels = models.filter(m => String(m.provider_name || '').toLowerCase() !== 'ollama');
-                if (filteredModels.length === 0) {
-                     modelsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No public model usage data available yet.</p>';
-                } else {
-                    filteredModels.forEach(model => {
-                        const providerName = escapeHtml(formatProviderName(model.provider_name));
-                        const safeModelName = escapeHtml(model.model_name);
-                        const safeUsers = (Number(model.unique_users) || 0).toLocaleString();
-                        const safeQueries = (Number(model.total_invocations) || 0).toLocaleString();
-                        modelsContainer.innerHTML += `
-                            <div class="mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                                <div class="mb-2">
-                                    <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1.1rem !important; padding: 0 !important; font-weight: 700; word-break: break-all;">${safeModelName}</code>
-                                </div>
-                                <div class="is-flex is-justify-content-space-between is-align-items-center">
-                                    <span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${providerName}</span>
-                                    <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.9rem; color: #a6adc8;">
-                                        <strong style="color: #f5e0dc;">${safeUsers}</strong> devs 
-                                        <span style="margin: 0 8px; color: #45475a;">|</span>
-                                        <strong style="color: #89b4fa;">${safeQueries}</strong> queries
-                                    </span>
-                                </div>
+                modelsContainer.innerHTML = filteredModels.map(model => {
+                    const providerName = escapeHtml(formatProviderName(model.provider_name));
+                    const safeModelName = escapeHtml(model.model_name);
+                    const safeUsers = (Number(model.unique_users) || 0).toLocaleString();
+                    const safeQueries = (Number(model.total_invocations) || 0).toLocaleString();
+                    return `
+                        <div class="mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
+                            <div class="mb-2">
+                                <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1.1rem !important; padding: 0 !important; font-weight: 700; word-break: break-all;">${safeModelName}</code>
                             </div>
-                        `;
-                    });
-                }
+                            <div class="is-flex is-justify-content-space-between is-align-items-center">
+                                <span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${providerName}</span>
+                                <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.9rem; color: #a6adc8;">
+                                    <strong style="color: #f5e0dc;">${safeUsers}</strong> devs
+                                    <span style="margin: 0 8px; color: #45475a;">|</span>
+                                    <strong style="color: #89b4fa;">${safeQueries}</strong> queries
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
             }
 
-            // All-Time Top 10 Modal wiring
+            // Tools
+            const toolsContainer = document.getElementById('tools-container');
+            if (tools.length === 0) {
+                toolsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No tool usage data available yet.</p>';
+            } else {
+                toolsContainer.innerHTML = tools.map(tool => {
+                    const safeName = escapeHtml(tool.tool_name);
+                    const safeCount = (Number(tool.usage_count) || 0).toLocaleString();
+                    const isExternalMcp = tool.tool_name === 'external_mcp_tool';
+                    const badgeHtml = isExternalMcp
+                        ? '<span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 8px;">External MCP</span>'
+                        : '';
+                    return `
+                        <div class="is-flex is-justify-content-space-between is-align-items-center mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
+                            <div class="is-flex is-align-items-center">
+                                <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1rem !important; padding: 0 !important;">${safeName}</code>${badgeHtml}
+                            </div>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #bac2de; font-weight: 600;">${safeCount} uses</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // All-Time Modal wiring
             const modal = document.getElementById('alltime-modal');
             const modalTitle = document.getElementById('alltime-modal-title');
             const modalList = document.getElementById('alltime-modal-list');
             const modalClose = document.getElementById('alltime-modal-close');
 
             const openAllTimeModal = (type) => {
-                let title = 'Top 10 of All Time';
+                let title = 'All Time';
                 let items = [];
                 if (type === 'os') {
                     title = 'Top 10 OS Usage — All Time';
-                    items = osAllTimeData.map(r => ({ name: r.os_name, users: r.unique_users }));
+                    items = osAllTimeData.slice(0, 10).map(r => ({
+                        name: r.os_name,
+                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
+                    }));
                 } else if (type === 'desktop') {
                     title = 'Top 10 Desktop Environments — All Time';
-                    items = desktopAllTimeData.map(r => ({ name: r.desktop_name, users: r.unique_users }));
+                    items = desktopAllTimeData.slice(0, 10).map(r => ({
+                        name: r.desktop_name,
+                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
+                    }));
                 } else if (type === 'shell') {
                     title = 'Top 10 Shells — All Time';
-                    items = shellAllTimeData.map(r => ({ name: r.shell_name, users: r.unique_users }));
+                    items = shellAllTimeData.slice(0, 10).map(r => ({
+                        name: r.shell_name,
+                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
+                    }));
                 } else if (type === 'theme') {
                     title = 'Theme Usage — All Time';
-                    items = themeAllTimeData.map(r => ({ name: r.theme_name, users: r.unique_users }));
+                    items = themeAllTimeData.map(r => ({
+                        name: r.theme_name,
+                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
+                    }));
+                } else if (type === 'pkg') {
+                    title = 'Installation Type — All Time';
+                    items = pkgAllTimeData.map(r => ({
+                        name: formatPkgType(r.pkg_type),
+                        metric: `${(Number(r.user_count ?? r.unique_users) || 0).toLocaleString()} devs`
+                    }));
+                } else if (type === 'providers') {
+                    title = 'Claw Providers — All Time';
+                    items = providersAllTimeData.map(r => ({
+                        name: formatProviderName(r.provider_name),
+                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs · ${(Number(r.total_invocations) || 0).toLocaleString()} queries`
+                    }));
+                } else if (type === 'models') {
+                    title = 'Top 20 Models — All Time';
+                    items = modelsAllTimeData
+                        .filter(m => !isPrivateProvider(m.provider_name) && String(m.model_name || '').toLowerCase() !== 'redacted')
+                        .slice(0, 20)
+                        .map(r => ({
+                            name: `${r.model_name} (${formatProviderName(r.provider_name)})`,
+                            metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs · ${(Number(r.total_invocations) || 0).toLocaleString()} queries`
+                        }));
+                } else if (type === 'tools') {
+                    title = 'Tools Usage — All Time';
+                    items = toolsAllTimeData.map(r => ({
+                        name: r.tool_name,
+                        metric: `${(Number(r.usage_count) || 0).toLocaleString()} uses`
+                    }));
                 }
 
                 modalTitle.innerText = title;
-                modalList.innerHTML = '';
-
                 if (items.length === 0) {
                     modalList.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No all-time data available yet.</li>';
                 } else {
-                    items.slice(0, 10).forEach((item, idx) => {
-                        const safeName = escapeHtml(item.name);
-                        const safeUsers = (Number(item.users) || 0).toLocaleString();
-                        modalList.innerHTML += `
-                            <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                                <div class="is-flex is-align-items-center" style="gap: 0.75rem;">
-                                    <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #6c7086; font-weight: 700; min-width: 1.5rem;">#${idx + 1}</span>
-                                    <span style="color: #cdd6f4; font-weight: 700;">${safeName}</span>
-                                </div>
-                                <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
-                            </li>
-                        `;
-                    });
+                    modalList.innerHTML = items.map((item, idx) => `
+                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a; gap: 1rem;">
+                            <div class="is-flex is-align-items-center" style="gap: 0.75rem; min-width: 0;">
+                                <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #6c7086; font-weight: 700; min-width: 1.8rem;">#${idx + 1}</span>
+                                <span style="color: #cdd6f4; font-weight: 700; word-break: break-word;">${escapeHtml(item.name)}</span>
+                            </div>
+                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc; white-space: nowrap; font-size: 0.9rem;">${escapeHtml(item.metric)}</span>
+                        </li>
+                    `).join('');
                 }
 
                 modal.style.display = 'flex';
