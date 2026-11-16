@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxxy Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="navbar is-dark">
+        <div class="container">
+            <div class="navbar-brand">
+                <div class="navbar-item">
+                    <a class="boxxy-brand-button" href="/">
+                        <strong>Boxxy Terminal</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-live-button" href="/live">
+                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
+                        <span>Live</span>
+                    </a>
+                </div>
+                <div class="navbar-item" style="padding: 0;">
+                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Star</span>
+                        <span class="star-count" id="github-stars">...</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <!-- Sidebar Navigation -->
+            <aside class="column is-3">
+                <div class="sidebar">
+                    <p class="sidebar-title">Getting Started</p>
+                    <ul class="menu-list mb-5">
+                        <li><a href="/getting-started" class="">Getting Started</a></li>
+                        <li><a href="/how-it-works" class="">How It Works</a></li>
+                        <li><a href="/development" class="">Development</a></li>
+                        <li><a href="/theme-api" class="">Boxxy Theme API</a></li>
+                        <li><a href="/desktop-integrations" class="is-active">Desktop Integrations</a></li>
+                        <li><a href="/providers" class="">Providers</a></li>
+                        <li><a href="/telemetry" class="">Telemetry</a></li>
+                    </ul>
+
+                    <p class="sidebar-title">What Boxxy Can Do</p>
+                    <ul class="menu-list mb-5">
+                        <li><a href="/features" class="">Features</a></li>
+                        <li><a href="/mcp" class="">MCP</a></li>
+                        <li><a href="/skills" class="">Skills</a></li>
+                        <li><a href="/characters" class="">Characters</a></li>
+                        <li><a href="/use-cases" class="">Use Cases</a></li>
+                    </ul>
+
+                    <p class="sidebar-title">Community</p>
+                    <ul class="menu-list">
+                        <li><a href="/releases" class="">Releases</a></li>
+                        <li><a href="/live" class="" style="display: flex; align-items: center; gap: 0.5rem;">
+                            Dashboard
+                            <span style="background-color: #f38ba8; color: #11111b; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">Live</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="column is-9">
+                <div class="content content-area">
+                    
+                        <h1 id="desktop-integrations-companion-api"><a class="zola-anchor" href="#desktop-integrations-companion-api" aria-label="Anchor link for: desktop-integrations-companion-api">🔗</a>Desktop Integrations &amp; Companion API</h1>
+<p>Boxxy Terminal exposes a reactive, zero-polling IPC interface over your user's <strong>Session D-Bus</strong>. Whether you are building a top-bar panel extension, a status bar module, or a quick-launcher plugin for =GNOME Shell=, =KDE Plasma=, =COSMIC=, =Waybar=, =Hyprland=, =Rofi=, or =Walker=, you can monitor <code>boxxy-agent</code>, restore detached background shells, inspect pending AI reminders, and focus or spawn characters in real time.</p>
+<p>For a complete production reference implementation, check out the official <a rel="external" href="https://github.com/boxxy-dev/gnome-shell-boxxy-companion">GNOME Shell Boxxy Companion Extension</a>.</p>
+<hr />
+<h2 id="bus-service-details"><a class="zola-anchor" href="#bus-service-details" aria-label="Anchor link for: bus-service-details">🔗</a>Bus &amp; Service Details</h2>
+<p>All companion methods and push signals live on a single D-Bus object in <code>boxxy-agent</code>:</p>
+<ul>
+<li><strong>Bus:</strong> Session Bus (<code>DBUS_SESSION_BUS_ADDRESS</code>)</li>
+<li><strong>Service Name (Stable):</strong> <code>dev.boxxy.BoxxyAgent</code></li>
+<li><strong>Service Name (<code>--dev</code> Mode):</strong> <code>dev.boxxy.BoxxyAgent.Devel</code> (or <code>dev.boxxy.BoxxyAgent.Devel.i_&lt;slug&gt;</code> for named <code>--instance &lt;slug&gt;</code> runs)</li>
+<li><strong>Object Path:</strong> <code>/dev/boxxy/Agent</code></li>
+<li><strong>Interface:</strong> <code>dev.boxxy.BoxxyTerminal.Agent</code></li>
+</ul>
+<p><em>Note: Boxxy is written in Rust with <code>zbus</code>, which maps Rust <code>snake_case</code> method names to <code>PascalCase</code> on the D-Bus wire. Complex payloads use UTF-8 JSON strings (<code>s</code>) so status bar scripts (<code>jq</code>, Python, GJS, QML, Rust) can consume them without custom struct marshalling.</em></p>
+<h3 id="best-practice-watch-without-auto-starting"><a class="zola-anchor" href="#best-practice-watch-without-auto-starting" aria-label="Anchor link for: best-practice-watch-without-auto-starting">🔗</a>Best Practice: Watch Without Auto-Starting</h3>
+<p>Companion applets should observe <code>dev.boxxy.BoxxyAgent</code> name ownership (<code>NameOwnerChanged</code> / <code>Gio.bus_watch_name</code>) and pass <code>NO_AUTO_START</code> when calling methods so an idle status bar never spawns <code>boxxy-agent</code> on its own.</p>
+<hr />
+<h2 id="1-daemon-status-lifecycle-api"><a class="zola-anchor" href="#1-daemon-status-lifecycle-api" aria-label="Anchor link for: 1-daemon-status-lifecycle-api">🔗</a>1. Daemon Status &amp; Lifecycle API</h2>
+<table><thead><tr><th style="text-align: left">Method</th><th style="text-align: left">Signature</th><th style="text-align: left">Type</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>GetDaemonStatus</code></td><td style="text-align: left"><code>() -&gt; (s)</code></td><td style="text-align: left">Method</td><td style="text-align: left">Returns a JSON snapshot (<code>DaemonStatusSnapshot</code>) summarizing daemon version, power state, Dream Cycle status, and active session counts in a single call.</td></tr>
+<tr><td style="text-align: left"><code>GetVersion</code></td><td style="text-align: left"><code>() -&gt; (s)</code></td><td style="text-align: left">Method</td><td style="text-align: left">Returns the running daemon version string (appends <code>-stale</code> if the on-disk binary was upgraded since launch).</td></tr>
+<tr><td style="text-align: left"><code>GetConfigDir</code></td><td style="text-align: left"><code>() -&gt; (s)</code></td><td style="text-align: left">Method</td><td style="text-align: left">Returns the active configuration directory path (e.g. <code>~/.config/boxxy-terminal</code>).</td></tr>
+<tr><td style="text-align: left"><code>RequestReload</code></td><td style="text-align: left"><code>() -&gt; ()</code></td><td style="text-align: left">Method</td><td style="text-align: left">Flushes telemetry and reloads <code>boxxy-agent</code> in-place via <code>execvp()</code>, preserving PID and background shells.</td></tr>
+<tr><td style="text-align: left"><code>RequestStop</code></td><td style="text-align: left"><code>() -&gt; ()</code></td><td style="text-align: left">Method</td><td style="text-align: left">Gracefully terminates active sessions, flushes telemetry, and stops the daemon.</td></tr>
+</tbody></table>
+<h3 id="getdaemonstatus-json-schema"><a class="zola-anchor" href="#getdaemonstatus-json-schema" aria-label="Anchor link for: getdaemonstatus-json-schema">🔗</a><code>GetDaemonStatus</code> JSON Schema</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="json"><span class="giallo-l"><span style="color: #9399B2;">{</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">bus_name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;dev.boxxy.BoxxyAgent&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">version</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;0.4.2+a1b2c3d&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">is_stale_binary</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">is_dev</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">instance_slug</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> null</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">is_ephemeral</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">config_dir</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;/home/me/.config/boxxy-terminal&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">on_battery</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">power_source</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;AC&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">dream_cycle</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;paused_ui_attached&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">is_ghost</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">active_claw_panes</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 2</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">detached_shells</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">pending_tasks</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 1</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre>
+<hr />
+<h2 id="2-character-roster-focus-spawning-api"><a class="zola-anchor" href="#2-character-roster-focus-spawning-api" aria-label="Anchor link for: 2-character-roster-focus-spawning-api">🔗</a>2. Character Roster, Focus &amp; Spawning API</h2>
+<table><thead><tr><th style="text-align: left">Method / Signal</th><th style="text-align: left">Signature</th><th style="text-align: left">Type</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>GetRegistrySnapshot</code></td><td style="text-align: left"><code>() -&gt; (s)</code></td><td style="text-align: left">Method</td><td style="text-align: left">Returns a JSON <code>RegistrySnapshot</code> containing the full character <code>catalog</code>, active <code>claims</code>, and monotonic <code>revision</code>.</td></tr>
+<tr><td style="text-align: left"><code>RequestFocusPane</code></td><td style="text-align: left"><code>(s) -&gt; ()</code></td><td style="text-align: left">Method</td><td style="text-align: left">Accepts <code>pane_id</code>. Raises the Boxxy window and focuses that pane (or queues restoration if the pane is detached in the background).</td></tr>
+<tr><td style="text-align: left"><code>RequestSpawnCharacter</code></td><td style="text-align: left"><code>(s, s) -&gt; ()</code></td><td style="text-align: left">Method</td><td style="text-align: left">Accepts <code>(character, cwd)</code> where <code>character</code> is a UUID, slug (<code>niko-una</code>), or display name (<code>Niko</code>), and <code>cwd</code> is an optional working directory (<code>""</code> for default). If the character is already active, focuses its pane; otherwise opens a new Claw tab with that character claimed (queuing for startup if no Boxxy window is open).</td></tr>
+<tr><td style="text-align: left"><code>ClaimsChanged</code></td><td style="text-align: left"><code>(s)</code></td><td style="text-align: left">Signal</td><td style="text-align: left">Broadcast whenever a character is claimed, released, or reloaded. Payload matches <code>GetRegistrySnapshot</code> JSON.</td></tr>
+<tr><td style="text-align: left"><code>SpawnCharacterRequested</code></td><td style="text-align: left"><code>(s, s)</code></td><td style="text-align: left">Signal</td><td style="text-align: left">Emitted to open Boxxy UI windows (<code>(character_id, cwd)</code>) when <code>RequestSpawnCharacter</code> targets an available character while a window is attached.</td></tr>
+</tbody></table>
+<h3 id="getregistrysnapshot-claimschanged-json-schema"><a class="zola-anchor" href="#getregistrysnapshot-claimschanged-json-schema" aria-label="Anchor link for: getregistrysnapshot-claimschanged-json-schema">🔗</a><code>GetRegistrySnapshot</code> / <code>ClaimsChanged</code> JSON Schema</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="json"><span class="giallo-l"><span style="color: #9399B2;">{</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">catalog</span><span style="color: #9399B2;">&quot;: [</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">config</span><span style="color: #9399B2;">&quot;: {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;550e8400-e29b-41d4-a716-446655440000&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;niko-una&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">display_name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Niko&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">color</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;#a855f7&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">duties</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Systems &amp; Rust engineering&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">personality</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Curious, sharp, concise&quot;</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      },</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">status</span><span style="color: #9399B2;">&quot;: {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">Active</span><span style="color: #9399B2;">&quot;: {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">          &quot;</span><span style="color: #89B4FA;">pane_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;6f8a0c1e-3a4b-4d2a-9c1b-8e7f6a5b4c3d&quot;</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      },</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">has_avatar</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> true</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    },</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">config</span><span style="color: #9399B2;">&quot;: {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;8c1b2d3e-4f5a-6b7c-8d9e-0f1a2b3c4d5e&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;levi-kujo&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">display_name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Levi&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">color</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;#204a87&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">duties</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Linux kernel &amp; infrastructure&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">        &quot;</span><span style="color: #89B4FA;">personality</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Direct and methodical&quot;</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      },</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">status</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Available&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">has_avatar</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> true</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  ],</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">claims</span><span style="color: #9399B2;">&quot;: [</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">holder_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;6f8a0c1e-3a4b-4d2a-9c1b-8e7f6a5b4c3d&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">holder_kind</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Pane&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">character_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;550e8400-e29b-41d4-a716-446655440000&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">session_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;9a8b7c6d-5e4f-3a2b-1c0d-e9f8a7b6c5d4&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">petname</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;crimson-falcon&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      &quot;</span><span style="color: #89B4FA;">owner_bus_name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;:1.142&quot;</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  ],</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">revision</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 7</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre>
+<ul>
+<li><strong>Avatar Resolution:</strong> When <code>has_avatar</code> is <code>true</code>, the character's avatar image is located at <code>&lt;config_dir&gt;/boxxyclaw/characters/&lt;config.name&gt;/AVATAR.png</code>.</li>
+<li><strong>Cold-Window Launch Flow:</strong> When calling <code>RequestFocusPane</code>, <code>RequestSpawnCharacter</code>, or <code>RequestRestoreDetached</code> while no Boxxy UI window is open (<code>is_ghost == true</code>), <code>boxxy-agent</code> queues the action in memory. Immediately launch <code>boxxy-terminal --present</code> afterward—the newly opened window automatically drains the pending queue on startup.</li>
+</ul>
+<hr />
+<h2 id="3-detached-background-shells-api"><a class="zola-anchor" href="#3-detached-background-shells-api" aria-label="Anchor link for: 3-detached-background-shells-api">🔗</a>3. Detached Background Shells API</h2>
+<p>When a user closes a Boxxy tab or window while a foreground command (<code>cargo build</code>, <code>nvim</code>, <code>top</code>, <code>pacman -Syu</code>, or a background AI session) is running, <code>boxxy-agent</code> keeps the PTY alive in a 4 MB ring buffer so any companion applet can restore or terminate it.</p>
+<table><thead><tr><th style="text-align: left">Method / Signal</th><th style="text-align: left">Signature</th><th style="text-align: left">Type</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>GetDetachedSessions</code></td><td style="text-align: left"><code>() -&gt; (s)</code></td><td style="text-align: left">Method</td><td style="text-align: left">Returns a JSON array of <code>DetachedSessionInfo</code> objects for all background shells hosted by <code>boxxy-agent</code>.</td></tr>
+<tr><td style="text-align: left"><code>RequestRestoreDetached</code></td><td style="text-align: left"><code>(u) -&gt; ()</code></td><td style="text-align: left">Method</td><td style="text-align: left">Accepts <code>pid</code> (<code>u32</code>, or <code>0</code> to restore <strong>all</strong> detached shells preserving split layouts). Restores immediately into an open Boxxy window or queues for <code>boxxy-terminal --present</code>.</td></tr>
+<tr><td style="text-align: left"><code>TerminateDetachedSession</code></td><td style="text-align: left"><code>(u) -&gt; ()</code></td><td style="text-align: left">Method</td><td style="text-align: left">Accepts <code>pid</code> (<code>u32</code>, or <code>0</code> to terminate <strong>all</strong> detached shells). Disables persistence and sends <code>SIGTERM</code> to the background process group.</td></tr>
+<tr><td style="text-align: left"><code>DetachedSessionsChanged</code></td><td style="text-align: left"><code>(s)</code></td><td style="text-align: left">Signal</td><td style="text-align: left">Broadcast whenever a shell detaches, reattaches, is terminated, or exits. Payload matches <code>GetDetachedSessions</code>.</td></tr>
+<tr><td style="text-align: left"><code>RestoreDetachedRequested</code></td><td style="text-align: left"><code>(u, s)</code></td><td style="text-align: left">Signal</td><td style="text-align: left">Internal UI signal (<code>(pid, cwd)</code>) emitted to attached Boxxy windows when <code>RequestRestoreDetached</code> is called.</td></tr>
+</tbody></table>
+<h3 id="getdetachedsessions-detachedsessionschanged-json-schema"><a class="zola-anchor" href="#getdetachedsessions-detachedsessionschanged-json-schema" aria-label="Anchor link for: getdetachedsessions-detachedsessionschanged-json-schema">🔗</a><code>GetDetachedSessions</code> / <code>DetachedSessionsChanged</code> JSON Schema</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="json"><span class="giallo-l"><span style="color: #9399B2;">[</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">pid</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 121283</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">pane_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;6f8a0c1e-3a4b-4d2a-9c1b-8e7f6a5b4c3d&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">idle_secs</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 6</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">cwd</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;/home/me/Projects/boxxy-dev/boxxy-terminal&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">foreground_process</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;cachy-update&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">waiting_for_input</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> true</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">character_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">character_name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">character_slug</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">session_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">pending_task_count</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 0</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">]</span></span></code></pre>
+<ul>
+<li><code>waiting_for_input</code>: <code>true</code> when Linux <code>/proc/&lt;fg_pid&gt;/wchan</code> indicates the foreground child process is blocked on interactive TTY input (<code>n_tty_read</code> / <code>tty_read</code>, such as a <code>[Y/n]</code> or <code>sudo</code> password prompt)—ideal for highlighting your panel badge in warning amber.</li>
+</ul>
+<hr />
+<h2 id="4-pending-reminders-scheduled-tasks-api"><a class="zola-anchor" href="#4-pending-reminders-scheduled-tasks-api" aria-label="Anchor link for: 4-pending-reminders-scheduled-tasks-api">🔗</a>4. Pending Reminders &amp; Scheduled Tasks API</h2>
+<p>Characters in =BoxxyClaw= can schedule timers, interval laps, background commands, and deferred AI queries. Companions can display live countdowns and cancel or jump to any scheduled task.</p>
+<table><thead><tr><th style="text-align: left">Method / Signal</th><th style="text-align: left">Signature</th><th style="text-align: left">Type</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>GetPendingTasks</code></td><td style="text-align: left"><code>() -&gt; (s)</code></td><td style="text-align: left">Method</td><td style="text-align: left">Returns a JSON array of <code>PendingTaskInfo</code> sorted by <code>due_at_unix</code>.</td></tr>
+<tr><td style="text-align: left"><code>CancelPendingTask</code></td><td style="text-align: left"><code>(s, s) -&gt; ()</code></td><td style="text-align: left">Method</td><td style="text-align: left">Accepts <code>(pane_id, task_id)</code> and cancels the scheduled task.</td></tr>
+<tr><td style="text-align: left"><code>PendingTasksChanged</code></td><td style="text-align: left"><code>(s)</code></td><td style="text-align: left">Signal</td><td style="text-align: left">Broadcast whenever a task is scheduled, completed, cancelled, or detached/reattached. Payload matches <code>GetPendingTasks</code>.</td></tr>
+</tbody></table>
+<h3 id="getpendingtasks-pendingtaskschanged-json-schema"><a class="zola-anchor" href="#getpendingtasks-pendingtaskschanged-json-schema" aria-label="Anchor link for: getpendingtasks-pendingtaskschanged-json-schema">🔗</a><code>GetPendingTasks</code> / <code>PendingTasksChanged</code> JSON Schema</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="json"><span class="giallo-l"><span style="color: #9399B2;">[</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;d290f1ee-6c54-4b01-90e6-d701748f0851&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">pane_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;6f8a0c1e-3a4b-4d2a-9c1b-8e7f6a5b4c3d&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">session_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;9a8b7c6d-5e4f-3a2b-1c0d-e9f8a7b6c5d4&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">character_id</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;550e8400-e29b-41d4-a716-446655440000&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">character_name</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Niko&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">character_slug</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;niko-una&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">task_type</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Notification&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">payload</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;Check deployment logs&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">due_at_unix</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 1763308800</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">remaining_secs</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 185</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">is_detached</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    &quot;</span><span style="color: #89B4FA;">pid</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 124910</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">]</span></span></code></pre>
+<ul>
+<li><code>task_type</code>: <code>"Notification"</code> (reminder), <code>"Command"</code>, or <code>"Query"</code>.</li>
+<li>If <code>is_detached</code> is <code>true</code> and <code>pid</code> is non-null, call <code>RequestRestoreDetached(pid)</code> to bring the backgrounded agent session back into a live tab; otherwise call <code>RequestFocusPane(pane_id)</code>.</li>
+</ul>
+<hr />
+<h2 id="quick-cli-status-bar-examples"><a class="zola-anchor" href="#quick-cli-status-bar-examples" aria-label="Anchor link for: quick-cli-status-bar-examples">🔗</a>Quick CLI &amp; Status Bar Examples</h2>
+<h3 id="busctl-cli-inspection-scripting"><a class="zola-anchor" href="#busctl-cli-inspection-scripting" aria-label="Anchor link for: busctl-cli-inspection-scripting">🔗</a><code>busctl</code> (CLI Inspection &amp; Scripting)</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># 1. Single-call daemon status summary (pipe to jq!)</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">busctl</span><span style="color: #A6E3A1;"> --user -j call dev.boxxy.BoxxyAgent /dev/boxxy/Agent</span><span style="color: #F5C2E7;"> \</span></span>
+<span class="giallo-l"><span style="color: #A6E3A1;">  dev.boxxy.BoxxyTerminal.Agent GetDaemonStatus</span><span style="color: #94E2D5;"> |</span><span style="color: #89B4FA;font-style: italic;"> jq</span><span style="color: #A6E3A1;"> -r &#39;.data[0] | fromjson&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># 2. Inspect character catalog and active pane claims</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">busctl</span><span style="color: #A6E3A1;"> --user -j call dev.boxxy.BoxxyAgent /dev/boxxy/Agent</span><span style="color: #F5C2E7;"> \</span></span>
+<span class="giallo-l"><span style="color: #A6E3A1;">  dev.boxxy.BoxxyTerminal.Agent GetRegistrySnapshot</span><span style="color: #94E2D5;"> |</span><span style="color: #89B4FA;font-style: italic;"> jq</span><span style="color: #A6E3A1;"> -r &#39;.data[0] | fromjson&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># 3. Focus or spawn a character by slug (then raise/launch Boxxy Terminal)</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">busctl</span><span style="color: #A6E3A1;"> --user call dev.boxxy.BoxxyAgent /dev/boxxy/Agent</span><span style="color: #F5C2E7;"> \</span></span>
+<span class="giallo-l"><span style="color: #A6E3A1;">  dev.boxxy.BoxxyTerminal.Agent RequestSpawnCharacter ss &quot;niko-una&quot; &quot;&quot;</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-terminal</span><span style="color: #A6E3A1;"> --present</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># 4. Restore all detached background shells</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">busctl</span><span style="color: #A6E3A1;"> --user call dev.boxxy.BoxxyAgent /dev/boxxy/Agent</span><span style="color: #F5C2E7;"> \</span></span>
+<span class="giallo-l"><span style="color: #A6E3A1;">  dev.boxxy.BoxxyTerminal.Agent RequestRestoreDetached u</span><span style="color: #FAB387;"> 0</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-terminal</span><span style="color: #A6E3A1;"> --present</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;"># 5. Stop a running `--dev` agent instance cleanly over D-Bus</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">busctl</span><span style="color: #A6E3A1;"> --user call dev.boxxy.BoxxyAgent.Devel /dev/boxxy/Agent</span><span style="color: #F5C2E7;"> \</span></span>
+<span class="giallo-l"><span style="color: #A6E3A1;">  dev.boxxy.BoxxyTerminal.Agent RequestStop</span></span></code></pre><h3 id="minimal-waybar-custom-module"><a class="zola-anchor" href="#minimal-waybar-custom-module" aria-label="Anchor link for: minimal-waybar-custom-module">🔗</a>Minimal Waybar Custom Module</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="json"><span class="giallo-l"><span style="color: #A6E3A1;">&quot;custom/boxxy&quot;</span><span>: </span><span style="color: #9399B2;">{</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">exec</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;busctl --user -j call dev.boxxy.BoxxyAgent /dev/boxxy/Agent dev.boxxy.BoxxyTerminal.Agent GetDaemonStatus 2&gt;/dev/null | jq -rc &#39;.data[0] | fromjson | {text: (</span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;">boxxy </span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;"> + ((.detached_shells + .pending_tasks) | tostring)), tooltip: (</span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;">Boxxy v</span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;"> + .version + </span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;"> (</span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;"> + .power_source + </span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;">)</span><span style="color: #F5C2E7;">\&quot;</span><span style="color: #A6E3A1;">)}&#39;&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">return-type</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;json&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">interval</span><span style="color: #9399B2;">&quot;:</span><span style="color: #FAB387;"> 5</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  &quot;</span><span style="color: #89B4FA;">on-click</span><span style="color: #9399B2;">&quot;:</span><span style="color: #A6E3A1;"> &quot;boxxy-terminal --present&quot;</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre>
+                    
+
+                    <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">
+                    <div class="has-text-right">
+                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/desktop-integrations.md" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Improve this page
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</section>
+
+
+    <footer class="footer">
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html>
