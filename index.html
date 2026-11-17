@@ -4,223 +4,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boxxy Terminal</title>
+    <meta name="description" content="A powerful CLI tool to simplify your development workflow">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
     <link rel="stylesheet" href="/css/style.css">
+    
 </head>
 <body>
-    <header class="navbar is-dark">
-        <div class="container">
-            <div class="navbar-brand">
-                <div class="navbar-item">
-                    <a class="boxxy-brand-button" href="/">
-                        <strong>Boxxy Terminal</strong>
-                    </a>
-                </div>
+    
+    
+    
+    
+    
+
+    <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
+    <header class="bx-headerbar">
+        <div class="bx-headerbar-inner">
+            <div class="bx-header-left">
+                <a class="bx-brand-btn" href="/">
+                    <span class="bx-brand-prompt" aria-hidden="true">&gt;_</span>
+                    <span>Boxxy Terminal</span>
+                </a>
             </div>
-            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-live-button" href="/live">
-                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
-                        <span>Live</span>
-                    </a>
-                </div>
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Star</span>
-                        <span class="star-count" id="github-stars">...</span>
-                    </a>
-                </div>
+
+            <nav class="bx-tabbar" id="site-menu" aria-label="Main navigation">
+                <a href="/" class="bx-nav-tab is-selected">Home</a>
+                <a href="/getting-started" class="bx-nav-tab ">Docs</a>
+                <a href="/theme-api" class="bx-nav-tab ">Theme API</a>
+            </nav>
+
+            <div class="bx-header-right">
+                <a class="bx-status-pill " href="/live" title="Live Community Telemetry">
+                    <span class="bx-live-dot" aria-hidden="true"></span>
+                    <span>Live</span>
+                </a>
+                <a class="bx-tactile-btn bx-star-btn" href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Star</span>
+                    <span class="bx-star-count" id="github-stars">···</span>
+                </a>
+                <button type="button" class="bx-tactile-btn bx-mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
             </div>
         </div>
     </header>
 
     
-<section class="section">
-    <div class="container">
-        <div class="columns is-vcentered">
-            <!-- Left Side: Icon and Title -->
-            <div class="column is-5 has-text-left-tablet has-text-centered-mobile">
-                <div class="mb-5">
-                    <div class="boxxy-badge">
-                        <img src="/boxxyclaw.svg" alt="Boxxy Icon">
-                        <div class="boxxy-badge-text">
-                            <span class="feat">Featuring</span>
-                            <span class="highlight">Boxxy</span>Claw
-                        </div>
+<main class="bx-home">
+    <div class="bx-container">
+        <!-- Hero Section -->
+        <section class="bx-hero">
+            <div class="boxxy-badge bx-claw-tag" title="Click me!">
+                <img src="/boxxyclaw.svg" alt="BoxxyClaw" class="bx-claw-icon">
+                <span>FEATURING BOXXYCLAW · RUST + GTK4 LINUX TERMINAL</span>
+            </div>
+
+            <h1 class="bx-hero-title">
+                A self-improving Linux terminal<br>
+                via <span class="bx-accent-span">Memories &amp; Local Models.</span>
+            </h1>
+
+            <p class="bx-hero-lead">
+                Not just an app <em>on</em> the terminal — it <em>is</em> the terminal. Boxxy watches your workflow, remembers your setup across sessions, and helps fix broken configs or manage background tasks right inside your shell.
+            </p>
+
+            <div class="bx-hero-cta">
+                <a href="/getting-started" class="bx-pill-btn is-suggested">
+                    <span>Getting Started</span>
+                    <span aria-hidden="true">→</span>
+                </a>
+                <a href="/development" class="bx-pill-btn">
+                    <span>Development</span>
+                </a>
+            </div>
+
+            <!-- Real App Window Showcase -->
+            <div class="bx-hero-window-wrap">
+                <div class="hero-box-container bx-hero-window">
+                    <img src="/hero.png" alt="Boxxy Terminal Interface" class="bx-hero-img">
+                    <div id="character-hotspot" class="bx-char-hotspot" title="Click character!"></div>
+                </div>
+                <div class="bx-hero-hint">
+                    <span>Press <kbd>Ctrl</kbd> + <kbd>/</kbd> anywhere in Boxxy to summon your character</span>
+                    <span class="bx-dot-sep">·</span>
+                    <span>Click Niko above to say hi</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unified Tabbed Installation Card (Boxxy `.card` + `stackswitcher`) -->
+        <section class="bx-section is-tight">
+            <div class="bx-card bx-install-card">
+                <div class="bx-install-head">
+                    <div class="bx-install-titles">
+                        <span class="bx-install-heading">Get Boxxy running</span>
+                        <span class="bx-install-meta" id="install-meta-note">Native Nightlies · Requires GTK 4.24+</span>
                     </div>
-                    <h1 class="title is-2 has-text-weight-bold fancy-title">
-                        A <span class="accent-text">self-improving</span> Linux<br>
-                        Terminal via <span class="gradient-text">Memories</span><br>
-                        and <span class="gradient-text">Local Models!</span>
-                    </h1>
-                </div>
-            </div>
-
-            <!-- Right Side: Terminal Image -->
-            <div class="column is-7 has-text-centered">
-                <div class="hero-box-container" style="position: relative; display: inline-block; width: 100%;">
-                    <figure class="image hero-box">
-                        <img src="/hero.png" alt="Boxxy Terminal Interface" style="width: 100%; display: block;">
-                    </figure>
-                    <!-- Hotspot for the character (approximate position based on image) -->
-                    <div id="character-hotspot" style="position: absolute; bottom: 10%; right: 5%; width: 25%; height: 70%; cursor: pointer; z-index: 10;" title="Click me!"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="buttons is-centered mb-6" style="margin-top: 6rem !important;">
-            <a href="/getting-started" class="boxxy-button mr-4">
-                Getting Started
-            </a>
-            <a href="/development" class="boxxy-button is-dev">
-                Development
-            </a>
-        </div>
-
-        <!-- Installation Code Block -->
-        <div class="columns is-centered mt-6">
-            <div class="column is-10">
-                <p class="has-text-centered mb-3" style="color: #a6adc8; font-weight: 600; font-size: 0.9rem;">Native Nightlies (Requires GTK 4.24+)</p>
-                <div class="installation-code fancy-box mt-0 mb-6" style="position: relative; text-align: left; display: flex; align-items: center;">
-                    <pre style="flex-grow: 1;"><code id="install-command" class="language-bash">curl -sSf https://raw.githubusercontent.com/boxxy-dev/boxxy/main/scripts/install.sh | sh</code></pre>
-                    <button id="copy-button" class="button is-small" style="position: absolute; right: 0.75rem; background-color: #313244; color: #cdd6f4; border: none; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Copy to clipboard">
-                        <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        <svg id="check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#11111b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </button>
+                    <div class="bx-stackswitcher" role="tablist" aria-label="Installation method">
+                        <button type="button" class="bx-switcher-btn is-active" data-install-tab="native" role="tab" aria-selected="true">Native</button>
+                        <button type="button" class="bx-switcher-btn" data-install-tab="flatpak" role="tab" aria-selected="false">Flatpak</button>
+                        <button type="button" class="bx-switcher-btn" data-install-tab="nixos" role="tab" aria-selected="false">NixOS</button>
+                    </div>
                 </div>
 
-                <p class="has-text-centered mb-3" style="color: #a6adc8; font-weight: 600; font-size: 0.9rem;">Flatpak Nightlies</p>
-                <div class="installation-code fancy-box mt-0" style="position: relative; text-align: left; display: flex; align-items: center;">
-                    <pre style="flex-grow: 1;"><code id="flatpak-install-command" class="language-bash">curl -O https://boxxy-dev.github.io/boxxy-flatpak-remote/boxxy.gpg && \
+                <div class="install-pane" id="install-pane-native">
+                    <div class="bx-terminal-well">
+                        <span class="bx-term-prompt" aria-hidden="true">$</span>
+                        <pre><code id="install-command">curl -sSf https://raw.githubusercontent.com/boxxy-dev/boxxy/main/scripts/install.sh | sh</code></pre>
+                        <button type="button" id="copy-button" class="bx-icon-btn bx-copy-btn" title="Copy to clipboard">
+                            <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <svg id="check-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0d140a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="install-pane" id="install-pane-flatpak" style="display: none;">
+                    <div class="bx-terminal-well">
+                        <span class="bx-term-prompt" aria-hidden="true">$</span>
+                        <pre><code id="flatpak-install-command">curl -O https://boxxy-dev.github.io/boxxy-flatpak-remote/boxxy.gpg &amp;&amp; \
   flatpak remote-add --user --if-not-exists --gpg-import=boxxy.gpg \
-  boxxy https://boxxy-dev.github.io/boxxy-flatpak-remote/repo && \
+  boxxy https://boxxy-dev.github.io/boxxy-flatpak-remote/repo &amp;&amp; \
   flatpak install --user boxxy dev.boxxy.BoxxyTerminal</code></pre>
-                    <button id="flatpak-copy-button" class="button is-small" style="position: absolute; right: 0.75rem; background-color: #313244; color: #cdd6f4; border: none; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Copy to clipboard">
-                        <svg id="flatpak-copy-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        <svg id="flatpak-check-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#11111b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </button>
-                </div>
-
-                <p class="has-text-centered mt-5" style="color: #a6adc8; font-size: 0.9rem;">
-                    Desktop integrations:
-                    <a href="https://github.com/boxxy-dev/gnome-shell-boxxy-companion" target="_blank" style="color: #89b4fa; font-weight: 600; margin-left: 0.35rem;">GNOME Shell Extension</a>
-                    <span style="color: #45475a; margin: 0 0.4rem;">•</span>
-                    <a href="https://github.com/boxxy-dev/cosmic-boxxy-companion" target="_blank" style="color: #89b4fa; font-weight: 600;">COSMIC Desktop Applet</a>
-                </p>
-            </div>
-        </div>
-
-        <!-- Narrative Bridge -->
-        <div class="columns is-centered mt-6 mb-6">
-            <div class="column is-8 has-text-centered">
-                <h2 class="title is-3 fancy-title mb-4">Not just an app <em>on</em> the terminal. It <em>is</em> the terminal.</h2>
-                <p class="subtitle is-5" style="line-height: 1.6;">
-                    Most AI coding tools are trapped in your editor or run as isolated CLI commands. Boxxy is a terminal emulator that natively understands your environment. It watches your workflow, catches your errors, and can autonomously fix broken dependencies or manage system configurations using the tools you already have installed.
-                </p>
-                <p class="is-size-5 has-text-weight-bold mt-4" style="color: #a6e3a1;">
-                    Just press <span class="quoted-text">Control + /</span> and you're ready to go!
-                </p>
-            </div>
-        </div>
-
-        <!-- Everyday Use Cases Section -->
-        <div class="columns is-centered mt-6 mb-6">
-            <div class="column is-8">
-                <div style="background-color: #1e1e2e; border: 2px solid #313244; border-radius: 16px; padding: 2.5rem;">
-                    <h2 class="title is-4 mb-2" style="color: #f5e0dc !important;">What You Can Use Boxxy For Every Day</h2>
-                    <p style="color: #a6adc8; margin-bottom: 2rem; font-size: 0.95rem;">Practical ways Boxxy fits into your daily Linux workflow:</p>
-
-                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div style="border-bottom: 1px solid #313244; padding-bottom: 1.25rem;">
-                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Debug Your Linux System</div>
-                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                                Hit a broken package update, a failing <code>systemd</code> service, or a full disk? Press <code>Ctrl + /</code> and ask <em>'fix this'</em>. Boxxy reads your terminal output, checks logs, and proposes the exact commands for your approval.
-                            </p>
-                        </div>
-
-                        <div style="border-bottom: 1px solid #313244; padding-bottom: 1.25rem;">
-                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Send Tasks to the Background</div>
-                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                                Running a long build, dev server, or distro upgrade? Close the tab or quit the app with <strong>Run in Background</strong>. Your shells and AI characters stay alive in the background daemon and restore with their full split-pane layout whenever you return.
-                            </p>
-                        </div>
-
-                        <div style="border-bottom: 1px solid #313244; padding-bottom: 1.25rem;">
-                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Set Reminders &amp; Scheduled Tasks</div>
-                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                                Tell your character <em>'Remind me to check the deploy in 20 minutes'</em>. Even if you close Boxxy, the background daemon keeps counting down and sends a native desktop notification right on time.
-                            </p>
-                        </div>
-
-                        <div>
-                            <div style="color: #cdd6f4; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">Chat with Your Favorite Character</div>
-                            <p style="color: #a6adc8; margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                                Pair up with Niko, Levi, or Kuro — or create your own persona. Each character has their own personality, remembers your preferences across sessions via Memories &amp; Dreams, and addresses you by name.
-                            </p>
-                        </div>
+                        <button type="button" id="flatpak-copy-button" class="bx-icon-btn bx-copy-btn" title="Copy to clipboard">
+                            <svg id="flatpak-copy-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <svg id="flatpak-check-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0d140a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Features Grid -->
-        <div class="columns is-centered feature-grid">
-            <div class="column is-10">
-                <div class="columns">
-                    <div class="column">
-                        <div class="feature-item fancy-box" style="background: linear-gradient(rgba(30, 30, 46, 0.85), rgba(30, 30, 46, 0.85)), url('/1_speed.png'); background-size: cover; background-position: center;">
-                            <h3>High Performance</h3>
-                            <p>A <span class="quoted-text">fast</span>, fully-featured Linux terminal built for efficiency. It's a great daily driver, even before you turn the AI on.</p>
-                        </div>
+                <div class="install-pane" id="install-pane-nixos" style="display: none;">
+                    <div class="bx-terminal-well">
+                        <span class="bx-term-prompt" aria-hidden="true">$</span>
+                        <pre><code id="nixos-install-command">nix profile install github:boxxy-dev/boxxy</code></pre>
+                        <button type="button" id="nixos-copy-button" class="bx-icon-btn bx-copy-btn" title="Copy to clipboard">
+                            <svg id="nixos-copy-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <svg id="nixos-check-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0d140a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </button>
                     </div>
-                    <div class="column">
-                        <div class="feature-item fancy-box" style="border-color: #f5c2e7; box-shadow: 1px 1px 0 #f5c2e7, 2px 2px 0 #f5c2e7, 3px 3px 0 #f5c2e7, 4px 4px 0 #f5c2e7, 5px 5px 0 #f5c2e7, 6px 6px 0 #f5c2e7; background: linear-gradient(rgba(30, 30, 46, 0.85), rgba(30, 30, 46, 0.85)), url('/2_agentic-core.png'); background-size: cover; background-position: center;">
-                            <h3>Agentic Core</h3>
-                            <p>Powered by <span class="quoted-text">BoxxyClaw</span>, your terminal understands your intent, remembers preferences, and assists your workflow.</p>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="feature-item fancy-box" style="border-color: #cba6f7; box-shadow: 1px 1px 0 #cba6f7, 2px 2px 0 #cba6f7, 3px 3px 0 #cba6f7, 4px 4px 0 #cba6f7, 5px 5px 0 #cba6f7, 6px 6px 0 #cba6f7; background: linear-gradient(rgba(30, 30, 46, 0.85), rgba(30, 30, 46, 0.85)), url('/3_privacy.png'); background-size: cover; background-position: center;">
-                            <h3>Total Privacy</h3>
-                            <p>Connect to local LLMs like <span class="quoted-text">Ollama</span> or custom endpoints to keep your code, data, and terminal history entirely on your machine.</p>
-                        </div>
-                    </div>
+                    <p class="bx-nix-note">
+                        Try without installing: <code>nix run github:boxxy-dev/boxxy</code> · Flake input: <code>github:boxxy-dev/boxxy</code>
+                    </p>
+                </div>
+
+                <div class="bx-install-foot">
+                    <span>Desktop panel companions:</span>
+                    <a href="https://github.com/boxxy-dev/gnome-shell-boxxy-companion" target="_blank" rel="noopener">GNOME Shell Extension ↗</a>
+                    <span class="bx-dot-sep">·</span>
+                    <a href="https://github.com/boxxy-dev/cosmic-boxxy-companion" target="_blank" rel="noopener">COSMIC Desktop Applet ↗</a>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- 3 Core Pillars (Boxxy `.card` with Pixel-Ready Sprite Wells) -->
+        <section class="bx-section">
+            <div class="bx-section-head">
+                <span class="bx-eyebrow">ARCHITECTURE</span>
+                <h2>Built as a daily-driver terminal first.</h2>
+                <p>Pure Rust VTE performance under the hood, with BoxxyClaw ready whenever you want extra brainpower.</p>
+            </div>
+
+            <div class="bx-features-grid">
+                <div class="bx-card bx-feature-card">
+                    <div class="bx-feature-top">
+                        <div class="bx-sprite-well">
+                            <img src="/1_speed.png" alt="High Performance" class="bx-sprite-img">
+                        </div>
+                        <span class="bx-tag-chip is-highlight">boxxy-vte</span>
+                    </div>
+                    <h3>High Performance</h3>
+                    <p>A fast, GPU-accelerated 100% Rust &amp; GTK4 Linux terminal built for efficiency. Rock-solid as your daily driver even before turning any AI feature on.</p>
+                </div>
+
+                <div class="bx-card bx-feature-card">
+                    <div class="bx-feature-top">
+                        <div class="bx-sprite-well">
+                            <img src="/2_agentic-core.png" alt="Agentic Core" class="bx-sprite-img">
+                        </div>
+                        <span class="bx-tag-chip is-accent">boxxy-claw</span>
+                    </div>
+                    <h3>Agentic Core</h3>
+                    <p>Powered by BoxxyClaw, characters understand your terminal buffer, learn preferences via Memories &amp; Dreams, and stay alive in the background daemon.</p>
+                </div>
+
+                <div class="bx-card bx-feature-card">
+                    <div class="bx-feature-top">
+                        <div class="bx-sprite-well">
+                            <img src="/3_privacy.png" alt="Total Privacy" class="bx-sprite-img">
+                        </div>
+                        <span class="bx-tag-chip is-secondary">local-first</span>
+                    </div>
+                    <h3>Total Privacy</h3>
+                    <p>Connect to local LLMs like Ollama, llama.cpp, or custom OpenAI-compatible endpoints to keep your code, prompts, and terminal history on your machine.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Everyday Workflows (Styled as authentic Boxxy `.boxed-list`) -->
+        <section class="bx-section">
+            <div class="bx-section-head">
+                <span class="bx-eyebrow">DAILY WORKFLOWS</span>
+                <h2>What you can use Boxxy for every day.</h2>
+                <p>Practical ways Boxxy fits into a real Linux workflow without getting in your way.</p>
+            </div>
+
+            <div class="bx-boxed-list">
+                <div class="bx-list-row">
+                    <div class="bx-list-main">
+                        <div class="bx-list-title">Debug Your Linux System</div>
+                        <p class="bx-list-sub">Hit a broken package update, a failing <code>systemd</code> service, or a full disk? Press <kbd>Ctrl</kbd> + <kbd>/</kbd> and ask <em>“fix this”</em>. Boxxy reads your terminal output, checks logs, and proposes exact commands for your approval.</p>
+                    </div>
+                    <span class="bx-cmd-pill">&gt; "fix this"</span>
+                </div>
+
+                <div class="bx-list-row">
+                    <div class="bx-list-main">
+                        <div class="bx-list-title">Send Tasks to the Background</div>
+                        <p class="bx-list-sub">Running a long build, dev server, or distro upgrade? Close the tab or quit the app with <strong>Run in Background</strong>. Your shells and characters stay alive in <code>boxxy-agent</code> and restore with their exact split-pane layout.</p>
+                    </div>
+                    <span class="bx-cmd-pill">&gt;_ 2 detached</span>
+                </div>
+
+                <div class="bx-list-row">
+                    <div class="bx-list-main">
+                        <div class="bx-list-title">Set Reminders &amp; Scheduled Tasks</div>
+                        <p class="bx-list-sub">Tell your character <em>“Remind me to check the deploy in 20 minutes”</em>. Even with all Boxxy windows closed, the background daemon keeps counting down and sends a native desktop notification on time.</p>
+                    </div>
+                    <span class="bx-cmd-pill">● 20:00 timer</span>
+                </div>
+
+                <div class="bx-list-row">
+                    <div class="bx-list-main">
+                        <div class="bx-list-title">Chat with Persistent Characters</div>
+                        <p class="bx-list-sub">Pair up with Niko, Levi, or Kuro — or create your own persona. Each character remembers your preferences in human-readable <code>MEMORY.md</code> and consolidates knowledge during idle Dream cycles.</p>
+                    </div>
+                    <span class="bx-cmd-pill">MEMORY.md</span>
+                </div>
+            </div>
+        </section>
     </div>
-</section>
-
-<script>
-    document.getElementById('copy-button').addEventListener('click', function() {
-        const codeText = document.getElementById('install-command').innerText;
-        const btn = document.getElementById('copy-button');
-        const copyIcon = document.getElementById('copy-icon');
-        const checkIcon = document.getElementById('check-icon');
-
-        navigator.clipboard.writeText(codeText).then(() => {
-            copyIcon.style.display = 'none';
-            checkIcon.style.display = 'block';
-            btn.style.backgroundColor = '#a6e3a1'; // Catppuccin Green
-
-            setTimeout(() => {
-                copyIcon.style.display = 'block';
-                checkIcon.style.display = 'none';
-                btn.style.backgroundColor = '#313244';
-            }, 2000);
-        });
-    });
-</script>
+</main>
 
 
-    <footer class="footer">
+    <footer class="bx-footer">
+        <div class="bx-footer-inner">
+            <div class="bx-footer-left">
+                <span class="bx-footer-prompt">&gt;_</span>
+                <span>Boxxy Terminal · Built with Rust &amp; GTK4 for Linux</span>
+            </div>
+            <div class="bx-footer-links">
+                <a href="/getting-started">Docs</a>
+                <a href="/theme-api">Theme API</a>
+                <a href="/releases">Releases</a>
+                <a href="/live">Telemetry</a>
+                <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
     </footer>
+
     <script src="/js/main.js"></script>
 </body>
 </html>

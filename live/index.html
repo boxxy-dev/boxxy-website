@@ -3,270 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telemetry Dashboard - Boxxy Terminal</title>
+    <title>Telemetry Dashboard — Boxxy Terminal</title>
+    <meta name="description" content="A powerful CLI tool to simplify your development workflow">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
     <link rel="stylesheet" href="/css/style.css">
+    
 </head>
 <body>
-    <header class="navbar is-dark">
-        <div class="container">
-            <div class="navbar-brand">
-                <div class="navbar-item">
-                    <a class="boxxy-brand-button" href="/">
-                        <strong>Boxxy Terminal</strong>
-                    </a>
-                </div>
+    
+    
+    
+    
+    
+
+    <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
+    <header class="bx-headerbar">
+        <div class="bx-headerbar-inner">
+            <div class="bx-header-left">
+                <a class="bx-brand-btn" href="/">
+                    <span class="bx-brand-prompt" aria-hidden="true">&gt;_</span>
+                    <span>Boxxy Terminal</span>
+                </a>
             </div>
-            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-live-button" href="/live">
-                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
-                        <span>Live</span>
-                    </a>
-                </div>
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Star</span>
-                        <span class="star-count" id="github-stars">...</span>
-                    </a>
-                </div>
+
+            <nav class="bx-tabbar" id="site-menu" aria-label="Main navigation">
+                <a href="/" class="bx-nav-tab ">Home</a>
+                <a href="/getting-started" class="bx-nav-tab ">Docs</a>
+                <a href="/theme-api" class="bx-nav-tab ">Theme API</a>
+            </nav>
+
+            <div class="bx-header-right">
+                <a class="bx-status-pill is-selected" href="/live" title="Live Community Telemetry">
+                    <span class="bx-live-dot" aria-hidden="true"></span>
+                    <span>Live</span>
+                </a>
+                <a class="bx-tactile-btn bx-star-btn" href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Star</span>
+                    <span class="bx-star-count" id="github-stars">···</span>
+                </a>
+                <button type="button" class="bx-tactile-btn bx-mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
             </div>
         </div>
     </header>
 
     
-<section class="section">
-    <div class="container">
-        <div class="columns is-centered">
-            <!-- Main Content Area -->
-            <main class="column is-10">
-                <div class="has-text-centered mb-6">
-                    <h1 class="title is-1 fancy-title mb-2">Last <span class="gradient-text">7 Days</span></h1>
-                    <p class="subtitle is-4" style="color: #a6adc8; font-weight: 600;">
-                        Live Telemetry • <span id="date-range" style="color: #89b4fa; font-size: 0.9em; font-weight: 500;">Loading range...</span>
-                    </p>
-                </div>
-
-                <div id="loading-state" class="has-text-centered my-6 py-6">
-                    <p class="subtitle is-4" style="color: #a6adc8; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">Loading Global Stats...</p>
-                    <style>
-                        @keyframes pulse {
-                            0%, 100% { opacity: 1; }
-                            50% { opacity: .5; }
-                        }
-                        .live-scroll-list {
-                            max-height: 530px;
-                            overflow-y: auto;
-                            padding: 0 12px 0 0 !important;
-                            margin: 0 !important;
-                            list-style: none;
-                        }
-                        .live-scroll-models {
-                            max-height: 820px;
-                            overflow-y: auto;
-                            padding: 0 12px 0 0 !important;
-                        }
-                        .live-modal-scroll {
-                            max-height: 65vh;
-                            overflow-y: auto;
-                            padding-right: 6px !important;
-                        }
-                        .live-scroll-list::-webkit-scrollbar,
-                        .live-scroll-models::-webkit-scrollbar,
-                        .live-modal-scroll::-webkit-scrollbar {
-                            width: 6px;
-                        }
-                        .live-scroll-list::-webkit-scrollbar-track,
-                        .live-scroll-models::-webkit-scrollbar-track,
-                        .live-modal-scroll::-webkit-scrollbar-track {
-                            background: transparent;
-                        }
-                        .live-scroll-list::-webkit-scrollbar-thumb,
-                        .live-scroll-models::-webkit-scrollbar-thumb,
-                        .live-modal-scroll::-webkit-scrollbar-thumb {
-                            background-color: #45475a;
-                            border-radius: 6px;
-                        }
-                        .alltime-link {
-                            color: #89b4fa;
-                            font-size: 0.85rem;
-                            font-weight: 600;
-                            cursor: pointer;
-                            background: none;
-                            border: none;
-                            padding: 0;
-                            font-family: inherit;
-                            transition: color 0.15s ease;
-                        }
-                        .alltime-link:hover {
-                            color: #b4befe;
-                            text-decoration: underline;
-                        }
-                    </style>
-                </div>
-
-                <div id="dashboard-content" style="display: none;">
-                    <div class="columns is-multiline is-centered">
-                        <!-- Hero Stats -->
-                        <div class="column is-4">
-                            <div class="fancy-box p-5 has-text-centered" style="height: 100%;">
-                                <h3 style="color: #a6adc8; text-transform: uppercase; font-size: 0.9rem; font-weight: 800; letter-spacing: 1px;">Weekly AI Tokens</h3>
-                                <p id="total-tokens-week" class="mt-3" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 2.5rem; color: #89dceb; font-weight: 700;">-</p>
-                                <p style="color: #6c7086; font-size: 0.8rem; font-weight: 600;">All-time: <span id="total-tokens-alltime">-</span></p>
-                            </div>
-                        </div>
-
-                        <div class="column is-4">
-                            <div class="fancy-box p-5 has-text-centered" style="height: 100%; border-color: #f9e2af; box-shadow: 1px 1px 0 #f9e2af, 2px 2px 0 #f9e2af, 3px 3px 0 #f9e2af, 4px 4px 0 #f9e2af, 5px 5px 0 #f9e2af, 6px 6px 0 #f9e2af;">
-                                <h3 style="color: #a6adc8; text-transform: uppercase; font-size: 0.9rem; font-weight: 800; letter-spacing: 1px;">Claw Adoption</h3>
-                                <p id="claw-adoption" class="mt-3" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 2.5rem; color: #f9e2af; font-weight: 700;">-%</p>
-                                <p style="color: #6c7086; font-size: 0.8rem; font-weight: 600;">of app launches<span id="claw-adoption-alltime-wrap" style="display: none;"> • All-time: <span id="claw-adoption-alltime">-%</span></span></p>
-                            </div>
-                        </div>
-
-                        <div class="column is-4">
-                            <div class="fancy-box p-5 has-text-centered" style="height: 100%; border-color: #cba6f7; box-shadow: 1px 1px 0 #cba6f7, 2px 2px 0 #cba6f7, 3px 3px 0 #cba6f7, 4px 4px 0 #cba6f7, 5px 5px 0 #cba6f7, 6px 6px 0 #cba6f7;">
-                                <h3 style="color: #a6adc8; text-transform: uppercase; font-size: 0.9rem; font-weight: 800; letter-spacing: 1px;">Daily Developers</h3>
-                                <p id="current-dau" class="mt-3" style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 2.5rem; color: #cba6f7; font-weight: 700;">-</p>
-                                <p style="color: #6c7086; font-size: 0.8rem; font-weight: 600;"><span id="weekly-devs-wrap" style="display: none;">7d: <span id="total-devs-7d">-</span> • </span>All-time: <span id="total-devs-alltime">-</span></p>
-                            </div>
-                        </div>
-
-                        <!-- System Stats Group -->
-                        <div class="column is-12 mt-5">
-                            <h2 class="title is-4" style="color: #cdd6f4; border-bottom: 2px solid #313244; padding-bottom: 0.5rem; margin-bottom: 1.5rem;">System</h2>
-                            <div class="columns is-multiline">
-                                <!-- Left Column: OS Usage + Desktop Usage -->
-                                <div class="column is-6">
-                                    <div class="content-area" style="margin-bottom: 1.5rem;">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">OS Usage</h3>
-                                        <ul id="os-container" class="live-scroll-list">
-                                            <!-- Populated by JS -->
-                                        </ul>
-                                        <div class="has-text-right mt-3">
-                                            <button type="button" class="alltime-link" data-alltime="os">Top 10 of all time</button>
-                                        </div>
-                                    </div>
-                                    <div class="content-area">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Desktop Environment</h3>
-                                        <ul id="desktop-container" class="live-scroll-list">
-                                            <!-- Populated by JS -->
-                                        </ul>
-                                        <div class="has-text-right mt-3">
-                                            <button type="button" class="alltime-link" data-alltime="desktop">Top 10 of all time</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Right Column: Installation Type, Shell Usage, and Theme Usage -->
-                                <div class="column is-6">
-                                    <div class="content-area" style="margin-bottom: 1.5rem;">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Installation Type</h3>
-                                        <ul id="pkg-container" class="live-scroll-list">
-                                            <!-- Populated by JS -->
-                                        </ul>
-                                        <div class="has-text-right mt-3">
-                                            <button type="button" class="alltime-link" data-alltime="pkg">All time</button>
-                                        </div>
-                                    </div>
-                                    <div class="content-area" style="margin-bottom: 1.5rem;">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Shell Usage</h3>
-                                        <ul id="shell-container" class="live-scroll-list">
-                                            <!-- Populated by JS -->
-                                        </ul>
-                                        <div class="has-text-right mt-3">
-                                            <button type="button" class="alltime-link" data-alltime="shell">Top 10 of all time</button>
-                                        </div>
-                                    </div>
-                                    <div class="content-area">
-                                        <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Theme Usage</h3>
-                                        <ul id="theme-container" class="live-scroll-list">
-                                            <!-- Populated by JS -->
-                                        </ul>
-                                        <div class="has-text-right mt-3">
-                                            <button type="button" class="alltime-link" data-alltime="theme">All time</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Claw Stats Group -->
-                        <div class="column is-12 mt-5">
-                            <h2 class="title is-4" style="color: #cdd6f4; border-bottom: 2px solid #313244; padding-bottom: 0.5rem; margin-bottom: 1.5rem;">Claw</h2>
-                            <div class="columns is-multiline">
-                                <!-- Left Column: Providers -->
-                                <div class="column is-6">
-                                    <div class="content-area" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                                        <div>
-                                            <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Claw Providers</h3>
-                                            <ul id="providers-container" class="live-scroll-list">
-                                                <!-- Populated by JS -->
-                                            </ul>
-                                        </div>
-                                        <div class="has-text-right mt-3">
-                                            <button type="button" class="alltime-link" data-alltime="providers">All time</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Right Column: Models Usage -->
-                                <div class="column is-6">
-                                    <div class="content-area" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                                        <div>
-                                            <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: 1px;">Models usage</h3>
-                                            <p style="color: #a6adc8; font-size: 0.9em; margin-bottom: 1.5rem; font-style: italic;">Note: Ollama and Custom Endpoint models are excluded for privacy reasons.</p>
-                                            <div id="models-container" class="live-scroll-models">
-                                                <!-- Populated by JS -->
-                                            </div>
-                                        </div>
-                                        <div class="has-text-right mt-3">
-                                            <button type="button" class="alltime-link" data-alltime="models">Top 20 of all time</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tool Usage Table -->
-                        <div class="column is-12 mt-5">
-                            <div class="content-area">
-                                <h3 style="color: #a6adc8 !important; text-transform: uppercase; font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: 1px;">Tools usage</h3>
-                                <div id="tools-container" class="live-scroll-list">
-                                    <!-- Populated by JS -->
-                                </div>
-                                <div class="has-text-right mt-3">
-                                    <button type="button" class="alltime-link" data-alltime="tools">All time</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </main>
+<main class="bx-live-page">
+    <div class="bx-container">
+        <div class="bx-live-head">
+            <span class="bx-eyebrow">BOXXY IN THE WILD</span>
+            <h1>Live Telemetry</h1>
+            <p>Anonymous, opt-in community statistics · Last 7 days · <span id="date-range" class="bx-secondary-text">Loading range...</span></p>
         </div>
-    </div>
 
-    <!-- All-Time Modal -->
-    <div id="alltime-modal" style="display: none; position: fixed; inset: 0; background-color: rgba(17, 17, 27, 0.8); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-        <div style="background-color: #1e1e2e; border: 2px solid #45475a; border-radius: 16px; width: 100%; max-width: 560px; padding: 2rem; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
-            <div class="is-flex is-justify-content-space-between is-align-items-center mb-4">
-                <h3 id="alltime-modal-title" style="color: #f5e0dc !important; font-size: 1.15rem; font-weight: 800; margin: 0;">All Time</h3>
-                <button id="alltime-modal-close" type="button" style="background-color: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center;">✕</button>
+        <div id="loading-state" class="bx-status-box is-centered">
+            <span class="bx-live-dot"></span>
+            <span>Loading global telemetry stats...</span>
+        </div>
+
+        <div id="dashboard-content" style="display: none;">
+            <!-- Top 3 Stat Cards -->
+            <div class="bx-metrics-grid">
+                <div class="bx-card bx-metric-card">
+                    <span class="bx-metric-label">Weekly AI Tokens</span>
+                    <div id="total-tokens-week" class="bx-metric-value is-secondary">-</div>
+                    <span class="bx-metric-sub">All-time: <span id="total-tokens-alltime">-</span></span>
+                </div>
+
+                <div class="bx-card bx-metric-card">
+                    <span class="bx-metric-label">Claw Adoption</span>
+                    <div id="claw-adoption" class="bx-metric-value is-highlight">-%</div>
+                    <span class="bx-metric-sub">Of app launches<span id="claw-adoption-alltime-wrap" style="display: none;"> · All-time: <span id="claw-adoption-alltime">-%</span></span></span>
+                </div>
+
+                <div class="bx-card bx-metric-card">
+                    <span class="bx-metric-label">Daily Developers</span>
+                    <div id="current-dau" class="bx-metric-value is-accent">-</div>
+                    <span class="bx-metric-sub"><span id="weekly-devs-wrap" style="display: none;">7d: <span id="total-devs-7d">-</span> · </span>All-time: <span id="total-devs-alltime">-</span></span>
+                </div>
             </div>
-            <ul id="alltime-modal-list" class="live-modal-scroll" style="list-style: none; margin: 0; padding: 0;">
-                <!-- Populated by JS -->
-            </ul>
+
+            <!-- System Group -->
+            <h2 class="bx-live-group-title">System</h2>
+            <div class="bx-dash-grid">
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <h3>OS Usage</h3>
+                        <button type="button" class="alltime-link" data-alltime="os">Top 10 all-time →</button>
+                    </div>
+                    <div id="os-container" class="live-scroll-list"></div>
+                </section>
+
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <h3>Installation Type</h3>
+                        <button type="button" class="alltime-link" data-alltime="pkg">All-time →</button>
+                    </div>
+                    <div id="pkg-container" class="live-scroll-list"></div>
+                </section>
+
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <h3>Desktop Environment</h3>
+                        <button type="button" class="alltime-link" data-alltime="desktop">Top 10 all-time →</button>
+                    </div>
+                    <div id="desktop-container" class="live-scroll-list"></div>
+                </section>
+
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <h3>Theme Usage</h3>
+                        <button type="button" class="alltime-link" data-alltime="theme">All-time →</button>
+                    </div>
+                    <div id="theme-container" class="live-scroll-list"></div>
+                </section>
+
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <h3>Shell Usage</h3>
+                        <button type="button" class="alltime-link" data-alltime="shell">Top 10 all-time →</button>
+                    </div>
+                    <div id="shell-container" class="live-scroll-list"></div>
+                </section>
+            </div>
+
+            <!-- Claw Group -->
+            <h2 class="bx-live-group-title is-spaced">Claw</h2>
+            <div class="bx-dash-grid">
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <h3>Claw Providers</h3>
+                        <button type="button" class="alltime-link" data-alltime="providers">All-time →</button>
+                    </div>
+                    <div id="providers-container" class="live-scroll-list"></div>
+                </section>
+
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <div>
+                            <h3>Models Usage</h3>
+                            <p class="bx-dash-note">Ollama and Custom Endpoint model names are excluded for privacy.</p>
+                        </div>
+                        <button type="button" class="alltime-link" data-alltime="models">Top 20 all-time →</button>
+                    </div>
+                    <div id="models-container" class="live-scroll-models"></div>
+                </section>
+
+                <section class="bx-card bx-dash-panel">
+                    <div class="bx-dash-head">
+                        <h3>Tools Usage</h3>
+                        <button type="button" class="alltime-link" data-alltime="tools">All-time →</button>
+                    </div>
+                    <div id="tools-container" class="live-scroll-list"></div>
+                </section>
+            </div>
         </div>
     </div>
-</section>
 
-<!-- Supabase JS CDN -->
+    <!-- All-Time Modal (Boxxy `dialog sheet` styling) -->
+    <div id="alltime-modal" class="bx-modal-backdrop" style="display: none;">
+        <div class="bx-modal-sheet" role="dialog" aria-modal="true" aria-labelledby="alltime-modal-title">
+            <div class="bx-modal-head">
+                <h3 id="alltime-modal-title">All Time</h3>
+                <button id="alltime-modal-close" type="button" class="bx-icon-btn" aria-label="Close">✕</button>
+            </div>
+            <ul id="alltime-modal-list" class="bx-boxed-list live-modal-scroll"></ul>
+        </div>
+    </div>
+</main>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     document.addEventListener("DOMContentLoaded", async () => {
@@ -313,10 +224,10 @@
         const formatPkgType = (raw) => {
             switch (String(raw ?? '').trim().toLowerCase()) {
                 case 'flatpak': return 'Flatpak';
+                case 'nix': return 'Nix / NixOS';
                 case 'distro':
                 case 'distro packaged':
-                case 'system-package':
-                case 'nix': return 'Distro Packaged';
+                case 'system-package': return 'Distro Packaged';
                 default: return 'Native';
             }
         };
@@ -332,7 +243,6 @@
                 return rpcRes.data;
             }
 
-            // Fallback to individual view reads if RPC is unavailable
             const [
                 statsRes, toolsRes, toolsAllRes, osRes, osAllRes,
                 shellRes, shellAllRes, providerRes, providerAllRes,
@@ -414,7 +324,6 @@
             const tools = payload.tools_7d || [];
             const toolsAllTimeData = payload.tools_all_time || [];
 
-            // Calculate totals and UTC-accurate date range
             const last7Days = daily.slice(0, 7);
             const tokensLastWeek = stats7d && stats7d.total_tokens_7d !== undefined
                 ? Number(stats7d.total_tokens_7d)
@@ -432,8 +341,8 @@
                 const startYear = startDate.getUTCFullYear();
                 const endYear = endDate.getUTCFullYear();
                 const rangeText = startYear === endYear
-                    ? `${fmtShort(startDate)} - ${fmtShort(endDate)}, ${endYear}`
-                    : `${fmtShort(startDate)}, ${startYear} - ${fmtShort(endDate)}, ${endYear}`;
+                    ? `${fmtShort(startDate)} – ${fmtShort(endDate)}, ${endYear}`
+                    : `${fmtShort(startDate)}, ${startYear} – ${fmtShort(endDate)}, ${endYear}`;
                 document.getElementById('date-range').innerText = rangeText;
             }
 
@@ -455,99 +364,84 @@
                 document.getElementById('claw-adoption-alltime-wrap').style.display = 'inline';
             }
 
-            const renderSimpleDevList = (containerId, rows, nameKey, emptyMsg) => {
+            const renderBarDevList = (containerId, rows, nameKey, fillClass, emptyMsg) => {
                 const el = document.getElementById(containerId);
                 if (!rows || rows.length === 0) {
-                    el.innerHTML = `<li class="has-text-centered" style="color: #a6adc8;">${escapeHtml(emptyMsg)}</li>`;
+                    el.innerHTML = `<p class="bx-dash-empty">${escapeHtml(emptyMsg)}</p>`;
                     return;
                 }
+                const maxVal = Math.max(...rows.map(r => Number(r.unique_users) || 0), 1);
                 el.innerHTML = rows.map(row => {
                     const safeName = escapeHtml(row[nameKey]);
-                    const safeUsers = (Number(row.unique_users) || 0).toLocaleString();
+                    const count = Number(row.unique_users) || 0;
+                    const widthPct = Math.max((count / maxVal) * 100, 4).toFixed(1);
                     return `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${safeName}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">${safeUsers} devs</span>
-                        </li>
+                        <div class="bx-bar-row">
+                            <div class="bx-bar-labels">
+                                <span>${safeName}</span>
+                                <b>${count.toLocaleString()} devs</b>
+                            </div>
+                            <div class="bx-progress-trough">
+                                <div class="bx-progress-fill ${fillClass}" style="width: ${widthPct}%"></div>
+                            </div>
+                        </div>
                     `;
                 }).join('');
             };
 
-            const renderShareList = (containerId, rows, getLabel, getCount, emptyMsg) => {
+            const renderBarShareList = (containerId, rows, getLabel, getCount, fillClass, emptyMsg) => {
                 const el = document.getElementById(containerId);
                 if (!rows || rows.length === 0) {
-                    el.innerHTML = `<li class="has-text-centered" style="color: #a6adc8;">${escapeHtml(emptyMsg)}</li>`;
+                    el.innerHTML = `<p class="bx-dash-empty">${escapeHtml(emptyMsg)}</p>`;
                     return;
                 }
                 const total = rows.reduce((acc, r) => acc + (Number(getCount(r)) || 0), 0);
                 el.innerHTML = rows.map(row => {
                     const safeName = escapeHtml(getLabel(row));
                     const userCount = Number(getCount(row)) || 0;
-                    const percentage = total > 0 ? ((userCount / total) * 100).toFixed(1) : '0.0';
+                    const pctNum = total > 0 ? (userCount / total) * 100 : 0;
+                    const widthPct = Math.max(pctNum, 3).toFixed(1);
                     return `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${safeName}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
-                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${userCount.toLocaleString()} devs)</small>
-                            </span>
-                        </li>
+                        <div class="bx-bar-row">
+                            <div class="bx-bar-labels">
+                                <span>${safeName}</span>
+                                <b>${pctNum.toFixed(1)}% <small>(${userCount.toLocaleString()})</small></b>
+                            </div>
+                            <div class="bx-progress-trough">
+                                <div class="bx-progress-fill ${fillClass}" style="width: ${widthPct}%"></div>
+                            </div>
+                        </div>
                     `;
                 }).join('');
             };
 
-            renderSimpleDevList('os-container', osData, 'os_name', 'No OS data available yet.');
-            renderSimpleDevList('shell-container', shellData, 'shell_name', 'No shell data available yet.');
-            renderSimpleDevList('desktop-container', desktopData, 'desktop_name', 'No desktop data yet — populates on next launch.');
-            renderShareList('pkg-container', pkgData, (r) => formatPkgType(r.pkg_type), (r) => r.user_count ?? r.unique_users, 'No package data available yet.');
-            renderShareList('theme-container', themeData, (r) => r.theme_name, (r) => r.unique_users, 'No theme data yet — populates on next launch.');
+            renderBarDevList('os-container', osData, 'os_name', 'is-accent', 'No OS data available yet.');
+            renderBarShareList('pkg-container', pkgData, (r) => formatPkgType(r.pkg_type), (r) => r.user_count ?? r.unique_users, 'is-secondary', 'No package data available yet.');
+            renderBarDevList('desktop-container', desktopData, 'desktop_name', 'is-secondary', 'No desktop data yet — populates on next launch.');
+            renderBarShareList('theme-container', themeData, (r) => r.theme_name, (r) => r.unique_users, 'is-highlight', 'No theme data yet — populates on next launch.');
+            renderBarDevList('shell-container', shellData, 'shell_name', 'is-accent', 'No shell data available yet.');
 
             // Providers
             const providersContainer = document.getElementById('providers-container');
             if (providers.length === 0) {
-                providersContainer.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No provider data available yet.</li>';
+                providersContainer.innerHTML = '<p class="bx-dash-empty">No provider data available yet.</p>';
             } else {
                 const totalProviderUsers = providers.reduce((acc, p) => acc + (Number(p.unique_users) || 0), 0);
+                const maxProviderUsers = Math.max(...providers.map(p => Number(p.unique_users) || 0), 1);
                 providersContainer.innerHTML = providers.map(p => {
                     const name = escapeHtml(formatProviderName(p.provider_name));
                     const uniqueUsers = Number(p.unique_users) || 0;
                     const totalInvocations = Number(p.total_invocations) || 0;
-                    const percentage = totalProviderUsers > 0
-                        ? ((uniqueUsers / totalProviderUsers) * 100).toFixed(1)
-                        : '0.0';
+                    const percentage = totalProviderUsers > 0 ? ((uniqueUsers / totalProviderUsers) * 100).toFixed(1) : '0.0';
+                    const widthPct = Math.max((uniqueUsers / maxProviderUsers) * 100, 4).toFixed(1);
                     return `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <span style="color: #cdd6f4; font-weight: 700;">${name}</span>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc;">
-                                ${percentage}% <small style="color: #6c7086; margin-left: 8px; font-size: 0.8em;">(${uniqueUsers.toLocaleString()} devs - ${totalInvocations.toLocaleString()} queries)</small>
-                            </span>
-                        </li>
-                    `;
-                }).join('');
-            }
-
-            // Models
-            const modelsContainer = document.getElementById('models-container');
-            const filteredModels = models.filter(m => !isPrivateProvider(m.provider_name) && String(m.model_name || '').toLowerCase() !== 'redacted');
-            if (filteredModels.length === 0) {
-                modelsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No public model usage data available yet.</p>';
-            } else {
-                modelsContainer.innerHTML = filteredModels.map(model => {
-                    const providerName = escapeHtml(formatProviderName(model.provider_name));
-                    const safeModelName = escapeHtml(model.model_name);
-                    const safeUsers = (Number(model.unique_users) || 0).toLocaleString();
-                    const safeQueries = (Number(model.total_invocations) || 0).toLocaleString();
-                    return `
-                        <div class="mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <div class="mb-2">
-                                <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1.1rem !important; padding: 0 !important; font-weight: 700; word-break: break-all;">${safeModelName}</code>
+                        <div class="bx-bar-row">
+                            <div class="bx-bar-labels">
+                                <span>${name}</span>
+                                <b>${percentage}% <small>(${uniqueUsers.toLocaleString()}d · ${totalInvocations.toLocaleString()}q)</small></b>
                             </div>
-                            <div class="is-flex is-justify-content-space-between is-align-items-center">
-                                <span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${providerName}</span>
-                                <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.9rem; color: #a6adc8;">
-                                    <strong style="color: #f5e0dc;">${safeUsers}</strong> devs
-                                    <span style="margin: 0 8px; color: #45475a;">|</span>
-                                    <strong style="color: #89b4fa;">${safeQueries}</strong> queries
-                                </span>
+                            <div class="bx-progress-trough">
+                                <div class="bx-progress-fill is-accent" style="width: ${widthPct}%"></div>
                             </div>
                         </div>
                     `;
@@ -557,27 +451,62 @@
             // Tools
             const toolsContainer = document.getElementById('tools-container');
             if (tools.length === 0) {
-                toolsContainer.innerHTML = '<p class="has-text-centered" style="color: #a6adc8;">No tool usage data available yet.</p>';
+                toolsContainer.innerHTML = '<p class="bx-dash-empty">No tool usage data available yet.</p>';
             } else {
+                const maxTools = Math.max(...tools.map(t => Number(t.usage_count) || 0), 1);
                 toolsContainer.innerHTML = tools.map(tool => {
                     const safeName = escapeHtml(tool.tool_name);
-                    const safeCount = (Number(tool.usage_count) || 0).toLocaleString();
-                    const isExternalMcp = tool.tool_name === 'external_mcp_tool';
-                    const badgeHtml = isExternalMcp
-                        ? '<span style="background-color: #45475a; color: #cdd6f4; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 8px;">External MCP</span>'
+                    const count = Number(tool.usage_count) || 0;
+                    const widthPct = Math.max((count / maxTools) * 100, 4).toFixed(1);
+                    const badgeHtml = tool.tool_name === 'external_mcp_tool'
+                        ? '<span class="bx-mini-badge is-secondary">MCP</span>'
                         : '';
                     return `
-                        <div class="is-flex is-justify-content-space-between is-align-items-center mb-3 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a;">
-                            <div class="is-flex is-align-items-center">
-                                <code style="color: #94e2d5 !important; background: transparent !important; border: none !important; font-size: 1rem !important; padding: 0 !important;">${safeName}</code>${badgeHtml}
+                        <div class="bx-bar-row">
+                            <div class="bx-bar-labels">
+                                <span class="bx-mono-span">${safeName} ${badgeHtml}</span>
+                                <b>${count.toLocaleString()} uses</b>
                             </div>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #bac2de; font-weight: 600;">${safeCount} uses</span>
+                            <div class="bx-progress-trough">
+                                <div class="bx-progress-fill is-highlight" style="width: ${widthPct}%"></div>
+                            </div>
                         </div>
                     `;
                 }).join('');
             }
 
-            // All-Time Modal wiring
+            // Models
+            const modelsContainer = document.getElementById('models-container');
+            const filteredModels = models.filter(m => !isPrivateProvider(m.provider_name) && String(m.model_name || '').toLowerCase() !== 'redacted');
+            if (filteredModels.length === 0) {
+                modelsContainer.innerHTML = '<p class="bx-dash-empty">No public model usage data available yet.</p>';
+            } else {
+                const maxQueries = Math.max(...filteredModels.map(m => Number(m.total_invocations) || 0), 1);
+                modelsContainer.innerHTML = filteredModels.map(model => {
+                    const providerName = escapeHtml(formatProviderName(model.provider_name));
+                    const safeModelName = escapeHtml(model.model_name);
+                    const safeUsers = (Number(model.unique_users) || 0).toLocaleString();
+                    const queries = Number(model.total_invocations) || 0;
+                    const widthPct = Math.max((queries / maxQueries) * 100, 4).toFixed(1);
+                    return `
+                        <div class="bx-model-tile">
+                            <div class="bx-model-top">
+                                <code class="bx-model-id">${safeModelName}</code>
+                                <span class="bx-mini-badge is-secondary">${providerName}</span>
+                            </div>
+                            <div class="bx-bar-labels is-small">
+                                <span>${safeUsers} devs</span>
+                                <b>${queries.toLocaleString()} queries</b>
+                            </div>
+                            <div class="bx-progress-trough">
+                                <div class="bx-progress-fill is-secondary" style="width: ${widthPct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Modal
             const modal = document.getElementById('alltime-modal');
             const modalTitle = document.getElementById('alltime-modal-title');
             const modalList = document.getElementById('alltime-modal-list');
@@ -588,104 +517,84 @@
                 let items = [];
                 if (type === 'os') {
                     title = 'Top 10 OS Usage — All Time';
-                    items = osAllTimeData.slice(0, 10).map(r => ({
-                        name: r.os_name,
-                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
-                    }));
+                    items = osAllTimeData.slice(0, 10).map(r => ({ name: r.os_name, metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs` }));
                 } else if (type === 'desktop') {
                     title = 'Top 10 Desktop Environments — All Time';
-                    items = desktopAllTimeData.slice(0, 10).map(r => ({
-                        name: r.desktop_name,
-                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
-                    }));
+                    items = desktopAllTimeData.slice(0, 10).map(r => ({ name: r.desktop_name, metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs` }));
                 } else if (type === 'shell') {
                     title = 'Top 10 Shells — All Time';
-                    items = shellAllTimeData.slice(0, 10).map(r => ({
-                        name: r.shell_name,
-                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
-                    }));
+                    items = shellAllTimeData.slice(0, 10).map(r => ({ name: r.shell_name, metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs` }));
                 } else if (type === 'theme') {
                     title = 'Theme Usage — All Time';
-                    items = themeAllTimeData.map(r => ({
-                        name: r.theme_name,
-                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs`
-                    }));
+                    items = themeAllTimeData.map(r => ({ name: r.theme_name, metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs` }));
                 } else if (type === 'pkg') {
                     title = 'Installation Type — All Time';
-                    items = pkgAllTimeData.map(r => ({
-                        name: formatPkgType(r.pkg_type),
-                        metric: `${(Number(r.user_count ?? r.unique_users) || 0).toLocaleString()} devs`
-                    }));
+                    items = pkgAllTimeData.map(r => ({ name: formatPkgType(r.pkg_type), metric: `${(Number(r.user_count ?? r.unique_users) || 0).toLocaleString()} devs` }));
                 } else if (type === 'providers') {
                     title = 'Claw Providers — All Time';
-                    items = providersAllTimeData.map(r => ({
-                        name: formatProviderName(r.provider_name),
-                        metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs · ${(Number(r.total_invocations) || 0).toLocaleString()} queries`
-                    }));
+                    items = providersAllTimeData.map(r => ({ name: formatProviderName(r.provider_name), metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs · ${(Number(r.total_invocations) || 0).toLocaleString()} queries` }));
                 } else if (type === 'models') {
                     title = 'Top 20 Models — All Time';
                     items = modelsAllTimeData
                         .filter(m => !isPrivateProvider(m.provider_name) && String(m.model_name || '').toLowerCase() !== 'redacted')
                         .slice(0, 20)
-                        .map(r => ({
-                            name: `${r.model_name} (${formatProviderName(r.provider_name)})`,
-                            metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs · ${(Number(r.total_invocations) || 0).toLocaleString()} queries`
-                        }));
+                        .map(r => ({ name: `${r.model_name} (${formatProviderName(r.provider_name)})`, metric: `${(Number(r.unique_users) || 0).toLocaleString()} devs · ${(Number(r.total_invocations) || 0).toLocaleString()} queries` }));
                 } else if (type === 'tools') {
                     title = 'Tools Usage — All Time';
-                    items = toolsAllTimeData.map(r => ({
-                        name: r.tool_name,
-                        metric: `${(Number(r.usage_count) || 0).toLocaleString()} uses`
-                    }));
+                    items = toolsAllTimeData.map(r => ({ name: r.tool_name, metric: `${(Number(r.usage_count) || 0).toLocaleString()} uses` }));
                 }
 
                 modalTitle.innerText = title;
                 if (items.length === 0) {
-                    modalList.innerHTML = '<li class="has-text-centered" style="color: #a6adc8;">No all-time data available yet.</li>';
+                    modalList.innerHTML = '<li class="bx-dash-empty">No all-time data available yet.</li>';
                 } else {
                     modalList.innerHTML = items.map((item, idx) => `
-                        <li class="is-flex is-justify-content-space-between is-align-items-center mb-2 p-3" style="background-color: #313244; border-radius: 8px; border: 1px solid #45475a; gap: 1rem;">
-                            <div class="is-flex is-align-items-center" style="gap: 0.75rem; min-width: 0;">
-                                <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #6c7086; font-weight: 700; min-width: 1.8rem;">#${idx + 1}</span>
-                                <span style="color: #cdd6f4; font-weight: 700; word-break: break-word;">${escapeHtml(item.name)}</span>
+                        <li class="bx-list-row is-compact">
+                            <div class="bx-modal-left">
+                                <span class="bx-modal-rank">#${idx + 1}</span>
+                                <span class="bx-modal-name">${escapeHtml(item.name)}</span>
                             </div>
-                            <span style="font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #f5e0dc; white-space: nowrap; font-size: 0.9rem;">${escapeHtml(item.metric)}</span>
+                            <span class="bx-modal-metric">${escapeHtml(item.metric)}</span>
                         </li>
                     `).join('');
                 }
-
                 modal.style.display = 'flex';
             };
 
-            const closeAllTimeModal = () => {
-                modal.style.display = 'none';
-            };
-
+            const closeAllTimeModal = () => { modal.style.display = 'none'; };
             document.querySelectorAll('.alltime-link').forEach(btn => {
                 btn.addEventListener('click', () => openAllTimeModal(btn.getAttribute('data-alltime')));
             });
             modalClose.addEventListener('click', closeAllTimeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeAllTimeModal();
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.style.display === 'flex') closeAllTimeModal();
-            });
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeAllTimeModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.style.display === 'flex') closeAllTimeModal(); });
 
-            // Show dashboard, hide loading
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('dashboard-content').style.display = 'block';
-
         } catch (err) {
             console.error("Failed to fetch telemetry data:", err);
-            document.getElementById('loading-state').innerHTML = '<p style="color: #f38ba8;">Failed to load telemetry data. Please try again later.</p>';
+            document.getElementById('loading-state').innerHTML = '<span style="color: #ff7b63;">Failed to load telemetry data. Please try again later.</span>';
         }
     });
 </script>
 
 
-    <footer class="footer">
+    <footer class="bx-footer">
+        <div class="bx-footer-inner">
+            <div class="bx-footer-left">
+                <span class="bx-footer-prompt">&gt;_</span>
+                <span>Boxxy Terminal · Built with Rust &amp; GTK4 for Linux</span>
+            </div>
+            <div class="bx-footer-links">
+                <a href="/getting-started">Docs</a>
+                <a href="/theme-api">Theme API</a>
+                <a href="/releases">Releases</a>
+                <a href="/live">Telemetry</a>
+                <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
     </footer>
+
     <script src="/js/main.js"></script>
 </body>
 </html>

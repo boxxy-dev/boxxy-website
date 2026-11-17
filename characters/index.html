@@ -3,85 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boxxy Terminal</title>
+    <title>Characters — Boxxy Terminal</title>
+    <meta name="description" content="A powerful CLI tool to simplify your development workflow">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
     <link rel="stylesheet" href="/css/style.css">
+    
 </head>
 <body>
-    <header class="navbar is-dark">
-        <div class="container">
-            <div class="navbar-brand">
-                <div class="navbar-item">
-                    <a class="boxxy-brand-button" href="/">
-                        <strong>Boxxy Terminal</strong>
-                    </a>
-                </div>
+    
+    
+    
+    
+    
+
+    <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
+    <header class="bx-headerbar">
+        <div class="bx-headerbar-inner">
+            <div class="bx-header-left">
+                <a class="bx-brand-btn" href="/">
+                    <span class="bx-brand-prompt" aria-hidden="true">&gt;_</span>
+                    <span>Boxxy Terminal</span>
+                </a>
             </div>
-            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-live-button" href="/live">
-                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
-                        <span>Live</span>
-                    </a>
-                </div>
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Star</span>
-                        <span class="star-count" id="github-stars">...</span>
-                    </a>
-                </div>
+
+            <nav class="bx-tabbar" id="site-menu" aria-label="Main navigation">
+                <a href="/" class="bx-nav-tab ">Home</a>
+                <a href="/getting-started" class="bx-nav-tab is-selected">Docs</a>
+                <a href="/theme-api" class="bx-nav-tab ">Theme API</a>
+            </nav>
+
+            <div class="bx-header-right">
+                <a class="bx-status-pill " href="/live" title="Live Community Telemetry">
+                    <span class="bx-live-dot" aria-hidden="true"></span>
+                    <span>Live</span>
+                </a>
+                <a class="bx-tactile-btn bx-star-btn" href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Star</span>
+                    <span class="bx-star-count" id="github-stars">···</span>
+                </a>
+                <button type="button" class="bx-tactile-btn bx-mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
             </div>
         </div>
     </header>
 
     
-<section class="section">
-    <div class="container">
-        <div class="columns">
-            <!-- Sidebar Navigation -->
-            <aside class="column is-3">
-                <div class="sidebar">
-                    <p class="sidebar-title">Getting Started</p>
-                    <ul class="menu-list mb-5">
-                        <li><a href="/getting-started" class="">Getting Started</a></li>
-                        <li><a href="/how-it-works" class="">How It Works</a></li>
-                        <li><a href="/development" class="">Development</a></li>
-                        <li><a href="/theme-api" class="">Boxxy Theme API</a></li>
-                        <li><a href="/desktop-integrations" class="">Desktop Integrations</a></li>
-                        <li><a href="/providers" class="">Providers</a></li>
-                        <li><a href="/telemetry" class="">Telemetry</a></li>
-                    </ul>
 
-                    <p class="sidebar-title">What Boxxy Can Do</p>
-                    <ul class="menu-list mb-5">
-                        <li><a href="/features" class="">Features</a></li>
-                        <li><a href="/mcp" class="">MCP</a></li>
-                        <li><a href="/skills" class="">Skills</a></li>
-                        <li><a href="/characters" class="is-active">Characters</a></li>
-                        <li><a href="/use-cases" class="">Use Cases</a></li>
-                    </ul>
 
-                    <p class="sidebar-title">Community</p>
-                    <ul class="menu-list">
-                        <li><a href="/releases" class="">Releases</a></li>
-                        <li><a href="/live" class="" style="display: flex; align-items: center; gap: 0.5rem;">
-                            Dashboard
-                            <span style="background-color: #f38ba8; color: #11111b; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">Live</span>
-                        </a></li>
-                    </ul>
-                </div>
-            </aside>
+    
 
-            <!-- Main Content Area -->
-            <main class="column is-9">
-                <div class="content content-area">
-                    
-                        <h1 id="characters"><a class="zola-anchor" href="#characters" aria-label="Anchor link for: characters">🔗</a>Characters</h1>
+
+<div class="bx-docs-shell">
+    
+<div class="bx-docs-mobile-bar">
+    <button type="button" class="bx-tactile-btn bx-docs-mobile-toggle" id="docs-mobile-toggle" aria-expanded="false">
+        <span><strong class="bx-green-text">&gt;_</strong> Documentation Menu</span>
+        <span>▾</span>
+    </button>
+</div>
+
+<aside class="bx-docs-sidebar" id="docs-side" aria-label="Documentation navigation">
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">Getting Started</p>
+        <nav class="bx-nav-list">
+            <a href="/getting-started" class="bx-nav-row ">Getting Started</a>
+            <a href="/how-it-works" class="bx-nav-row ">How It Works</a>
+            <a href="/development" class="bx-nav-row ">Development</a>
+            <a href="/theme-api" class="bx-nav-row ">Boxxy Theme API</a>
+            <a href="/desktop-integrations" class="bx-nav-row ">Desktop Integrations</a>
+            <a href="/providers" class="bx-nav-row ">Providers</a>
+            <a href="/telemetry" class="bx-nav-row ">Telemetry</a>
+        </nav>
+    </div>
+
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">What Boxxy Can Do</p>
+        <nav class="bx-nav-list">
+            <a href="/features" class="bx-nav-row ">Features</a>
+            <a href="/mcp" class="bx-nav-row ">MCP</a>
+            <a href="/skills" class="bx-nav-row ">Skills</a>
+            <a href="/characters" class="bx-nav-row is-selected">Characters</a>
+            <a href="/use-cases" class="bx-nav-row ">Use Cases</a>
+        </nav>
+    </div>
+
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">Community</p>
+        <nav class="bx-nav-list">
+            <a href="/releases" class="bx-nav-row ">Releases</a>
+            <a href="/live" class="bx-nav-row ">
+                <span>Dashboard</span>
+                <span class="bx-mini-badge is-highlight">LIVE</span>
+            </a>
+        </nav>
+    </div>
+</aside>
+
+
+    <article class="bx-docs-article content-area">
+        <div class="bx-crumb">
+            <span>Docs</span>
+            <span class="bx-crumb-sep">/</span>
+            <span>What Boxxy Can Do</span>
+            
+                <span class="bx-crumb-sep">/</span>
+                <span class="bx-crumb-current">Characters</span>
+            
+        </div>
+
+        
+            <h1 id="characters"><a class="zola-anchor" href="#characters" aria-label="Anchor link for: characters">🔗</a>Characters</h1>
 <p>Instead of interacting with a faceless LLM, every =BoxxyClaw= character has a <strong>personality, avatar, and color</strong>. Characters are per-pane — you can run different characters in different splits, each with its own tone and expertise.</p>
 <hr />
 <h2 id="your-profile-you"><a class="zola-anchor" href="#your-profile-you" aria-label="Anchor link for: your-profile-you">🔗</a>Your Profile ("You")</h2>
@@ -157,24 +194,145 @@
 <h2 id="resetting-to-defaults"><a class="zola-anchor" href="#resetting-to-defaults" aria-label="Anchor link for: resetting-to-defaults">🔗</a>Resetting to Defaults</h2>
 <p>Open =Preferences= (<code>Ctrl+,</code>), navigate to =Characters=, and click <strong>Reset to Defaults</strong>. This wipes all custom characters and re-extracts the three bundled defaults.</p>
 
+        
+
+        
+
+
+
+<div class="bx-article-footer">
+    <div class="bx-pager">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                
+                <div class="bx-pager-col">
                     
-
-                    <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">
-                    <div class="has-text-right">
-                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/characters.md" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                            Improve this page
+                        <a href="&#x2F;skills&#x2F;" class="bx-pager-btn">
+                            <span class="bx-pager-dir">← Previous</span>
+                            <span class="bx-pager-title">Skills</span>
                         </a>
-                    </div>
+                    
                 </div>
-            </main>
-        </div>
+                <div class="bx-pager-col is-right">
+                    
+                        <a href="&#x2F;use-cases&#x2F;" class="bx-pager-btn is-next">
+                            <span class="bx-pager-dir">Next →</span>
+                            <span class="bx-pager-title">Use Cases</span>
+                        </a>
+                    
+                </div>
+            
+        
+            
+        
+            
+        
     </div>
-</section>
+
+    
+    <div class="bx-edit-row">
+        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/characters.md" target="_blank" rel="noopener" class="bx-flat-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span>Improve this page on GitHub</span>
+        </a>
+    </div>
+    
+</div>
+
+    </article>
+
+    
+    
+        
+    
+
+    
+    <nav class="bx-docs-toc" aria-label="On this page">
+        <p class="bx-toc-heading">On this page</p>
+        <ul class="bx-toc-list">
+            
+                <li>
+                    <a href="#your-profile-you" data-toc-link="your-profile-you" class="is-active">Your Profile (&quot;You&quot;)</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#the-default-characters" data-toc-link="the-default-characters" class="">The Default Characters</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#changing-a-character" data-toc-link="changing-a-character" class="">Changing a Character</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#creating-custom-characters" data-toc-link="creating-custom-characters" class="">Creating Custom Characters</a>
+                    
+                        <ul class="bx-toc-sublist">
+                            
+                                <li>
+                                    <a href="#hot-reload" data-toc-link="hot-reload">Hot Reload</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="#sorting" data-toc-link="sorting">Sorting</a>
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li>
+                    <a href="#resetting-to-defaults" data-toc-link="resetting-to-defaults" class="">Resetting to Defaults</a>
+                    
+                </li>
+            
+        </ul>
+    </nav>
+    
 
 
-    <footer class="footer">
+</div>
+
+
+    <footer class="bx-footer">
+        <div class="bx-footer-inner">
+            <div class="bx-footer-left">
+                <span class="bx-footer-prompt">&gt;_</span>
+                <span>Boxxy Terminal · Built with Rust &amp; GTK4 for Linux</span>
+            </div>
+            <div class="bx-footer-links">
+                <a href="/getting-started">Docs</a>
+                <a href="/theme-api">Theme API</a>
+                <a href="/releases">Releases</a>
+                <a href="/live">Telemetry</a>
+                <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
     </footer>
+
     <script src="/js/main.js"></script>
 </body>
 </html>
