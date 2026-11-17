@@ -1,62 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="section">
-    <div class="container">
-        <div class="columns">
-            <!-- Sidebar Navigation -->
-            <aside class="column is-3">
-                <div class="sidebar">
-                    <p class="sidebar-title">Getting Started</p>
-                    <ul class="menu-list mb-5">
-                        <li><a href="/getting-started" class="{% if current_path == '/getting-started/' %}is-active{% endif %}">Getting Started</a></li>
-                        <li><a href="/how-it-works" class="{% if current_path == '/how-it-works/' %}is-active{% endif %}">How It Works</a></li>
-                        <li><a href="/development" class="{% if current_path == '/development/' %}is-active{% endif %}">Development</a></li>
-                        <li><a href="/theme-api" class="{% if current_path == '/theme-api/' %}is-active{% endif %}">Boxxy Theme API</a></li>
-                        <li><a href="/desktop-integrations" class="{% if current_path == '/desktop-integrations/' %}is-active{% endif %}">Desktop Integrations</a></li>
-                        <li><a href="/providers" class="{% if current_path == '/providers/' %}is-active{% endif %}">Providers</a></li>
-                        <li><a href="/telemetry" class="{% if current_path == '/telemetry/' %}is-active{% endif %}">Telemetry</a></li>
-                    </ul>
+{% set path = current_path | default(value="/") %}
+{% if path in ["/features/", "/mcp/", "/skills/", "/characters/", "/use-cases/"] %}
+    {% set cat_label = "What Boxxy Can Do" %}
+{% elif path in ["/releases/", "/live/"] %}
+    {% set cat_label = "Community" %}
+{% else %}
+    {% set cat_label = "Getting Started" %}
+{% endif %}
 
-                    <p class="sidebar-title">What Boxxy Can Do</p>
-                    <ul class="menu-list mb-5">
-                        <li><a href="/features" class="{% if current_path == '/features/' %}is-active{% endif %}">Features</a></li>
-                        <li><a href="/mcp" class="{% if current_path == '/mcp/' %}is-active{% endif %}">MCP</a></li>
-                        <li><a href="/skills" class="{% if current_path == '/skills/' %}is-active{% endif %}">Skills</a></li>
-                        <li><a href="/characters" class="{% if current_path == '/characters/' %}is-active{% endif %}">Characters</a></li>
-                        <li><a href="/use-cases" class="{% if current_path == '/use-cases/' %}is-active{% endif %}">Use Cases</a></li>
-                    </ul>
+<div class="bx-docs-shell">
+    {% include "partials/docs_sidebar.html" %}
 
-                    <p class="sidebar-title">Community</p>
-                    <ul class="menu-list">
-                        <li><a href="/releases" class="{% if current_path == '/releases/' %}is-active{% endif %}">Releases</a></li>
-                        <li><a href="/live" class="{% if current_path == '/live/' %}is-active{% endif %}" style="display: flex; align-items: center; gap: 0.5rem;">
-                            Dashboard
-                            <span style="background-color: #f38ba8; color: #11111b; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">Live</span>
-                        </a></li>
-                    </ul>
-                </div>
-            </aside>
-
-            <!-- Main Content Area -->
-            <main class="column is-9">
-                <div class="content content-area">
-                    {% if page %}
-                        {{ page.content | safe }}
-                    {% elif section %}
-                        {{ section.content | safe }}
-                    {% endif %}
-
-                    <hr style="margin-top: 3rem; background-color: #313244; height: 1px;">
-                    <div class="has-text-right">
-                        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/{% if page %}{{ page.relative_path }}{% elif section %}{{ section.relative_path }}{% endif %}" target="_blank" style="color: #a6adc8; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s;" onmouseover="this.style.color='#f5e0dc'" onmouseout="this.style.color='#a6adc8'">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                            Improve this page
-                        </a>
-                    </div>
-                </div>
-            </main>
+    <article class="bx-docs-article content-area">
+        <div class="bx-crumb">
+            <span>Docs</span>
+            <span class="bx-crumb-sep">/</span>
+            <span>{{ cat_label }}</span>
+            {% if page and page.title %}
+                <span class="bx-crumb-sep">/</span>
+                <span class="bx-crumb-current">{{ page.title }}</span>
+            {% endif %}
         </div>
-    </div>
-</section>
+
+        {% if page %}
+            {{ page.content | safe }}
+        {% elif section %}
+            {{ section.content | safe }}
+        {% endif %}
+
+        {% include "partials/docs_pager.html" %}
+    </article>
+
+    {% include "partials/docs_toc.html" %}
+</div>
 {% endblock content %}

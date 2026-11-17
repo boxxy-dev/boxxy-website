@@ -1,0 +1,67 @@
+{% set path = current_path | default(value="/") %}
+{% set nav_paths = [
+    "/getting-started/",
+    "/how-it-works/",
+    "/development/",
+    "/theme-api/",
+    "/desktop-integrations/",
+    "/providers/",
+    "/telemetry/",
+    "/features/",
+    "/mcp/",
+    "/skills/",
+    "/characters/",
+    "/use-cases/",
+    "/releases/"
+] %}
+{% set nav_titles = [
+    "Getting Started",
+    "How It Works",
+    "Development",
+    "Boxxy Theme API",
+    "Desktop Integrations",
+    "Providers",
+    "Telemetry",
+    "Features",
+    "MCP",
+    "Skills",
+    "Characters",
+    "Use Cases",
+    "Releases"
+] %}
+
+<div class="bx-article-footer">
+    <div class="bx-pager">
+        {% for p in nav_paths %}
+            {% if p == path %}
+                {% set prev_idx = loop.index0 - 1 %}
+                {% set next_idx = loop.index0 + 1 %}
+                <div class="bx-pager-col">
+                    {% if not loop.first %}
+                        <a href="{{ nav_paths | nth(n=prev_idx) }}" class="bx-pager-btn">
+                            <span class="bx-pager-dir">← Previous</span>
+                            <span class="bx-pager-title">{{ nav_titles | nth(n=prev_idx) }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="bx-pager-col is-right">
+                    {% if not loop.last %}
+                        <a href="{{ nav_paths | nth(n=next_idx) }}" class="bx-pager-btn is-next">
+                            <span class="bx-pager-dir">Next →</span>
+                            <span class="bx-pager-title">{{ nav_titles | nth(n=next_idx) }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if page or section %}
+    <div class="bx-edit-row">
+        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/{% if page %}{{ page.relative_path }}{% elif section %}{{ section.relative_path }}{% endif %}" target="_blank" rel="noopener" class="bx-flat-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span>Improve this page on GitHub</span>
+        </a>
+    </div>
+    {% endif %}
+</div>

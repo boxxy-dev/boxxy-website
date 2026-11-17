@@ -1,0 +1,35 @@
+{% if page and page.toc %}
+    {% if page.toc | length == 1 and page.toc[0].children %}
+        {% set toc_items = page.toc[0].children %}
+    {% elif page.toc | length > 1 %}
+        {% set toc_items = page.toc %}
+    {% else %}
+        {% set toc_items = [] %}
+    {% endif %}
+
+    {% if toc_items | length > 0 %}
+    <nav class="bx-docs-toc" aria-label="On this page">
+        <p class="bx-toc-heading">On this page</p>
+        <ul class="bx-toc-list">
+            {% for h in toc_items %}
+                <li>
+                    <a href="#{{ h.id }}" data-toc-link="{{ h.id }}" class="{% if loop.first %}is-active{% endif %}">{{ h.title }}</a>
+                    {% if h.children and h.children | length > 0 and toc_items | length <= 6 %}
+                        <ul class="bx-toc-sublist">
+                            {% for sub in h.children %}
+                                <li>
+                                    <a href="#{{ sub.id }}" data-toc-link="{{ sub.id }}">{{ sub.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    {% else %}
+    <div class="bx-docs-toc-spacer"></div>
+    {% endif %}
+{% else %}
+    <div class="bx-docs-toc-spacer"></div>
+{% endif %}

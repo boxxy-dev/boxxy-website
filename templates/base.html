@@ -3,38 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <title>{% block title %}{% if page and page.title %}{{ page.title }} — {{ config.title }}{% else %}{{ config.title }}{% endif %}{% endblock title %}</title>
+    <meta name="description" content="{{ config.description }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
     <link rel="stylesheet" href="/css/style.css">
+    {% block extra_head %}{% endblock extra_head %}
 </head>
 <body>
-    <header class="navbar is-dark">
-        <div class="container">
-            <div class="navbar-brand">
-                <div class="navbar-item">
-                    <a class="boxxy-brand-button" href="/">
-                        <strong>Boxxy Terminal</strong>
-                    </a>
-                </div>
+    {% set path = current_path | default(value="/") %}
+    {% set is_home = path == "/" %}
+    {% set is_theme = path == "/theme-api/" %}
+    {% set is_live = path == "/live/" %}
+    {% set is_docs = not is_home and not is_theme and not is_live %}
+
+    <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
+    <header class="bx-headerbar">
+        <div class="bx-headerbar-inner">
+            <div class="bx-header-left">
+                <a class="bx-brand-btn" href="/">
+                    <span class="bx-brand-prompt" aria-hidden="true">&gt;_</span>
+                    <span>Boxxy Terminal</span>
+                </a>
             </div>
-            <div class="navbar-end" style="gap: 1rem; align-items: center; display: flex;">
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-live-button" href="/live">
-                        <span style="width: 8px; height: 8px; background-color: #f38ba8; border-radius: 50%; display: inline-block; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; border: 1.5px solid #11111b;"></span>
-                        <span>Live</span>
-                    </a>
-                </div>
-                <div class="navbar-item" style="padding: 0;">
-                    <a class="boxxy-github-button" href="https://github.com/boxxy-dev/boxxy" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Star</span>
-                        <span class="star-count" id="github-stars">...</span>
-                    </a>
-                </div>
+
+            <nav class="bx-tabbar" id="site-menu" aria-label="Main navigation">
+                <a href="/" class="bx-nav-tab {% if is_home %}is-selected{% endif %}">Home</a>
+                <a href="/getting-started" class="bx-nav-tab {% if is_docs %}is-selected{% endif %}">Docs</a>
+                <a href="/theme-api" class="bx-nav-tab {% if is_theme %}is-selected{% endif %}">Theme API</a>
+            </nav>
+
+            <div class="bx-header-right">
+                <a class="bx-status-pill {% if is_live %}is-selected{% endif %}" href="/live" title="Live Community Telemetry">
+                    <span class="bx-live-dot" aria-hidden="true"></span>
+                    <span>Live</span>
+                </a>
+                <a class="bx-tactile-btn bx-star-btn" href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Star</span>
+                    <span class="bx-star-count" id="github-stars">···</span>
+                </a>
+                <button type="button" class="bx-tactile-btn bx-mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
             </div>
         </div>
     </header>
@@ -42,8 +56,22 @@
     {% block content %}
     {% endblock content %}
 
-    <footer class="footer">
+    <footer class="bx-footer">
+        <div class="bx-footer-inner">
+            <div class="bx-footer-left">
+                <span class="bx-footer-prompt">&gt;_</span>
+                <span>Boxxy Terminal · Built with Rust &amp; GTK4 for Linux</span>
+            </div>
+            <div class="bx-footer-links">
+                <a href="/getting-started">Docs</a>
+                <a href="/theme-api">Theme API</a>
+                <a href="/releases">Releases</a>
+                <a href="/live">Telemetry</a>
+                <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
     </footer>
+
     <script src="/js/main.js"></script>
 </body>
 </html>
