@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsroom — Boxxy Terminal</title>
+    <meta name="description" content="A powerful CLI tool to simplify your development workflow">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
+    <link rel="stylesheet" href="/css/style.css">
+    
+<meta name="robots" content="noindex, nofollow">
+
+</head>
+<body>
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
+    <header class="bx-headerbar">
+        <div class="bx-headerbar-inner">
+            <div class="bx-header-left">
+                <a class="bx-brand-btn" href="/">
+                    <span class="bx-brand-prompt" aria-hidden="true">&gt;_</span>
+                    <span>Boxxy Terminal</span>
+                </a>
+            </div>
+
+            <nav class="bx-tabbar" id="site-menu" aria-label="Main navigation">
+                <a href="/" class="bx-nav-tab ">Home</a>
+                <a href="/getting-started" class="bx-nav-tab ">Docs</a>
+                <a href="/theme-api" class="bx-nav-tab ">Theme API</a>
+                <a href="/news" class="bx-nav-tab ">News</a>
+            </nav>
+
+            <div class="bx-header-right">
+                <a class="bx-status-pill " href="/live" title="Live Community Telemetry">
+                    <span class="bx-live-dot" aria-hidden="true"></span>
+                    <span>Live</span>
+                </a>
+                <a class="bx-tactile-btn bx-star-btn" href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Star</span>
+                    <span class="bx-star-count" id="github-stars">···</span>
+                </a>
+                <button type="button" class="bx-tactile-btn bx-mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    
+<main class="bx-newsroom-shell">
+    <!-- Loading State -->
+    <div id="nr-loading" class="bx-status-box is-centered">
+        <span class="bx-live-dot"></span>
+        <span>Checking maintainer session...</span>
+    </div>
+
+    <!-- State 1: Signed Out -->
+    <section id="nr-signed-out" class="bx-card bx-auth-gate" style="display: none;">
+        <span class="bx-eyebrow">MAINTAINER CONSOLE</span>
+        <h1>Boxxy Newsroom</h1>
+        <p>Sign in with your GitHub maintainer account to draft, publish, or manage Boxxy News broadcasts.</p>
+
+        <button id="nr-login-btn" type="button" class="bx-pill-btn is-suggested" style="width: 100%;">
+            <span>Sign in with GitHub</span>
+        </button>
+
+        <p id="nr-auth-error" class="mt-4" style="display: none; color: #ff7b63; font-size: 13px; margin-bottom: 0; text-align: left;"></p>
+    </section>
+
+    <!-- State 2: Signed In, Not Allowlisted -->
+    <section id="nr-unauthorized" class="bx-card bx-auth-gate" style="display: none; max-width: 640px;">
+        <span class="bx-tag-chip is-highlight">RESTRICTED</span>
+        <h1>Access restricted to Boxxy maintainers</h1>
+        <p>Your account is authenticated, but your Supabase user UUID is not in <code>public.broadcast_admins</code> yet.</p>
+        <div class="bx-terminal-well" style="text-align: left; margin-bottom: 18px; padding-right: 16px;">
+            <pre><code id="nr-uid-sql"></code></pre>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;">
+            <button id="nr-copy-uid-btn" type="button" class="bx-tactile-btn">Copy User UUID</button>
+            <button id="nr-copy-sql-btn" type="button" class="bx-tactile-btn">Copy Allowlist Command</button>
+            <button id="nr-unauth-logout-btn" type="button" class="bx-tactile-btn">Sign Out</button>
+        </div>
+    </section>
+
+    <!-- State 3: Verified Admin Dashboard & Composer -->
+    <div id="nr-workspace" style="display: none;">
+        <div class="bx-newsroom-topbar">
+            <div>
+                <span class="bx-eyebrow">BOXXY BROADCAST PUBLISHER</span>
+                <h1>Newsroom</h1>
+            </div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <a href="/news" target="_blank" rel="noopener" class="bx-tactile-btn">Public Feed ↗</a>
+                <button id="nr-refresh-btn" type="button" class="bx-tactile-btn">Refresh</button>
+                <button id="nr-new-post-btn" type="button" class="bx-tactile-btn" style="border-color: var(--accent); color: var(--accent) !important;">+ New Post</button>
+                <button id="nr-logout-btn" type="button" class="bx-tactile-btn">Sign Out</button>
+            </div>
+        </div>
+
+        <div id="nr-banner" class="bx-status-box" style="display: none; margin-top: 0; margin-bottom: 18px;"></div>
+
+        <div class="bx-newsroom-grid">
+            <!-- Left Sidebar: Post List -->
+            <aside class="bx-card bx-newsroom-list-panel">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span class="bx-label">All Broadcasts</span>
+                    <span id="nr-post-count" class="bx-counter">0</span>
+                </div>
+                <div id="nr-post-list" class="bx-newsroom-posts"></div>
+            </aside>
+
+            <!-- Right Area: Composer & Live Preview -->
+            <section class="bx-card bx-composer-panel">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span id="nr-editor-mode" class="bx-tag-chip is-muted">NEW DRAFT</span>
+                        <span id="nr-editor-rev" class="bx-counter"></span>
+                    </div>
+                    <span id="nr-editor-timestamps" class="bx-counter"></span>
+                </div>
+
+                <div class="bx-form-grid">
+                    <div class="bx-field" style="margin-bottom: 0;">
+                        <div class="bx-field-head">
+                            <label class="bx-label" for="nr-title">Title</label>
+                            <span id="nr-title-count" class="bx-counter">0 / 140</span>
+                        </div>
+                        <input id="nr-title" class="bx-input" type="text" maxlength="140" placeholder="Introducing Boxxy News...">
+                    </div>
+
+                    <div class="bx-field" style="margin-bottom: 0;">
+                        <div class="bx-field-head">
+                            <label class="bx-label" for="nr-slug">Slug</label>
+                            <span id="nr-slug-count" class="bx-counter">0 / 100</span>
+                        </div>
+                        <input id="nr-slug" class="bx-input is-mono" type="text" maxlength="100" placeholder="introducing-boxxy-news">
+                    </div>
+                </div>
+
+                <div class="bx-form-grid">
+                    <div class="bx-field" style="margin-bottom: 0;">
+                        <div class="bx-field-head">
+                            <label class="bx-label" for="nr-category">Category</label>
+                        </div>
+                        <select id="nr-category" class="bx-select">
+                            <option value="news">news — General Announcement</option>
+                            <option value="feature">feature — New Feature</option>
+                            <option value="community">community — Community Update</option>
+                            <option value="maintenance">maintenance — Service / Packaging</option>
+                            <option value="security">security — Security Advisory</option>
+                        </select>
+                    </div>
+
+                    <div class="bx-field" style="margin-bottom: 0; justify-content: flex-end;">
+                        <label class="bx-check-row" style="padding-bottom: 8px;">
+                            <input id="nr-notify" type="checkbox" checked>
+                            <span>Send persistent in-app toast notification on desktop</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="bx-field">
+                    <div class="bx-field-head">
+                        <label class="bx-label" for="nr-summary">Summary (List Snippet)</label>
+                        <span id="nr-summary-count" class="bx-counter">0 / 300</span>
+                    </div>
+                    <input id="nr-summary" class="bx-input" type="text" maxlength="300" placeholder="Short two-line summary shown in the Boxxy News list and web archive...">
+                </div>
+
+                <div class="bx-form-grid">
+                    <div class="bx-field" style="margin-bottom: 0;">
+                        <div class="bx-field-head">
+                            <label class="bx-label" for="nr-action-label">CTA Button Label (Optional)</label>
+                            <span id="nr-action-label-count" class="bx-counter">0 / 40</span>
+                        </div>
+                        <input id="nr-action-label" class="bx-input" type="text" maxlength="40" placeholder="Read Release Notes">
+                    </div>
+
+                    <div class="bx-field" style="margin-bottom: 0;">
+                        <div class="bx-field-head">
+                            <label class="bx-label" for="nr-action-url">CTA HTTPS URL (Optional)</label>
+                        </div>
+                        <input id="nr-action-url" class="bx-input is-mono" type="url" placeholder="https://boxxy.dev/releases/">
+                    </div>
+                </div>
+
+                <div class="bx-editor-split">
+                    <div class="bx-field" style="margin-bottom: 0;">
+                        <div class="bx-field-head">
+                            <label class="bx-label" for="nr-body">Markdown Body</label>
+                            <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                <input id="nr-md-file" type="file" accept=".md,.markdown,text/markdown,text/plain" style="display: none;">
+                                <button id="nr-import-md-btn" type="button" class="alltime-link">Import .md file</button>
+                                <span id="nr-body-bytes" class="bx-counter">0 / 65,536 B</span>
+                            </div>
+                        </div>
+                        <textarea id="nr-body" class="bx-textarea is-mono" placeholder="Write CommonMark / GFM Markdown here (headings, code blocks, tables, lists, https:// links)..."></textarea>
+                    </div>
+
+                    <div class="bx-field" style="margin-bottom: 0;">
+                        <div class="bx-field-head">
+                            <span class="bx-label">Live Desktop &amp; Web Preview</span>
+                        </div>
+                        <div class="bx-preview-well">
+                            <div id="nr-toast-preview" class="bx-toast-preview">
+                                <span id="nr-toast-text">Boxxy News: Untitled</span>
+                                <span class="bx-mini-badge is-accent">Read</span>
+                            </div>
+                            <div class="bx-news-meta" style="margin-bottom: 8px;">
+                                <span id="nr-prev-cat" class="bx-tag-chip is-accent">NEWS</span>
+                                <span class="bx-news-date">Preview</span>
+                            </div>
+                            <h3 id="nr-prev-title" class="bx-news-title" style="font-size: 1.25rem;">Untitled</h3>
+                            <p id="nr-prev-summary" class="bx-news-summary" style="font-size: 13.5px;"></p>
+                            <div id="nr-prev-body" class="bx-news-prose"></div>
+                            <div id="nr-prev-cta-wrap" class="bx-news-foot" style="display: none;">
+                                <a id="nr-prev-cta" class="bx-pill-btn is-suggested" href="#" target="_blank" rel="noopener noreferrer"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bx-composer-actions">
+                    <div class="bx-composer-actions-left">
+                        <button id="nr-save-draft-btn" type="button" class="bx-tactile-btn">Save Draft</button>
+                        <button id="nr-save-changes-btn" type="button" class="bx-tactile-btn" style="display: none;">Save Changes (Bump Rev)</button>
+                        <button id="nr-archive-btn" type="button" class="bx-tactile-btn" style="display: none;">Archive</button>
+                        <button id="nr-withdraw-btn" type="button" class="bx-tactile-btn is-danger" style="display: none;">Withdraw</button>
+                        <button id="nr-delete-btn" type="button" class="bx-tactile-btn is-danger" style="display: none;">Delete Forever</button>
+                    </div>
+                    <div class="bx-composer-actions-right">
+                        <button id="nr-publish-btn" type="button" class="bx-pill-btn is-suggested">Publish Now</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="nr-confirm-modal" class="bx-modal-backdrop" style="display: none;">
+        <div class="bx-modal-sheet" role="dialog" aria-modal="true" aria-labelledby="nr-confirm-title">
+            <div class="bx-modal-head">
+                <h3 id="nr-confirm-title">Confirm Action</h3>
+                <button id="nr-confirm-close" type="button" class="bx-icon-btn" aria-label="Close">✕</button>
+            </div>
+            <p id="nr-confirm-msg" style="color: var(--prose-body); margin: 0 0 20px; font-size: 14.5px;"></p>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="nr-confirm-cancel" type="button" class="bx-tactile-btn">Cancel</button>
+                <button id="nr-confirm-accept" type="button" class="bx-pill-btn is-suggested">Confirm</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const supabaseUrl = 'https://qfwhesnmixgmczkdnvsu.supabase.co';
+        const supabasePublishableKey = 'sb_publishable_Z-SbIil88PSj3ri24CM7aw_8vzsCFie';
+        const supabase = window.supabase.createClient(supabaseUrl, supabasePublishableKey);
+        const utf8Encoder = new TextEncoder();
+
+        DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+            if (node.tagName === 'A') {
+                const href = (node.getAttribute('href') || '').trim();
+                if (/^https:\/\/[^\s]+$/i.test(href)) {
+                    node.setAttribute('target', '_blank');
+                    node.setAttribute('rel', 'noopener noreferrer');
+                } else {
+                    node.removeAttribute('href');
+                }
+            } else if (node.tagName === 'IMG') {
+                const src = (node.getAttribute('src') || '').trim();
+                if (!/^https:\/\/[^\s]+$/i.test(src)) {
+                    node.remove();
+                }
+            }
+        });
+
+        const escapeHtml = (unsafe) => String(unsafe ?? '')
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+        const slugify = (text) => String(text ?? '')
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .slice(0, 100);
+
+        const statusBadgeClass = (status) => {
+            switch (status) {
+                case 'published': return 'is-accent';
+                case 'archived': return 'is-secondary';
+                case 'withdrawn': return 'is-danger';
+                default: return 'is-muted';
+            }
+        };
+
+        const categoryBadgeClass = (cat) => {
+            switch (cat) {
+                case 'feature': return 'is-secondary';
+                case 'community': return 'is-highlight';
+                case 'security': return 'is-danger';
+                case 'maintenance': return 'is-muted';
+                default: return 'is-accent';
+            }
+        };
+
+        // DOM handles
+        const loadingEl = document.getElementById('nr-loading');
+        const signedOutEl = document.getElementById('nr-signed-out');
+        const unauthEl = document.getElementById('nr-unauthorized');
+        const workspaceEl = document.getElementById('nr-workspace');
+        const bannerEl = document.getElementById('nr-banner');
+
+        const titleInput = document.getElementById('nr-title');
+        const slugInput = document.getElementById('nr-slug');
+        const categoryInput = document.getElementById('nr-category');
+        const notifyInput = document.getElementById('nr-notify');
+        const summaryInput = document.getElementById('nr-summary');
+        const actionLabelInput = document.getElementById('nr-action-label');
+        const actionUrlInput = document.getElementById('nr-action-url');
+        const bodyInput = document.getElementById('nr-body');
+
+        let posts = [];
+        let activePost = null;
+        let slugManuallyEdited = false;
+        let pendingConfirmFn = null;
+
+        const showBanner = (msg, isError = false) => {
+            bannerEl.textContent = msg;
+            bannerEl.classList.toggle('is-error', isError);
+            bannerEl.style.display = 'flex';
+        };
+
+        const hideBanner = () => {
+            bannerEl.style.display = 'none';
+        };
+
+        const openConfirmModal = (title, message, confirmLabel, onAccept) => {
+            document.getElementById('nr-confirm-title').textContent = title;
+            document.getElementById('nr-confirm-msg').textContent = message;
+            document.getElementById('nr-confirm-accept').textContent = confirmLabel;
+            pendingConfirmFn = onAccept;
+            document.getElementById('nr-confirm-modal').style.display = 'flex';
+        };
+
+        const closeConfirmModal = () => {
+            pendingConfirmFn = null;
+            document.getElementById('nr-confirm-modal').style.display = 'none';
+        };
+
+        document.getElementById('nr-confirm-close').addEventListener('click', closeConfirmModal);
+        document.getElementById('nr-confirm-cancel').addEventListener('click', closeConfirmModal);
+        document.getElementById('nr-confirm-accept').addEventListener('click', async () => {
+            const fn = pendingConfirmFn;
+            closeConfirmModal();
+            if (fn) await fn();
+        });
+
+        const updateCountersAndPreview = () => {
+            const titleVal = titleInput.value;
+            const slugVal = slugInput.value;
+            const summaryVal = summaryInput.value;
+            const actionLabelVal = actionLabelInput.value;
+            const actionUrlVal = actionUrlInput.value.trim();
+            const bodyVal = bodyInput.value;
+            const bodyBytes = utf8Encoder.encode(bodyVal).length;
+
+            document.getElementById('nr-title-count').textContent = `${titleVal.trim().length} / 140`;
+            document.getElementById('nr-slug-count').textContent = `${slugVal.length} / 100`;
+            document.getElementById('nr-summary-count').textContent = `${summaryVal.trim().length} / 300`;
+            document.getElementById('nr-action-label-count').textContent = `${actionLabelVal.trim().length} / 40`;
+
+            const bodyBytesEl = document.getElementById('nr-body-bytes');
+            bodyBytesEl.textContent = `${bodyBytes.toLocaleString()} / 65,536 B`;
+            bodyBytesEl.classList.toggle('is-over', bodyBytes > 65536);
+
+            // Toast + Card Preview
+            const toastPreview = document.getElementById('nr-toast-preview');
+            toastPreview.style.display = notifyInput.checked ? 'flex' : 'none';
+            document.getElementById('nr-toast-text').textContent = `Boxxy News: ${titleVal.trim() || 'Untitled'}`;
+
+            const prevCat = document.getElementById('nr-prev-cat');
+            prevCat.className = `bx-tag-chip ${categoryBadgeClass(categoryInput.value)}`;
+            prevCat.textContent = categoryInput.value.toUpperCase();
+
+            document.getElementById('nr-prev-title').textContent = titleVal.trim() || 'Untitled';
+            document.getElementById('nr-prev-summary').textContent = summaryVal.trim() || 'Summary snippet appears here...';
+
+            const rawHtml = marked.parse(bodyVal || '*Markdown body preview...*', { gfm: true, breaks: false });
+            document.getElementById('nr-prev-body').innerHTML = DOMPurify.sanitize(rawHtml, {
+                USE_PROFILES: { html: true },
+                FORBID_TAGS: ['style', 'script', 'iframe', 'object', 'embed', 'form', 'input', 'button']
+            });
+
+            const ctaWrap = document.getElementById('nr-prev-cta-wrap');
+            const ctaEl = document.getElementById('nr-prev-cta');
+            if (actionLabelVal.trim() && /^https:\/\/[^\s]+$/i.test(actionUrlVal)) {
+                ctaEl.textContent = `${actionLabelVal.trim()} ↗`;
+                ctaEl.href = actionUrlVal;
+                ctaWrap.style.display = 'flex';
+            } else {
+                ctaWrap.style.display = 'none';
+            }
+        };
+
+        const syncActionButtons = () => {
+            const status = activePost?.status || 'new';
+            const modeBadge = document.getElementById('nr-editor-mode');
+            const revLabel = document.getElementById('nr-editor-rev');
+            const tsLabel = document.getElementById('nr-editor-timestamps');
+
+            if (!activePost) {
+                modeBadge.className = 'bx-tag-chip is-muted';
+                modeBadge.textContent = 'NEW DRAFT';
+                revLabel.textContent = '';
+                tsLabel.textContent = 'Unsaved';
+            } else {
+                modeBadge.className = `bx-tag-chip ${statusBadgeClass(status)}`;
+                modeBadge.textContent = status.toUpperCase();
+                revLabel.textContent = `rev ${activePost.revision}`;
+                tsLabel.textContent = activePost.published_at
+                    ? `Published ${new Date(activePost.published_at).toLocaleString()}`
+                    : `Updated ${new Date(activePost.updated_at).toLocaleString()}`;
+            }
+
+            document.getElementById('nr-save-draft-btn').style.display = (!activePost || status === 'draft') ? 'inline-flex' : 'none';
+            document.getElementById('nr-publish-btn').style.display = (!activePost || status === 'draft' || status === 'archived' || status === 'withdrawn') ? 'inline-flex' : 'none';
+            document.getElementById('nr-publish-btn').textContent = (status === 'archived' || status === 'withdrawn') ? 'Re-Publish' : 'Publish Now';
+            document.getElementById('nr-save-changes-btn').style.display = (status === 'published' || status === 'archived') ? 'inline-flex' : 'none';
+            document.getElementById('nr-archive-btn').style.display = (status === 'published') ? 'inline-flex' : 'none';
+            document.getElementById('nr-withdraw-btn').style.display = (activePost && status !== 'withdrawn') ? 'inline-flex' : 'none';
+            document.getElementById('nr-delete-btn').style.display = activePost ? 'inline-flex' : 'none';
+        };
+
+        const loadPostIntoEditor = (post) => {
+            activePost = post || null;
+            slugManuallyEdited = Boolean(post);
+            titleInput.value = post?.title || '';
+            slugInput.value = post?.slug || '';
+            categoryInput.value = post?.category || 'news';
+            notifyInput.checked = post ? Boolean(post.notify) : true;
+            summaryInput.value = post?.summary || '';
+            actionLabelInput.value = post?.action_label || '';
+            actionUrlInput.value = post?.action_url || '';
+            bodyInput.value = post?.body_md || '';
+            hideBanner();
+            syncActionButtons();
+            updateCountersAndPreview();
+            renderPostList();
+        };
+
+        const renderPostList = () => {
+            const listEl = document.getElementById('nr-post-list');
+            document.getElementById('nr-post-count').textContent = String(posts.length);
+
+            if (posts.length === 0) {
+                listEl.innerHTML = '<p class="bx-dash-empty">No broadcasts yet.</p>';
+                return;
+            }
+
+            listEl.innerHTML = posts.map((p) => {
+                const isActive = activePost && activePost.id === p.id;
+                const dateLabel = new Date(p.published_at || p.updated_at).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric'
+                });
+                return `
+                    <button type="button" class="bx-post-item ${isActive ? 'is-active' : ''}" data-post-id="${escapeHtml(p.id)}">
+                        <div class="bx-post-item-top">
+                            <span class="bx-mini-badge ${statusBadgeClass(p.status)}">${escapeHtml(p.status.toUpperCase())}</span>
+                            <span class="bx-post-item-sub">rev ${Number(p.revision) || 1} · ${escapeHtml(dateLabel)}</span>
+                        </div>
+                        <div class="bx-post-item-title">${escapeHtml(p.title)}</div>
+                        <div class="bx-post-item-sub">/${escapeHtml(p.slug)}</div>
+                    </button>
+                `;
+            }).join('');
+
+            listEl.querySelectorAll('.bx-post-item').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const found = posts.find((p) => p.id === btn.getAttribute('data-post-id'));
+                    if (found) loadPostIntoEditor(found);
+                });
+            });
+        };
+
+        const fetchAllPosts = async (selectId = null) => {
+            const { data, error } = await supabase
+                .from('broadcast_posts')
+                .select('*')
+                .order('updated_at', { ascending: false });
+
+            if (error) {
+                showBanner(`Failed to fetch posts: ${error.message}`, true);
+                return;
+            }
+
+            posts = data || [];
+            const targetId = selectId || activePost?.id;
+            const matched = targetId ? posts.find((p) => p.id === targetId) : null;
+            if (matched) {
+                loadPostIntoEditor(matched);
+            } else if (!activePost && posts.length > 0 && selectId === null) {
+                renderPostList();
+            } else {
+                renderPostList();
+            }
+        };
+
+        const buildValidatedPayload = (targetStatus) => {
+            const title = titleInput.value.trim();
+            const slug = slugInput.value.trim();
+            const summary = summaryInput.value.trim();
+            const body_md = bodyInput.value;
+            const bodyBytes = utf8Encoder.encode(body_md).length;
+            const category = categoryInput.value;
+            const notify = Boolean(notifyInput.checked);
+            const rawLabel = actionLabelInput.value.trim();
+            const rawUrl = actionUrlInput.value.trim();
+
+            if (title.length < 1 || title.length > 140) {
+                throw new Error('Title must be between 1 and 140 characters.');
+            }
+            if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || slug.length > 100) {
+                throw new Error('Slug must contain only lowercase letters, numbers, and single hyphens (max 100 chars).');
+            }
+            if (summary.length < 1 || summary.length > 300) {
+                throw new Error('Summary must be between 1 and 300 characters.');
+            }
+            if (bodyBytes < 1 || bodyBytes > 65536) {
+                throw new Error('Markdown body must be between 1 byte and 64 KiB.');
+            }
+            if ((rawLabel && !rawUrl) || (!rawLabel && rawUrl)) {
+                throw new Error('CTA Button Label and CTA URL must either both be filled or both be empty.');
+            }
+            if (rawUrl && !/^https:\/\/[^\s]+$/.test(rawUrl)) {
+                throw new Error('CTA URL must start with https:// and contain no spaces.');
+            }
+
+            return {
+                title,
+                slug,
+                summary,
+                body_md,
+                category,
+                status: targetStatus,
+                notify,
+                action_label: rawLabel || null,
+                action_url: rawUrl || null
+            };
+        };
+
+        const savePostWithStatus = async (targetStatus, successMsg) => {
+            hideBanner();
+            let payload;
+            try {
+                payload = buildValidatedPayload(targetStatus);
+            } catch (validationErr) {
+                showBanner(validationErr.message, true);
+                return;
+            }
+
+            if (activePost?.id) {
+                const { data, error } = await supabase
+                    .from('broadcast_posts')
+                    .update(payload)
+                    .eq('id', activePost.id)
+                    .select('*')
+                    .single();
+
+                if (error) {
+                    showBanner(`Save failed: ${error.message}`, true);
+                    return;
+                }
+                await fetchAllPosts(data.id);
+                showBanner(successMsg, false);
+            } else {
+                const { data, error } = await supabase
+                    .from('broadcast_posts')
+                    .insert(payload)
+                    .select('*')
+                    .single();
+
+                if (error) {
+                    showBanner(`Create failed: ${error.message}`, true);
+                    return;
+                }
+                await fetchAllPosts(data.id);
+                showBanner(successMsg, false);
+            }
+        };
+
+        // Form input listeners
+        titleInput.addEventListener('input', () => {
+            if (!slugManuallyEdited) {
+                slugInput.value = slugify(titleInput.value);
+            }
+            updateCountersAndPreview();
+        });
+        slugInput.addEventListener('input', () => {
+            slugManuallyEdited = slugInput.value.trim().length > 0;
+            updateCountersAndPreview();
+        });
+        [categoryInput, notifyInput, summaryInput, actionLabelInput, actionUrlInput, bodyInput].forEach((el) => {
+            el.addEventListener('input', updateCountersAndPreview);
+            el.addEventListener('change', updateCountersAndPreview);
+        });
+
+        // Import .md file helper
+        const mdFileInput = document.getElementById('nr-md-file');
+        document.getElementById('nr-import-md-btn').addEventListener('click', () => mdFileInput.click());
+        mdFileInput.addEventListener('change', async () => {
+            const file = mdFileInput.files?.[0];
+            if (!file) return;
+            const text = await file.text();
+            bodyInput.value = text;
+            mdFileInput.value = '';
+            updateCountersAndPreview();
+        });
+
+        // Buttons
+        document.getElementById('nr-new-post-btn').addEventListener('click', () => loadPostIntoEditor(null));
+        document.getElementById('nr-refresh-btn').addEventListener('click', () => fetchAllPosts(activePost?.id || null));
+        document.getElementById('nr-save-draft-btn').addEventListener('click', () => savePostWithStatus('draft', 'Draft saved.'));
+        document.getElementById('nr-save-changes-btn').addEventListener('click', () => {
+            const st = activePost?.status || 'published';
+            savePostWithStatus(st, 'Changes saved cleanly without re-toasting users.');
+        });
+        document.getElementById('nr-archive-btn').addEventListener('click', () => savePostWithStatus('archived', 'Broadcast archived (kept in history, silent for new installs).'));
+        document.getElementById('nr-publish-btn').addEventListener('click', () => {
+            openConfirmModal(
+                'Publish Broadcast Live?',
+                notifyInput.checked
+                    ? 'This post will immediately appear on boxxy.dev/news and show an in-app toast notification to Boxxy Terminal users.'
+                    : 'This post will immediately appear on boxxy.dev/news and inside Boxxy News without sending a toast notification.',
+                'Publish Now',
+                () => savePostWithStatus('published', 'Broadcast is now LIVE!')
+            );
+        });
+        document.getElementById('nr-withdraw-btn').addEventListener('click', () => {
+            openConfirmModal(
+                'Withdraw Broadcast?',
+                'Withdrawing removes this post from boxxy.dev/news, deletes cached copies on desktop clients, and cancels any pending toasts.',
+                'Withdraw Broadcast',
+                () => savePostWithStatus('withdrawn', 'Broadcast withdrawn.')
+            );
+        });
+        document.getElementById('nr-delete-btn').addEventListener('click', () => {
+            if (!activePost?.id) return;
+            openConfirmModal(
+                'Delete Broadcast Permanently?',
+                `This permanently deletes "${activePost.title}" from Postgres, removes it from boxxy.dev/news, and evicts cached copies from desktop clients on their next sync.`,
+                'Delete Forever',
+                async () => {
+                    hideBanner();
+                    const { error } = await supabase
+                        .from('broadcast_posts')
+                        .delete()
+                        .eq('id', activePost.id);
+                    if (error) {
+                        showBanner(`Delete failed: ${error.message}`, true);
+                        return;
+                    }
+                    loadPostIntoEditor(null);
+                    await fetchAllPosts(null);
+                    showBanner('Post permanently deleted from database.', false);
+                }
+            );
+        });
+
+        document.getElementById('nr-login-btn').addEventListener('click', async () => {
+            const authErrEl = document.getElementById('nr-auth-error');
+            authErrEl.style.display = 'none';
+
+            try {
+                const cfgRes = await fetch(`${supabaseUrl}/auth/v1/settings`, {
+                    headers: { apikey: supabasePublishableKey }
+                });
+                if (cfgRes.ok) {
+                    const cfg = await cfgRes.json();
+                    if (!cfg?.external?.github) {
+                        authErrEl.textContent = 'GitHub provider is still OFF in Supabase. Open Supabase Dashboard → Authentication → Sign In / Providers → GitHub, toggle "GitHub enabled" ON, paste your Client ID + Secret, and click Save.';
+                        authErrEl.style.display = 'block';
+                        return;
+                    }
+                }
+            } catch (_) {}
+
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'github',
+                options: { redirectTo: `${window.location.origin}/newsroom/` }
+            });
+            if (error) {
+                authErrEl.textContent = error.message;
+                authErrEl.style.display = 'block';
+            }
+        });
+
+        const signOut = async () => {
+            await supabase.auth.signOut();
+            window.location.reload();
+        };
+        document.getElementById('nr-logout-btn').addEventListener('click', signOut);
+        document.getElementById('nr-unauth-logout-btn').addEventListener('click', signOut);
+
+        // Evaluate Session & Admin Status
+        const { data: sessionData } = await supabase.auth.getSession();
+        const session = sessionData?.session;
+        loadingEl.style.display = 'none';
+
+        if (!session?.user) {
+            signedOutEl.style.display = 'block';
+            return;
+        }
+
+        const { data: isAdmin, error: adminErr } = await supabase.rpc('is_broadcast_admin');
+        if (adminErr || !isAdmin) {
+            const uid = session.user.id;
+            const sqlCmd = `supabase db query --remote --yes \\\n  "INSERT INTO public.broadcast_admins (user_id, note) VALUES ('${uid}', 'Maintainer');" \\\n  --workdir DEV`;
+            document.getElementById('nr-uid-sql').textContent = sqlCmd;
+            document.getElementById('nr-copy-uid-btn').addEventListener('click', () => navigator.clipboard.writeText(uid));
+            document.getElementById('nr-copy-sql-btn').addEventListener('click', () => navigator.clipboard.writeText(sqlCmd));
+            unauthEl.style.display = 'block';
+            return;
+        }
+
+        workspaceEl.style.display = 'block';
+        loadPostIntoEditor(null);
+        await fetchAllPosts(null);
+    });
+</script>
+
+
+    <footer class="bx-footer">
+        <div class="bx-footer-inner">
+            <div class="bx-footer-left">
+                <span class="bx-footer-prompt">&gt;_</span>
+                <span>Boxxy Terminal · Built with Rust &amp; GTK4 for Linux</span>
+            </div>
+            <div class="bx-footer-links">
+                <a href="/getting-started">Docs</a>
+                <a href="/theme-api">Theme API</a>
+                <a href="/news">News</a>
+                <a href="/releases">Releases</a>
+                <a href="/live">Telemetry</a>
+                <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
