@@ -161,30 +161,34 @@
 </div>
 </div>
 <hr />
-<h2 id="changing-a-character"><a class="zola-anchor" href="#changing-a-character" aria-label="Anchor link for: changing-a-character">🔗</a>Changing a Character</h2>
-<ol>
-<li>Open the =Claw Message Bar= (<code>Ctrl+/</code>) on the target pane.</li>
-<li>Type <code>@</code> to open the character picker.</li>
-<li>Select a different character to reassign.</li>
-</ol>
+<h2 id="picking-inviting-characters"><a class="zola-anchor" href="#picking-inviting-characters" aria-label="Anchor link for: picking-inviting-characters">🔗</a>Picking &amp; Inviting Characters</h2>
+<ul>
+<li><strong>Pick on Any New Pane:</strong> Press <code>Ctrl+/</code> on a fresh pane and click any character banner card to start chatting with them (or give individual characters their own model in =Models Selection=).</li>
+<li><strong>Invite Teammates Mid-Chat:</strong> Mention <code>:levi</code> (or run <code>/debate :kuro &lt;topic&gt;</code>) to bring a second character right into the same conversation!</li>
+<li><strong>Private Off-the-Record Chat:</strong> Run <code>/incognito</code> on a new pane to chat without saving history, memories, or system context.</li>
+</ul>
 <blockquote>
-<p>The session updates with the new personality while preserving and rehydrating your conversation history automatically. If you send a pane to the background (<strong>Run in Background</strong>), your character stays claimed and active in the daemon until you restore or close the session.</p>
+<p>If you send a pane to the background (<strong>Run in Background</strong>), your character stays claimed and active in the daemon until you restore or close the session.</p>
 </blockquote>
 <hr />
 <h2 id="creating-custom-characters"><a class="zola-anchor" href="#creating-custom-characters" aria-label="Anchor link for: creating-custom-characters">🔗</a>Creating Custom Characters</h2>
-<p>Characters are simple directories inside your Boxxy config folder:</p>
+<p>Want help building one? Enable the <strong>Boxxy Character Creator</strong> skill in =Preferences= → =Skills= and ask a character to create a new persona and crop artwork for you!</p>
+<p>Under the hood, characters live in simple folders inside your Boxxy config directory:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="plain"><span class="giallo-l"><span>~/.config/boxxy-terminal/boxxyclaw/characters/&lt;slug&gt;/</span></span>
 <span class="giallo-l"><span>├── CHARACTER.toml</span></span>
-<span class="giallo-l"><span>└── AVATAR.png        (optional — 256×256 PNG)</span></span></code></pre>
+<span class="giallo-l"><span>├── AVATAR.png        (optional — 256×256 square avatar)</span></span>
+<span class="giallo-l"><span>└── portrait.webp     (optional — 768×432 16:9 banner card)</span></span></code></pre>
 <p><strong>CHARACTER.toml</strong></p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span>display_name</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;My Custom Character&quot;</span></span>
 <span class="giallo-l"><span>color</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;#7B61FF&quot;</span></span>
 <span class="giallo-l"><span>duties</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Expert in Python backend development and Docker orchestration.&quot;</span></span>
-<span class="giallo-l"><span>personality</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Patient and thorough. Always explains the &#39;why&#39; behind every suggestion.&quot;</span></span></code></pre><table><thead><tr><th style="text-align: left">Field</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<span class="giallo-l"><span>personality</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;Patient and thorough. Always explains the &#39;why&#39; behind every suggestion.&quot;</span></span>
+<span class="giallo-l"><span>greetings</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;Ready when you are — what are we shipping today?&quot;</span><span style="color: #9399B2;">]</span></span></code></pre><table><thead><tr><th style="text-align: left">Field</th><th style="text-align: left">Description</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>display_name</code></td><td style="text-align: left">Name shown in the badge, sidebar, notifications, and swarm tools.</td></tr>
 <tr><td style="text-align: left"><code>color</code></td><td style="text-align: left">CSS hex color for the pane badge and UI accents.</td></tr>
 <tr><td style="text-align: left"><code>duties</code></td><td style="text-align: left">Short role description injected into the system prompt.</td></tr>
 <tr><td style="text-align: left"><code>personality</code></td><td style="text-align: left">Behavioral guidelines that shape how the character communicates.</td></tr>
+<tr><td style="text-align: left"><code>greetings</code></td><td style="text-align: left">Optional greeting lines shown on the character picker before a chat starts.</td></tr>
 </tbody></table>
 <p>A stable UUID is auto-generated on first load. You can safely share character directories — Boxxy detects and resolves any ID collisions automatically.</p>
 <h3 id="hot-reload"><a class="zola-anchor" href="#hot-reload" aria-label="Anchor link for: hot-reload">🔗</a>Hot Reload</h3>
@@ -286,7 +290,7 @@
                 </li>
             
                 <li>
-                    <a href="#changing-a-character" data-toc-link="changing-a-character" class="">Changing a Character</a>
+                    <a href="#picking-inviting-characters" data-toc-link="picking-inviting-characters" class="">Picking &amp; Inviting Characters</a>
                     
                 </li>
             

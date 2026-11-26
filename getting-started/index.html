@@ -129,21 +129,20 @@
 <h2 id="shell-files-integration"><a class="zola-anchor" href="#shell-files-integration" aria-label="Anchor link for: shell-files-integration">🔗</a>Shell &amp; Files Integration</h2>
 <p>Boxxy respects your environment. It relies on your existing shell and avoids injecting features to modify it. For the best experience, it is <strong>strongly</strong> recommended to use a modern shell like <a rel="external" href="https://github.com/fish-shell/fish-shell">Fish</a>.</p>
 <p>To enable terminal hyperlinks =(OSC 8)=, ensure that CLI tools like <code>ls</code> or <code>eza</code> are configured to use the <code>--hyperlink=auto</code> flag.</p>
-<p>Boxxy also integrates directly with <strong>GNOME Files (Nautilus)</strong> out of the box! Right-click any folder in Files and choose <strong>Open With Boxxy</strong> to launch a new window or tab straight in that directory (manageable in =Preferences= -&gt; =Advanced= -&gt; =Shell=).</p>
+<p>Boxxy also integrates directly with <strong>GNOME Files (Nautilus)</strong> out of the box! Right-click any folder in Files and choose <strong>Open With Boxxy</strong> to launch a new window or tab straight in that directory (manageable in =Preferences= -&gt; =Desktop Integrations=).</p>
 <hr />
-<h2 id="model-selection-custom-endpoints"><a class="zola-anchor" href="#model-selection-custom-endpoints" aria-label="Anchor link for: model-selection-custom-endpoints">🔗</a>Model Selection &amp; Custom Endpoints</h2>
-<p>Navigate to =Preferences= -&gt; =APIs= to enter your API keys or add <strong>OpenAI-Compatible Custom Endpoints</strong> (with built-in presets for <strong>OpenCode Go</strong>, <strong>OpenCode Zen</strong>, <strong>LiteLLM</strong>, and local <strong>vLLM / llama.cpp</strong> servers, complete with automatic <code>/models</code> discovery).</p>
-<p>Then open =Models Selection= (or click the quick model links right in the =Claw Sidebar=) to assign specific models to Boxxy's three roles:</p>
+<h2 id="model-selection-subscriptions"><a class="zola-anchor" href="#model-selection-subscriptions" aria-label="Anchor link for: model-selection-subscriptions">🔗</a>Model Selection &amp; Subscriptions</h2>
+<p>Open =Preferences= -&gt; =APIs= to add your API keys, sign in with your <strong>ChatGPT Plus / Pro</strong> subscription, connect local <strong>Ollama</strong>, or add <strong>OpenAI-Compatible Custom Endpoints</strong> (with presets for <strong>OpenCode Go</strong>, <strong>OpenCode Zen</strong>, <strong>LiteLLM</strong>, and <strong>vLLM / llama.cpp</strong>).</p>
+<p>Then open =Models Selection= (or click the model link in the =Claw Sidebar= or drawer) to choose your models:</p>
 <ul>
-<li><code>AI Chat:</code> Used exclusively for the stateless AI Chat tab in the sidebar.</li>
-<li><code>Claw:</code> Powers your terminal characters and assists with <code>Bookmarks Scripts</code>. A fast, capable reasoning model is recommended here.</li>
-<li><code>Memories &amp; Dreams:</code> Extracts background facts and consolidates long-term memories. A fast, lightweight model is ideal.</li>
+<li><code>Characters:</code> Set a global <strong>Default model</strong> for all your characters, and optionally give specific characters their own custom model override.</li>
+<li><code>Dreams:</code> Powers background memory extraction and consolidation. By default it shares your character model, or you can pick a fast, lightweight model just for dreaming.</li>
 </ul>
-<p><strong>Pro Tip:</strong> Press <code>Shift + Control + p</code> and type =Models= to jump straight to =Models Selection=.</p>
+<p><strong>Pro Tip:</strong> Press <code>Control + Shift + p</code> and type =Models= to jump straight to =Models Selection=.</p>
 <hr />
 <h2 id="characters-conversation"><a class="zola-anchor" href="#characters-conversation" aria-label="Anchor link for: characters-conversation">🔗</a>Characters Conversation</h2>
-<p>Press <code>Control + /</code> to start a conversation with a character in your active pane. Boxxy comes with 3 pre-installed characters, and you can edit them <a href="https://boxxy.dev/characters/">or add your own</a>. You can also set your own name and avatar under the <strong>"You"</strong> section in =Preferences= -&gt; =Characters= so your characters know how to address you!</p>
-<p>The =Message Bar= automatically wraps multi-line prompts and lets you paste large text snippets or <strong>images</strong> directly from your clipboard (rendered as compact thumbnails) to give your character visual context.</p>
+<p>Press <code>Control + /</code> on any new pane to pick a character card and start chatting. Boxxy ships with 3 built-in characters, and you can edit them <a href="https://boxxy.dev/characters/">or create your own</a>. Under the <strong>"You"</strong> section in =Preferences= -&gt; =Characters=, you can also set your name, avatar, and color so your characters know who they are talking to!</p>
+<p>Inside the =Message Bar=, type <code>@</code> to attach workspace files, <code>:name</code> (or <code>/debate</code>) to invite another character into the chat, <code>/btw</code> to ask a quick side question without adding to history, or <code>/incognito</code> on a fresh pane for a private off-the-record chat. You can also paste or drag-and-drop images and code snippets right at your cursor.</p>
 <hr />
 <h2 id="background-tasks-detached-shells"><a class="zola-anchor" href="#background-tasks-detached-shells" aria-label="Anchor link for: background-tasks-detached-shells">🔗</a>Background Tasks &amp; Detached Shells</h2>
 <p>Running a system upgrade, dev server, or long build and want to close your tab or quit Boxxy? Just choose <strong>Run in Background</strong> when closing (or enable =Always Keep Running Processes in Background= in =Preferences= -&gt; =Advanced=).</p>
@@ -167,7 +166,7 @@
 <hr />
 <h2 id="picking-up-where-you-left-off"><a class="zola-anchor" href="#picking-up-where-you-left-off" aria-label="Anchor link for: picking-up-where-you-left-off">🔗</a>Picking Up Where You Left Off</h2>
 <p>Never lose your context again. Whenever you open the =Claw Sidebar= on a new pane, your <strong>Past Conversations</strong> are listed right there for one-click resumption — or press <code>Control + /</code> and type <code>/resume</code>.</p>
-<p>Use the per-conversation menu (or the pin icon in the message bar) to =Pin= important sessions to the top of your list so they are never rotated out, or delete old ones you no longer need. See more at <a href="https://boxxy.dev/how-it-works/#resume-session">How It Works</a>.</p>
+<p>Use the per-conversation menu (or <code>/pin</code> and the <code>+</code> menu in the message bar) to =Pin= important sessions to the top of your list so they are never rotated out, or delete old ones you no longer need. See more at <a href="https://boxxy.dev/how-it-works/#resume-session">How It Works</a>.</p>
 <hr />
 <h2 id="memories-dreams"><a class="zola-anchor" href="#memories-dreams" aria-label="Anchor link for: memories-dreams">🔗</a>Memories &amp; Dreams</h2>
 <p>Boxxy is a self-improving system with two complementary layers that build up knowledge about you over time:</p>
@@ -182,8 +181,8 @@
 <h2 id="token-consumption"><a class="zola-anchor" href="#token-consumption" aria-label="Anchor link for: token-consumption">🔗</a>Token Consumption</h2>
 <p>Boxxy is context-rich! To perform at its best, it processes your active toolbox, relevant skills, memories, and terminal snapshots.</p>
 <p>You can monitor real-time token and cost usage (<code>% used</code> and <code>$ spent</code>) in the =Claw Sidebar=. Modern providers (Gemini, Claude, OpenAI) also leverage <strong>Context Caching</strong>, reducing billable input tokens by up to 80–90% across multi-turn sessions.</p>
-<p>To inspect the exact payload Boxxy sends to a model, run:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span>BOXXY_DEBUG_CONTEXT</span><span style="color: #94E2D5;">=</span><span style="color: #A6E3A1;">1</span><span style="color: #89B4FA;font-style: italic;"> cargo</span><span style="color: #A6E3A1;"> run</span></span></code></pre>
+<p>To inspect the exact payload Boxxy sends to a model, launch Boxxy with:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-terminal</span><span style="color: #A6E3A1;"> --debug-context</span></span></code></pre>
 <hr />
 <h2 id="desktop-companion-extensions-gnome-shell-cosmic"><a class="zola-anchor" href="#desktop-companion-extensions-gnome-shell-cosmic" aria-label="Anchor link for: desktop-companion-extensions-gnome-shell-cosmic">🔗</a>Desktop Companion Extensions (GNOME Shell &amp; COSMIC)</h2>
 <p>Boxxy offers native desktop panel companions for both <strong>GNOME Shell</strong> and the <strong>COSMIC Desktop</strong>!</p>
@@ -279,7 +278,7 @@
                 </li>
             
                 <li>
-                    <a href="#model-selection-custom-endpoints" data-toc-link="model-selection-custom-endpoints" class="">Model Selection &amp; Custom Endpoints</a>
+                    <a href="#model-selection-subscriptions" data-toc-link="model-selection-subscriptions" class="">Model Selection &amp; Subscriptions</a>
                     
                 </li>
             
