@@ -5,9 +5,11 @@ template = "theme_api.html"
 
 # Boxxy Theme Engine & API
 
-Boxxy decouples **Terminal Palettes** (the 16 ANSI colors and canvas background inside the terminal grid) from **Application Chrome Themes** (`crates/themes/src/app_theme/` and `resources/themes/boxxy_skeleton.css`). Each Boxxy App Theme defines surface tokens, neo-brutalist ink borders, and a **3-color identity triad**: **`accent`** (primary selection & active controls), **`secondary`** (supporting tags, metadata pills, and acknowledgment actions), and **`highlight`** (discovery badges, live active markers, and search matches)—with perceptual **OKLCH** lightness clamping for readable standalone text on any card surface.
+Boxxy separates **Terminal Palettes** (the 16 ANSI colors inside your shell grid) from **Application Chrome Themes** (tabs, sidebars, menus, dialogs, and the Claw drawer). Every Boxxy theme pairs crisp 2px ink borders with a **3-color identity triad** — **`accent`** (primary selection & active controls), **`secondary`** (tags, metadata pills, and `@file` mentions), and **`highlight`** (discovery badges, search matches, and `:character` mentions) — using perceptual **OKLCH** lightness clamping so text stays readable on every surface.
 
-All widgets below are rendered live in HTML and CSS using Boxxy's exact design tokens, borders, shadows, and padding rules. Use the **Live Theme & Accent Playground** toolbar to switch themes or override the accent color across every widget on this page in real time.
+Even if you prefer **Legacy Adwaita** (`System Follow`, `System Dark`, `System Light`), Boxxy brings the same `secondary` (Iris Lavender) and `highlight` (Solar Amber / Tangerine) colors to Adwaita while keeping primary accents synced with your desktop's live system accent color.
+
+Try the **Live Theme & Accent Playground** below to switch themes or test custom accent colors in real time.
 
 <div id="bx-theme-scope" class="bx-theme-root">
 
@@ -36,10 +38,10 @@ All widgets below are rendered live in HTML and CSS using Boxxy's exact design t
 
 ### 1. HeaderBar, Terminal Tabs & Unified Window Controls
 
-The main window headerbar (`.content-header`) hosts the tab bar in the center, the Sidebar Toggle icon button on the left, and the Hamburger Menu button + Window Controls (`×`) on the right.
+The main window headerbar (`.content-header`) centers the tab bar between the Sidebar Toggle on the left and the Background Shells pill, Hamburger Menu, and Window Controls on the right.
 
-- **Flush Terminal Tabs:** Use crisp 2px `@boxxy_ink` outlines and `@accent_bg_color` when selected, with **no drop-shadow** (`box-shadow: none`) so tabs sit flush inside the 28px headerbar strip without clipping.
-- **Unified Icon Button Sizing:** After stripping internal image padding on `windowcontrols > button > image`, both `.content-header button.image-button:not(.flat)` and `.content-header windowcontrols > button` share one single CSS rule (`min-width: 24px; min-height: 24px; padding: 0px 6px; margin-top: 6px; margin-bottom: 6px;`).
+- **Flush Terminal Tabs:** Selected tabs fill with `@accent_bg_color` inside a 2px `@boxxy_ink` border with `box-shadow: none`, keeping the compact tab strip crisp without clipping.
+- **Matching Square Header Buttons:** Sidebar toggle, menu, and window control buttons share one unified square button size across the headerbar and dialogs.
 
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
@@ -83,10 +85,6 @@ Unlike terminal tabs, the sidebar header switcher buttons (`viewswitcher > butto
   </div>
   <div class="bx-demo-sidebar">
     <div class="bx-demo-viewswitcher">
-      <div class="bx-demo-switcher-btn" onclick="bxSelectSibling(this, 'is-checked')">
-        <span>✦</span>
-        <span>AI Chat</span>
-      </div>
       <div class="bx-demo-switcher-btn is-checked" onclick="bxSelectSibling(this, 'is-checked')">
         <span>🦖</span>
         <span>Claw</span>
@@ -119,7 +117,7 @@ Unlike terminal tabs, the sidebar header switcher buttons (`viewswitcher > butto
 
 ### 3. Tactile Buttons, Identity Triad Badges & Flat Utility Controls
 
-All standard buttons, action buttons (`.suggested-action`, `.secondary-action`, `.destructive-action`), popover menu text rows (`modelbutton`), and popover segmented buttons (`box.linked > button.model`) share **one single CSS padding rule**: `min-height: 24px; padding: 5px 12px;`. Primary dialog footer CTA buttons (`Done`, `Save`, `Apply`, `Read What's New`, `Cancel`, `Close`) use `.pill` (`10px` radius, `padding: 6px 22px`, `3px 4px 0px @boxxy_shadow`). Quiet utility buttons (`button.flat`, such as `Ask Another AI`, `← Back`, and inline icons) stay transparent at rest and snap into a **shadowless recessed surface cutout + `1.5px` `@boxxy_ink` hairline** on hover instead of a foggy grey veil.
+Raised buttons (`.suggested-action`, `.secondary-action`, `.destructive-action`) and dialog footer `.pill` CTAs cast crisp offset `@boxxy_shadow` drop-shadows and physically press down by `1px` when clicked. Quiet `.flat` utility buttons stay transparent at rest and reveal a clean recessed cutout on hover.
 
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
@@ -188,7 +186,7 @@ The terminal context menu (`popover.terminal-menu > contents`) uses `@popover_bg
 
 ### 5. Preference Rows & Boxed Lists (`.boxed-list`, `.boxed-list-separate`)
 
-Preference group cards (`.boxed-list`, `.boxed-list-separate`, `preferencesgroup listbox`) use `@card_bg_color` with structured `8px` corners, a `2px solid @boxxy_ink` outline, a `2px 3px 0px @boxxy_shadow` offset shadow, and recessed `1.5px solid alpha(@boxxy_ink, 0.55)` dark ink row grooves (no grey hairlines). Clickable rows (`row.activatable:hover`) recess cleanly into `@window_bg_color` while keeping default readable text, and theme tag pills (`.boxxy-theme-tag-pill`) use `@boxxy_secondary_bg_color` so metadata never competes with selected controls.
+Preference cards sit on `@card_bg_color` with `8px` corners, a `2px solid @boxxy_ink` frame, and crisp ink row dividers. Hovering an activatable row recesses it into `@window_bg_color`, while theme tag pills use `@boxxy_secondary_bg_color` alongside the 4 signature theme preview dots (`[window_bg, accent, secondary, highlight]`).
 
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
@@ -236,7 +234,7 @@ Preference group cards (`.boxed-list`, `.boxed-list-separate`, `preferencesgroup
 
 ### 6. Search Entries & Claw MsgBar (`searchentry`, `.boxxy-msgbar`)
 
-Input fields (`searchentry`, `entry:not(.flat)`, `.claw-drawer .boxxy-msgbar`) rest on `@card_bg_color` with a `2px solid @boxxy_ink` outline, and switch their outline to `@accent_color` on `:focus-within`.
+Input fields and the Claw message bar rest on `@card_bg_color` with a `2px solid @boxxy_ink` outline that highlights with `@accent_color` on focus, while `@file` attachments and `:character` mentions pick up contrast-clamped `secondary` and `highlight` colors.
 
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
@@ -244,8 +242,8 @@ Input fields (`searchentry`, `entry:not(.flat)`, `.claw-drawer .boxxy-msgbar`) r
     <span>Click inside the input to see the focus outline</span>
   </div>
   <div class="bx-demo-entry">
-    <span>🦖</span>
-    <input type="text" value="Ask Niko or reference @crates/themes/src/app_theme.rs..." aria-label="Demo MsgBar Input" />
+    <span style="font-weight:800;opacity:0.75">＋</span>
+    <input type="text" value="Ask Niko, attach @crates/themes/src/app_theme/mod.rs, or invite :levi..." aria-label="Demo MsgBar Input" />
   </div>
 </div>
 
@@ -341,11 +339,11 @@ Boxxy styles application chrome using four prioritized GTK 4 CssProvider layers 
 
 | Layer | GTK Priority | Source | Lifecycle | Responsibility |
 | :--- | :--- | :--- | :--- | :--- |
-| **Layer 1 (Base)** | 600 (PRIORITY_APPLICATION) | `resources/style.css` | Always loaded | Base widget geometry, spacing, layout rules, and fallback `@define-color` tokens for Legacy Adwaita. |
+| **Layer 1 (Base)** | 600 (PRIORITY_APPLICATION) | `resources/style.css` | Always loaded | Base widget geometry, spacing, layout rules, and static fallback `@define-color` tokens. |
 | **Layer 1b (Palette)** | 610 (PRIORITY_APPLICATION + 10) | `build.rs` (`generate_gtk_css`) | Loaded when a terminal palette is selected | Terminal-coupled `.terminal-header` and `.claw-drawer` colors when running in Legacy Adwaita mode. |
 | **Layer 2 (Skeleton)** | 800 (PRIORITY_USER) | `resources/themes/boxxy_skeleton.css` | Loaded only in Boxxy Theme mode | Playful neo-brutalist outlines (`@boxxy_ink`), tactile offset drop-shadows (`@boxxy_shadow`), capsule navigation pills, and active button press states. |
-| **Layer 3 (Theme Tokens)** | 810 (PRIORITY_USER + 10) | `AppThemeColors::to_gtk_css()` | Loaded only in Boxxy Theme mode | Defines all semantic `@define-color` variables from the active built-in or community `.toml` theme. |
-| **Layer 4 (Accent Override)** | 820 (PRIORITY_USER + 20) | `generate_accent_override_css()` | Loaded when a custom accent is set | Overrides `@accent_color`, `@accent_bg_color`, and auto-contrasted `@accent_fg_color` on top of any active theme. |
+| **Layer 3 (Theme Tokens)** | 810 (PRIORITY_USER + 10) | `to_gtk_css()` / `generate_adwaita_tokens_css()` | Always loaded | Defines full theme tokens in Boxxy Theme mode, and supplies `secondary` (`#a594f9`) &amp; `highlight` (`#f5b971` / `#ff9f43`) in Legacy Adwaita while leaving `@accent_*` synced with your OS accent color. |
+| **Layer 4 (Accent Override)** | 820 (PRIORITY_USER + 20) | `generate_accent_override_css()` | Loaded when a custom accent is set in Boxxy mode | Overrides `@accent_color`, `@accent_bg_color`, and auto-contrasted `@accent_fg_color` independently of `secondary` and `highlight`. |
 
 ---
 
@@ -355,7 +353,7 @@ Boxxy styles application chrome using four prioritized GTK 4 CssProvider layers 
 | :--- | :--- | :--- | :--- |
 | <span class="bx-var-name">window_bg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#1d1d20"></span>#1d1d20</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ecfafb"></span>#ecfafb</span> | Primary window, dialog, and Claw overlay drawer canvas background. |
 | <span class="bx-var-name">window_fg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span> | Primary text and icon foreground on `window_bg`. |
-| <span class="bx-var-name">sidebar_bg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#2e2e32"></span>#2e2e32</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span> | Left sidebar (AI Chat, Claw, Bookmarks, Colors) and Preferences navigation sidebar. |
+| <span class="bx-var-name">sidebar_bg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#2e2e32"></span>#2e2e32</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span> | Left sidebar (Claw, Bookmarks, Colors) and Preferences navigation sidebar. |
 | <span class="bx-var-name">sidebar_fg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span> | Text and icon foreground on `sidebar_bg`. |
 | <span class="bx-var-name">card_bg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#26262a"></span>#26262a</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span> | Tactile buttons, unselected tabs, preference cards, entries, and linked button strips inside menus. |
 | <span class="bx-var-name">card_fg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span> | Text and icon foreground on `card_bg`. |
@@ -413,7 +411,7 @@ Components never hardcode hex or RGB values for surfaces, borders, or semantic s
 
 | Component | Has `@boxxy_shadow`? | Shadow Offset | Rationale |
 | :--- | :--- | :--- | :--- |
-| **Sidebar & Dialog Switcher Buttons** (`viewswitcher > button`, `stackswitcher > button`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Top-level mode switchers (AI Chat, Claw, Bookmarks, Colors in the sidebar; AI Chat, Boxxy Claw, Memories and Dreams in Models Selection) sit in spacious headers with inter-button gaps (`2px` / `6px`) and act as tactile physical toggles. |
+| **Sidebar & Dialog Switcher Buttons** (`viewswitcher > button`, `stackswitcher > button`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Top-level mode switchers (Claw, Bookmarks, Colors in the sidebar; Characters and Dreams in Models Selection) sit in spacious headers with inter-button gaps (`2px` / `6px`) and act as tactile physical toggles. |
 | **Hero / Advertising CTA Buttons** (`button.pill:not(.flat)`) | **Yes** | `3px 4px 0px @boxxy_shadow` (`4px 5px 0px` on `:hover`) | Primary dialog footer actions (`Done`, `Save`, `Apply`, `Read What's New`, `Cancel`/`Close`) use boxy-rounded `10px` corners, `6px 22px` padding, and a slight hover lift (`translate(-1px, -1px)`). |
 | **Sidebar & Command Palette Rows** (`.navigation-sidebar > row:selected`, `:hover`, `.menu-open`) | **Yes** | `2px 3px 0px @boxxy_shadow` | Lifts the active or hovered conversation, command palette item, bookmark, or preferences category above the flat list. Depresses to `1px 1px 0px` on click. |
 | **Terminal Tabs** (`tabbar tab`, `tabbar tab:selected`) | **No** (`box-shadow: none`) | `none` | Tabs live inside the compact 28px tab bar strip. Keeping `box-shadow: none` (while retaining the 2px `@boxxy_ink` outline and `@accent_bg_color` active fill) prevents bottom shadow clipping inside `AdwTabBox`. |

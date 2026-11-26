@@ -48,7 +48,7 @@ Boxxy knows the difference between a command the agent proposed and a quick typo
 
 Each terminal pane gets its own =Character=: a persistent AI session with a distinct name, avatar, personality, and color. Characters are coordinated by a central registry so no two panes accidentally claim the same persona at once, and they can collaborate across splits using the **Collaborative Swarm** toolbox.
 
-Boxxy ships with three pre-built characters (`Niko Una`, `Levi Kujo`, and `Kuro`), and you can also configure your own **"You" Profile** (name, avatar, and accent color) in =Preferences= → =Characters=. See [Characters](@/characters.md) for details.
+Boxxy ships with three pre-built characters (`Niko Una`, `Levi Kujo`, and `Kuro`), and you can configure your own **"You" Profile** (name, avatar, and accent color) in =Preferences= → =Characters=. You can even invite a second character into the same drawer with `:name` or `/debate`, ask quick side questions mid-turn with `/btw`, or start a private chat with `/incognito`. See [Characters](@/characters.md) for details.
 
 ---
 
@@ -84,7 +84,7 @@ Every sensitive action (running commands, editing files, killing processes, clip
 
 ### Built-In & Tavily Web Search
 
-Characters can search the web in real time using either **Built-in Native Search** (server-side grounding on Gemini, OpenAI, and Anthropic) or **Tavily** (automatically used as a fallback for local and third-party models), with more search providers coming soon. Toggle web search per pane using the **Globe Icon** in the message bar. See [Providers](@/providers.md#web-search-providers).
+Characters can search the web in real time using either **Built-in Native Search** (server-side grounding on Gemini, OpenAI, and Anthropic) or **Tavily** (automatically used as a fallback for local and third-party models), with more search providers coming soon. Toggle web search per pane using `/web` or the **`+` menu** in the message bar. See [Providers](@/providers.md#web-search-providers).
 
 ---
 

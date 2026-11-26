@@ -55,24 +55,27 @@ Boxxy ships with three bundled characters:
 
 ---
 
-## Changing a Character
+## Picking & Inviting Characters
 
-1. Open the =Claw Message Bar= (`Ctrl+/`) on the target pane.
-2. Type `@` to open the character picker.
-3. Select a different character to reassign.
+- **Pick on Any New Pane:** Press `Ctrl+/` on a fresh pane and click any character banner card to start chatting with them (or give individual characters their own model in =Models Selection=).
+- **Invite Teammates Mid-Chat:** Mention `:levi` (or run `/debate :kuro <topic>`) to bring a second character right into the same conversation!
+- **Private Off-the-Record Chat:** Run `/incognito` on a new pane to chat without saving history, memories, or system context.
 
-> The session updates with the new personality while preserving and rehydrating your conversation history automatically. If you send a pane to the background (**Run in Background**), your character stays claimed and active in the daemon until you restore or close the session.
+> If you send a pane to the background (**Run in Background**), your character stays claimed and active in the daemon until you restore or close the session.
 
 ---
 
 ## Creating Custom Characters
 
-Characters are simple directories inside your Boxxy config folder:
+Want help building one? Enable the **Boxxy Character Creator** skill in =Preferences= → =Skills= and ask a character to create a new persona and crop artwork for you!
+
+Under the hood, characters live in simple folders inside your Boxxy config directory:
 
 ```
 ~/.config/boxxy-terminal/boxxyclaw/characters/<slug>/
 ├── CHARACTER.toml
-└── AVATAR.png        (optional — 256×256 PNG)
+├── AVATAR.png        (optional — 256×256 square avatar)
+└── portrait.webp     (optional — 768×432 16:9 banner card)
 ```
 
 **CHARACTER.toml**
@@ -82,6 +85,7 @@ display_name = "My Custom Character"
 color = "#7B61FF"
 duties = "Expert in Python backend development and Docker orchestration."
 personality = "Patient and thorough. Always explains the 'why' behind every suggestion."
+greetings = ["Ready when you are — what are we shipping today?"]
 ```
 
 | Field | Description |
@@ -90,6 +94,7 @@ personality = "Patient and thorough. Always explains the 'why' behind every sugg
 | `color` | CSS hex color for the pane badge and UI accents. |
 | `duties` | Short role description injected into the system prompt. |
 | `personality` | Behavioral guidelines that shape how the character communicates. |
+| `greetings` | Optional greeting lines shown on the character picker before a chat starts. |
 
 A stable UUID is auto-generated on first load. You can safely share character directories — Boxxy detects and resolves any ID collisions automatically.
 

@@ -18,29 +18,28 @@ Boxxy respects your environment. It relies on your existing shell and avoids inj
 
 To enable terminal hyperlinks =(OSC 8)=, ensure that CLI tools like `ls` or `eza` are configured to use the `--hyperlink=auto` flag.
 
-Boxxy also integrates directly with **GNOME Files (Nautilus)** out of the box! Right-click any folder in Files and choose **Open With Boxxy** to launch a new window or tab straight in that directory (manageable in =Preferences= -> =Advanced= -> =Shell=).
+Boxxy also integrates directly with **GNOME Files (Nautilus)** out of the box! Right-click any folder in Files and choose **Open With Boxxy** to launch a new window or tab straight in that directory (manageable in =Preferences= -> =Desktop Integrations=).
 
 ---
 
-## Model Selection & Custom Endpoints
+## Model Selection & Subscriptions
 
-Navigate to =Preferences= -> =APIs= to enter your API keys or add **OpenAI-Compatible Custom Endpoints** (with built-in presets for **OpenCode Go**, **OpenCode Zen**, **LiteLLM**, and local **vLLM / llama.cpp** servers, complete with automatic `/models` discovery).
+Open =Preferences= -> =APIs= to add your API keys, sign in with your **ChatGPT Plus / Pro** subscription, connect local **Ollama**, or add **OpenAI-Compatible Custom Endpoints** (with presets for **OpenCode Go**, **OpenCode Zen**, **LiteLLM**, and **vLLM / llama.cpp**).
 
-Then open =Models Selection= (or click the quick model links right in the =Claw Sidebar=) to assign specific models to Boxxy's three roles:
+Then open =Models Selection= (or click the model link in the =Claw Sidebar= or drawer) to choose your models:
 
-- `AI Chat:` Used exclusively for the stateless AI Chat tab in the sidebar.
-- `Claw:` Powers your terminal characters and assists with `Bookmarks Scripts`. A fast, capable reasoning model is recommended here.
-- `Memories & Dreams:` Extracts background facts and consolidates long-term memories. A fast, lightweight model is ideal.
+- `Characters:` Set a global **Default model** for all your characters, and optionally give specific characters their own custom model override.
+- `Dreams:` Powers background memory extraction and consolidation. By default it shares your character model, or you can pick a fast, lightweight model just for dreaming.
 
-**Pro Tip:** Press `Shift + Control + p` and type =Models= to jump straight to =Models Selection=.
+**Pro Tip:** Press `Control + Shift + p` and type =Models= to jump straight to =Models Selection=.
 
 ---
 
 ## Characters Conversation
 
-Press `Control + /` to start a conversation with a character in your active pane. Boxxy comes with 3 pre-installed characters, and you can edit them [or add your own](@/characters.md). You can also set your own name and avatar under the **"You"** section in =Preferences= -> =Characters= so your characters know how to address you!
+Press `Control + /` on any new pane to pick a character card and start chatting. Boxxy ships with 3 built-in characters, and you can edit them [or create your own](@/characters.md). Under the **"You"** section in =Preferences= -> =Characters=, you can also set your name, avatar, and color so your characters know who they are talking to!
 
-The =Message Bar= automatically wraps multi-line prompts and lets you paste large text snippets or **images** directly from your clipboard (rendered as compact thumbnails) to give your character visual context.
+Inside the =Message Bar=, type `@` to attach workspace files, `:name` (or `/debate`) to invite another character into the chat, `/btw` to ask a quick side question without adding to history, or `/incognito` on a fresh pane for a private off-the-record chat. You can also paste or drag-and-drop images and code snippets right at your cursor.
 
 ---
 
@@ -77,7 +76,7 @@ All your scripts are stored locally at `~/.config/boxxy-terminal/bookmarks`.
 
 Never lose your context again. Whenever you open the =Claw Sidebar= on a new pane, your **Past Conversations** are listed right there for one-click resumption — or press `Control + /` and type `/resume`.
 
-Use the per-conversation menu (or the pin icon in the message bar) to =Pin= important sessions to the top of your list so they are never rotated out, or delete old ones you no longer need. See more at [How It Works](@/how-it-works.md#resume-session).
+Use the per-conversation menu (or `/pin` and the `+` menu in the message bar) to =Pin= important sessions to the top of your list so they are never rotated out, or delete old ones you no longer need. See more at [How It Works](@/how-it-works.md#resume-session).
 
 ---
 
@@ -101,10 +100,10 @@ Boxxy is context-rich! To perform at its best, it processes your active toolbox,
 
 You can monitor real-time token and cost usage (`% used` and `$ spent`) in the =Claw Sidebar=. Modern providers (Gemini, Claude, OpenAI) also leverage **Context Caching**, reducing billable input tokens by up to 80–90% across multi-turn sessions.
 
-To inspect the exact payload Boxxy sends to a model, run:
+To inspect the exact payload Boxxy sends to a model, launch Boxxy with:
 
 ```bash
-BOXXY_DEBUG_CONTEXT=1 cargo run
+boxxy-terminal --debug-context
 ```
 
 ---
