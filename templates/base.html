@@ -18,7 +18,9 @@
     {% set is_home = path == "/" %}
     {% set is_theme = path == "/theme-api/" %}
     {% set is_live = path == "/live/" %}
-    {% set is_docs = not is_home and not is_theme and not is_live %}
+    {% set is_news = path == "/news/" %}
+    {% set is_newsroom = path == "/newsroom/" %}
+    {% set is_docs = not is_home and not is_theme and not is_live and not is_news and not is_newsroom %}
 
     <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
     <header class="bx-headerbar">
@@ -34,6 +36,7 @@
                 <a href="/" class="bx-nav-tab {% if is_home %}is-selected{% endif %}">Home</a>
                 <a href="/getting-started" class="bx-nav-tab {% if is_docs %}is-selected{% endif %}">Docs</a>
                 <a href="/theme-api" class="bx-nav-tab {% if is_theme %}is-selected{% endif %}">Theme API</a>
+                <a href="/news" class="bx-nav-tab {% if is_news %}is-selected{% endif %}">News</a>
             </nav>
 
             <div class="bx-header-right">
@@ -65,6 +68,7 @@
             <div class="bx-footer-links">
                 <a href="/getting-started">Docs</a>
                 <a href="/theme-api">Theme API</a>
+                <a href="/news">News</a>
                 <a href="/releases">Releases</a>
                 <a href="/live">Telemetry</a>
                 <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>

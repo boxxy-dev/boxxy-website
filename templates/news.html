@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}News — {{ config.title }}{% endblock title %}
+
+{% block content %}
+<main class="bx-news-page">
+    <div class="bx-news-container">
+        <div class="bx-live-head">
+            <span class="bx-eyebrow">BOXXY BROADCASTS</span>
+            <h1>Boxxy News</h1>
+            <p>Official release highlights, feature announcements, and community updates — also delivered inside Boxxy Terminal.</p>
+        </div>
+
+        <div id="news-loading" class="bx-status-box is-centered">
+            <span class="bx-live-dot"></span>
+            <span>Loading latest announcements...</span>
+        </div>
+
+        <div id="news-empty" class="bx-status-box is-centered" style="display: none;">
+            <span>No announcements published yet. Check back soon!</span>
+        </div>
+
+        <div id="news-error" class="bx-status-box is-centered is-error" style="display: none;">
+            <span>Failed to load announcements. Please try again later.</span>
+        </div>
+
+        <div id="news-feed" class="bx-news-stack" style="display: none;"></div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const supabaseUrl = 'https://qfwhesnmixgmczkdnvsu.supabase.co';
+        const supabasePublishableKey = 'sb_publishable_Z-SbIil88PSj3ri24CM7aw_8vzsCFie';
+        const supabase = window.supabase.createClient(supabaseUrl, supabasePublishableKey);
+
+        const loadingEl = document.getElementById('news-loading');
+        const emptyEl = document.getElementById('news-empty');
+        const errorEl = document.getElementById('news-error');
+        const feedEl = document.getElementById('news-feed');
+
+        const escapeHtml = (unsafe) => String(unsafe ?? '')
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+        const categoryBadgeClass = (cat) => {
+            switch (String(cat ?? '').toLowerCase()) {
+                case 'feature': return 'is-secondary';
+                case 'community': return 'is-highlight';
+                case 'security': return 'is-danger';
+                case 'maintenance': return 'is-muted';
+                default: return 'is-accent';
+            }
+        };
+
+        const sanitizeSlug = (raw) => {
+            const cleaned = String(raw ?? '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+            return cleaned || 'post';
+        };
+
+        // Restrict rendered Markdown links and images strictly to HTTPS
+        DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+            if (node.tagName === 'A') {
+                const href = (node.getAttribute('href') || '').trim();
+                if (/^https:\/\/[^\s]+$/i.test(href)) {
+                    node.setAttribute('target', '_blank');
+                    node.setAttribute('rel', 'noopener noreferrer');
+                } else if (href.startsWith('#')) {
+                    node.removeAttribute('target');
+                    node.removeAttribute('rel');
+                } else {
+                    node.removeAttribute('href');
+                }
+            } else if (node.tagName === 'IMG') {
+                const src = (node.getAttribute('src') || '').trim();
+                if (!/^https:\/\/[^\s]+$/i.test(src)) {
+                    node.remove();
+                } else {
+                    node.setAttribute('loading', 'lazy');
+                }
+            }
+        });
+
+        const renderMarkdownSafe = (md) => {
+            const rawHtml = marked.parse(String(md ?? ''), { gfm: true, breaks: false });
+            return DOMPurify.sanitize(rawHtml, {
+                USE_PROFILES: { html: true },
+                FORBID_TAGS: ['style', 'script', 'iframe', 'object', 'embed', 'form', 'input', 'button']
+            });
+        };
+
+        const highlightHashTarget = () => {
+            const hash = decodeURIComponent(window.location.hash || '').replace(/^#/, '');
+            document.querySelectorAll('.bx-news-card').forEach((card) => {
+                card.classList.toggle('is-targeted', Boolean(hash) && card.id === hash);
+            });
+            if (hash) {
+                const target = document.getElementById(hash);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        };
+
+        try {
+            const { data, error } = await supabase.rpc('get_broadcast_feed', { p_limit: 50 });
+            if (error) throw error;
+
+            const items = Array.isArray(data?.items) ? data.items : [];
+            loadingEl.style.display = 'none';
+
+            if (items.length === 0) {
+                emptyEl.style.display = 'flex';
+                return;
+            }
+
+            feedEl.innerHTML = items.map((item) => {
+                const slug = sanitizeSlug(item.slug);
+                const cat = String(item.category || 'news').toUpperCase();
+                const badgeCls = categoryBadgeClass(item.category);
+                const pubDate = item.published_at
+                    ? new Date(item.published_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })
+                    : '';
+                const bodyHtml = renderMarkdownSafe(item.body_md);
+                const hasAction = item.action_label
+                    && item.action_url
+                    && /^https:\/\/[^\s]+$/i.test(String(item.action_url).trim());
+
+                return `
+                    <article id="${escapeHtml(slug)}" class="bx-card bx-news-card">
+                        <div class="bx-news-meta">
+                            <div class="bx-news-meta-left">
+                                <span class="bx-tag-chip ${badgeCls}">${escapeHtml(cat)}</span>
+                                <time class="bx-news-date" datetime="${escapeHtml(item.published_at || '')}">${escapeHtml(pubDate)}</time>
+                            </div>
+                            <a class="bx-news-anchor" href="#${escapeHtml(slug)}" title="Direct link to announcement">#${escapeHtml(slug)}</a>
+                        </div>
+                        <h2 class="bx-news-title"><a href="#${escapeHtml(slug)}">${escapeHtml(item.title)}</a></h2>
+                        <p class="bx-news-summary">${escapeHtml(item.summary)}</p>
+                        <div class="bx-news-prose">${bodyHtml}</div>
+                        ${hasAction ? `
+                            <div class="bx-news-foot">
+                                <a class="bx-pill-btn is-suggested" href="${escapeHtml(String(item.action_url).trim())}" target="_blank" rel="noopener noreferrer">
+                                    <span>${escapeHtml(item.action_label)}</span>
+                                    <span aria-hidden="true">↗</span>
+                                </a>
+                            </div>
+                        ` : ''}
+                    </article>
+                `;
+            }).join('');
+
+            feedEl.style.display = 'flex';
+            highlightHashTarget();
+            window.addEventListener('hashchange', highlightHashTarget);
+        } catch (err) {
+            console.error('Failed to load Boxxy News feed:', err);
+            loadingEl.style.display = 'none';
+            errorEl.style.display = 'flex';
+        }
+    });
+</script>
+{% endblock content %}

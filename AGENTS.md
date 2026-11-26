@@ -1,1 +1,1 @@
-This is a documentation project for Boxxy Terminal that uses Zola 0.22.1 and Bulma 1.0.4.
+This is the official documentation, telemetry dashboard (`/live/`), public **Boxxy News** archive (`/news/`), and unlisted maintainer **Newsroom** (`/newsroom/`) project for Boxxy Terminal, built with Zola 0.22.1 and Bulma 1.0.4.
