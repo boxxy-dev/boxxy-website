@@ -38,10 +38,10 @@ Try the **Live Theme & Accent Playground** below to switch themes or test custom
 
 ### 1. HeaderBar, Terminal Tabs & Unified Window Controls
 
-The main window headerbar (`.content-header`) centers the tab bar between the Sidebar Toggle on the left and the Background Shells pill, Hamburger Menu, and Window Controls on the right.
+The main window headerbar (`.content-header`) places the tab bar and new-tab button (`+`) between the Sidebar Toggle on the left and the Background Shells pill and Window Controls on the right.
 
 - **Flush Terminal Tabs:** Selected tabs fill with `@accent_bg_color` inside a 2px `@boxxy_ink` border with `box-shadow: none`, keeping the compact tab strip crisp without clipping.
-- **Matching Square Header Buttons:** Sidebar toggle, menu, and window control buttons share one unified square button size across the headerbar and dialogs.
+- **Matching Square Header Buttons:** Sidebar toggle and window control buttons share one unified square button size across the headerbar and dialogs.
 
 <div class="bx-widget-stage">
   <div class="bx-widget-caption">
@@ -50,26 +50,26 @@ The main window headerbar (`.content-header`) centers the tab bar between the Si
   </div>
   <div class="bx-demo-headerbar">
     <div class="bx-demo-header-side">
-      <button type="button" class="bx-demo-icon-btn" title="Toggle Sidebar">◧</button>
+      <button type="button" class="bx-demo-icon-btn" title="Toggle Sidebar"><span class="bx-icon" style="--icon: url('/icons/dock-left.svg')"></span></button>
     </div>
     <div class="bx-demo-tabbar">
       <div class="bx-demo-tab is-selected" onclick="bxSelectTab(this)">
         <span>boxxy-terminal</span>
-        <span class="bx-demo-tab-close">×</span>
+        <span class="bx-demo-tab-close"><span class="bx-icon" style="--icon: url('/icons/cross-small.svg'); width: 13px; height: 13px;"></span></span>
       </div>
       <div class="bx-demo-tab" onclick="bxSelectTab(this)">
         <span>nvim · themes</span>
-        <span class="bx-demo-tab-close">×</span>
+        <span class="bx-demo-tab-close"><span class="bx-icon" style="--icon: url('/icons/cross-small.svg'); width: 13px; height: 13px;"></span></span>
       </div>
       <div class="bx-demo-tab" onclick="bxSelectTab(this)">
         <span>cargo test</span>
-        <span class="bx-demo-tab-close">×</span>
+        <span class="bx-demo-tab-close"><span class="bx-icon" style="--icon: url('/icons/cross-small.svg'); width: 13px; height: 13px;"></span></span>
       </div>
+      <button type="button" class="bx-demo-new-tab-btn" title="New Tab"><span class="bx-icon" style="--icon: url('/icons/plus.svg'); width: 14px; height: 14px;"></span></button>
     </div>
     <div class="bx-demo-header-side">
       <span class="bx-demo-detached-pill" title="Background Shells (.detached-shells-pill)">&gt;_ 1</span>
-      <button type="button" class="bx-demo-icon-btn" title="Menu (.image-button)">☰</button>
-      <button type="button" class="bx-demo-icon-btn" title="Close (windowcontrols > button)">✕</button>
+      <button type="button" class="bx-demo-icon-btn" title="Close (windowcontrols > button)"><span class="bx-icon" style="--icon: url('/icons/window-close.svg'); width: 14px; height: 14px;"></span></button>
     </div>
   </div>
 </div>
@@ -86,15 +86,15 @@ Unlike terminal tabs, the sidebar header switcher buttons (`viewswitcher > butto
   <div class="bx-demo-sidebar">
     <div class="bx-demo-viewswitcher">
       <div class="bx-demo-switcher-btn is-checked" onclick="bxSelectSibling(this, 'is-checked')">
-        <span>🦖</span>
+        <span class="bx-icon" style="--icon: url('/icons/boxxyclaw.svg')"></span>
         <span>Claw</span>
       </div>
       <div class="bx-demo-switcher-btn" onclick="bxSelectSibling(this, 'is-checked')">
-        <span>🔖</span>
+        <span class="bx-icon" style="--icon: url('/icons/bookmark.svg')"></span>
         <span>Bookmarks</span>
       </div>
       <div class="bx-demo-switcher-btn" onclick="bxSelectSibling(this, 'is-checked')">
-        <span>🎨</span>
+        <span class="bx-icon" style="--icon: url('/icons/appearance.svg')"></span>
         <span>Colors</span>
       </div>
     </div>
@@ -130,12 +130,12 @@ Raised buttons (`.suggested-action`, `.secondary-action`, `.destructive-action`)
     <button type="button" class="bx-demo-btn is-secondary">Okay (.secondary-action)</button>
     <button type="button" class="bx-demo-btn is-destructive">Reject (.destructive-action)</button>
     <button type="button" class="bx-demo-btn is-suggested is-pill">Read What's New (.pill)</button>
-    <button type="button" class="bx-demo-btn is-flat">⧉ Ask Another AI (button.flat)</button>
-    <span class="bx-demo-highlight-badge">✪ FRESH UPDATE</span>
+    <button type="button" class="bx-demo-btn is-flat"><span class="bx-icon" style="--icon: url('/icons/copy.svg'); width: 14px; height: 14px;"></span> Ask Another AI (button.flat)</button>
+    <span class="bx-demo-highlight-badge"><span class="bx-icon" style="--icon: url('/icons/fresh-update.svg'); width: 13px; height: 13px;"></span> FRESH UPDATE</span>
   </div>
   <div class="bx-demo-round-strip">
     <div class="bx-demo-round-top">
-      <span style="font-weight:700;font-size:0.86rem">🔔 Boxing</span>
+      <span style="font-weight:700;font-size:0.86rem;display:inline-flex;align-items:center;gap:6px;"><span class="bx-icon" style="--icon: url('/icons/bell.svg'); width: 14px; height: 14px;"></span> Boxing</span>
       <span class="bx-demo-lap-pill">● LAP 2/6</span>
     </div>
     <div class="bx-demo-round-top">
@@ -168,18 +168,15 @@ The terminal context menu (`popover.terminal-menu > contents`) uses `@popover_bg
     </div>
     <div class="bx-demo-modelbutton">Paste</div>
     <div class="bx-demo-modelbutton">Select All</div>
-    <div class="bx-demo-linked-strip">
-      <button type="button" class="bx-demo-linked-btn" title="Split Vertical">⇹</button>
-      <button type="button" class="bx-demo-linked-btn" title="Split Horizontal">⇳</button>
-      <button type="button" class="bx-demo-linked-btn" title="Maximize Pane">⤢</button>
-      <button type="button" class="bx-demo-linked-btn" title="Close Pane">☒</button>
-    </div>
-    <div class="bx-demo-modelbutton is-hovered">New Tab</div>
-    <div class="bx-demo-modelbutton">New Window</div>
-    <div class="bx-demo-menu-sep"></div>
-    <div class="bx-demo-modelbutton">Open in Files</div>
     <div class="bx-demo-modelbutton">Reset</div>
-    <div class="bx-demo-menu-sep"></div>
+    <div class="bx-demo-linked-strip">
+      <button type="button" class="bx-demo-linked-btn" title="Split Vertical"><span class="bx-icon" style="--icon: url('/icons/split-vertical.svg')"></span></button>
+      <button type="button" class="bx-demo-linked-btn" title="Split Horizontal"><span class="bx-icon" style="--icon: url('/icons/split-horizontal.svg')"></span></button>
+      <button type="button" class="bx-demo-linked-btn" title="Maximize Pane"><span class="bx-icon" style="--icon: url('/icons/split-maximize.svg')"></span></button>
+      <button type="button" class="bx-demo-linked-btn" title="Close Pane"><span class="bx-icon" style="--icon: url('/icons/split-close.svg')"></span></button>
+    </div>
+    <div class="bx-demo-modelbutton">Open in Files</div>
+    <div class="bx-demo-modelbutton is-hovered">Command Palette</div>
     <div class="bx-demo-modelbutton">Preferences</div>
   </div>
 </div>
@@ -359,7 +356,7 @@ Boxxy styles application chrome using four prioritized GTK 4 CssProvider layers 
 | <span class="bx-var-name">card_fg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span> | Text and icon foreground on `card_bg`. |
 | <span class="bx-var-name">headerbar_bg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#1d1d20"></span>#1d1d20</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span> | Main content headerbar, dialog headerbars, and non-frosted terminal headerbar. |
 | <span class="bx-var-name">headerbar_fg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span> | Text and icon foreground on `headerbar_bg`. |
-| <span class="bx-var-name">popover_bg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#2e2e32"></span>#2e2e32</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span> | Matches `sidebar_bg`. Used by the terminal right-click menu, hamburger menu, command palette, and autocomplete popover. |
+| <span class="bx-var-name">popover_bg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#2e2e32"></span>#2e2e32</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#ffffff"></span>#ffffff</span> | Matches `sidebar_bg`. Used by the terminal right-click menu, command palette, and autocomplete popover. |
 | <span class="bx-var-name">popover_fg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#f2f4f2"></span>#f2f4f2</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#111418"></span>#111418</span> | Text and icon foreground on `popover_bg`. |
 | <span class="bx-var-name">accent</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#7ec868"></span>#7ec868</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#00acc1"></span>#00acc1</span> | **Primary interaction:** Selected tabs, active sidebar rows, active switcher buttons, `.suggested-action` buttons, checked switches, focus rings, and `@boxxy_surface_hover`. |
 | <span class="bx-var-name">accent_fg</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#0d140a"></span>#0d140a</span> | <span class="bx-color-chip"><span class="bx-color-chip-box" style="background:#0d1117"></span>#0d1117</span> | High-contrast ink text and icons rendered on top of `accent` surfaces. |
@@ -386,7 +383,7 @@ Components never hardcode hex or RGB values for surfaces, borders, or semantic s
 | <span class="bx-var-name">@headerbar_fg_color</span> | <span class="bx-source-name">colors.headerbar_fg</span> | Titles, buttons, and icons inside `.terminal-header`, `.content-header`, and dialog headerbars. |
 | <span class="bx-var-name">@card_bg_color</span> | <span class="bx-source-name">colors.card_bg</span> | Unselected terminal tabs, standard tactile buttons, preference boxed-list groups, search & text entries, Claw message bar (`.boxxy-msgbar`), diagnosis/diff viewer cards, character selector pills, status pills, and linked button strips inside menus (`popover.menu box.linked`). |
 | <span class="bx-var-name">@card_fg_color</span> | <span class="bx-source-name">colors.card_fg</span> | Text, labels, and icons inside all `@card_bg_color` widgets above. |
-| <span class="bx-var-name">@popover_bg_color</span> | <span class="bx-source-name">colors.popover_bg</span> | Terminal right-click menu (`popover.terminal-menu`), hamburger menu (`popover.menu`), command palette, search popover, and `@file` autocomplete popover. |
+| <span class="bx-var-name">@popover_bg_color</span> | <span class="bx-source-name">colors.popover_bg</span> | Terminal right-click menu (`popover.terminal-menu`), dropdown menus (`popover.menu`), command palette, search popover, and `@file` autocomplete popover. |
 | <span class="bx-var-name">@popover_fg_color</span> | <span class="bx-source-name">colors.popover_fg</span> | Menu items (`modelbutton`) and labels inside all popovers. |
 | <span class="bx-var-name">@accent_bg_color</span> | <span class="bx-source-name">colors.accent</span> | Selected terminal tab, selected sidebar row, active sidebar switcher button, pressed tactile buttons, `.suggested-action` buttons, hovered popover menu items, checked switches &amp; checkboxes, completed interval lap dots, and selected character pills. |
 | <span class="bx-var-name">@accent_fg_color</span> | <span class="bx-source-name">colors.accent_fg</span> | High-contrast text and icons inside all `@accent_bg_color` and `@boxxy_surface_hover` surfaces. |

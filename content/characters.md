@@ -22,33 +22,39 @@ At the top of =Preferences= → =Characters=, you can customize your own identit
 
 Boxxy ships with three bundled characters:
 
-<div style="display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 1.5rem 0;">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
 
-<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #8035D4; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
-  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/niko-una/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #8035D4;" alt="Niko Una">
-  <div>
-    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Niko Una</div>
-    <div style="color: #8035D4; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Tsundere Maid of the Linux Desktop</div>
+<div style="background: #1e1e2e; border: 2px solid #8035D4; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+  <img src="/characters/niko-una/portrait.webp" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 2px solid #8035D4; margin: 0;" alt="Niko Una">
+  <div style="padding: 1rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.45rem;">
+    <div>
+      <div style="font-weight: 700; font-size: 1.08rem; color: #cdd6f4;">Niko Una</div>
+      <div style="color: #b48ef0; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Tsundere Maid of the Linux Desktop</div>
+    </div>
+    <p style="color: #a6adc8; font-size: 0.86rem; line-height: 1.5; margin: 0;">Technically sharp but flustered by praise. Will absolutely help you — just don't expect a thank-you.</p>
   </div>
-  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">Technically sharp but flustered by praise. Will absolutely help you — just don't expect a thank-you.</p>
 </div>
 
-<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #204A87; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
-  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/levi-kujo/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #204A87;" alt="Levi Kujo">
-  <div>
-    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Levi Kujo</div>
-    <div style="color: #204A87; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Full-Metal Kernel Alchemist</div>
+<div style="background: #1e1e2e; border: 2px solid #204A87; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+  <img src="/characters/levi-kujo/portrait.webp" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 2px solid #204A87; margin: 0;" alt="Levi Kujo">
+  <div style="padding: 1rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.45rem;">
+    <div>
+      <div style="font-weight: 700; font-size: 1.08rem; color: #cdd6f4;">Levi Kujo</div>
+      <div style="color: #6ea4e8; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Full-Metal Kernel Alchemist</div>
+    </div>
+    <p style="color: #a6adc8; font-size: 0.86rem; line-height: 1.5; margin: 0;">No-nonsense and brutally direct. Values demonstrated expertise and has zero patience for cargo-cult practices.</p>
   </div>
-  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">No-nonsense and brutally direct. Values demonstrated expertise and has zero patience for cargo-cult practices.</p>
 </div>
 
-<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #B31825; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
-  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/kuro/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #B31825;" alt="Kuro">
-  <div>
-    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Kuro</div>
-    <div style="color: #B31825; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Demonic Arch User, btw</div>
+<div style="background: #1e1e2e; border: 2px solid #B31825; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+  <img src="/characters/kuro/portrait.webp" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 2px solid #B31825; margin: 0;" alt="Kuro">
+  <div style="padding: 1rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.45rem;">
+    <div>
+      <div style="font-weight: 700; font-size: 1.08rem; color: #cdd6f4;">Kuro</div>
+      <div style="color: #eb6f77; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Demonic Arch User, btw</div>
+    </div>
+    <p style="color: #a6adc8; font-size: 0.86rem; line-height: 1.5; margin: 0;">Theatrical and sardonic. Celebrates every successful build as a minor dark victory, and will remind you to use the ArchWiki.</p>
   </div>
-  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">Theatrical and sardonic. Celebrates every successful build as a minor dark victory, and will remind you to use the ArchWiki.</p>
 </div>
 
 </div>
@@ -57,7 +63,8 @@ Boxxy ships with three bundled characters:
 
 ## Picking & Inviting Characters
 
-- **Pick on Any New Pane:** Press `Ctrl+/` on a fresh pane and click any character banner card to start chatting with them (or give individual characters their own model in =Models Selection=).
+- **Pick on Any New Pane:** Press `Ctrl+/` on a fresh pane and click any character banner card to start chatting with them.
+- **Give Each Character Their Own Model:** Every character can use a different AI model in =Models Selection= — so you can build a specialized crew! For example, give one character a top coding model for deep refactors, another a fast, low-cost model for quick Linux fixes, notes, or summarizing emails, a local Ollama model for offline tasks, or an image-capable model for generating artwork.
 - **Invite Teammates Mid-Chat:** Mention `:levi` (or run `/debate :kuro <topic>`) to bring a second character right into the same conversation!
 - **Private Off-the-Record Chat:** Run `/incognito` on a new pane to chat without saving history, memories, or system context.
 

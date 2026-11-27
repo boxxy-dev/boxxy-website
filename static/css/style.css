@@ -1471,6 +1471,23 @@ pre:hover .pre-copy-btn,
     color: var(--window-fg) !important;
 }
 
+/* Symbolic GTK/IDK SVG icons tinted dynamically via currentColor */
+.bx-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask-image: var(--icon);
+    mask-image: var(--icon);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
 /* ==========================================================================
    RELEASES & STATUS BOXES
    ========================================================================== */

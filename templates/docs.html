@@ -2,7 +2,7 @@
 
 {% block content %}
 {% set path = current_path | default(value="/") %}
-{% if path in ["/features/", "/mcp/", "/skills/", "/characters/", "/use-cases/"] %}
+{% if path in ["/terminal/", "/keybindings/", "/reminders/", "/bookmarks/", "/run-in-background/", "/mcp/", "/skills/", "/characters/"] %}
     {% set cat_label = "What Boxxy Can Do" %}
 {% elif path in ["/releases/", "/live/"] %}
     {% set cat_label = "Community" %}

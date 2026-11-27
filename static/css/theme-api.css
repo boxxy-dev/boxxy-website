@@ -281,8 +281,34 @@
     align-items: center;
     gap: 6px;
     flex: 1;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
+}
+
+.bx-demo-new-tab-btn {
+    background: transparent;
+    color: var(--headerbar-fg);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 1rem;
+    opacity: 0.85;
+    transition: background-color 120ms ease, opacity 120ms ease;
+    user-select: none;
+}
+
+.bx-demo-new-tab-btn:hover {
+    opacity: 1;
+    background-color: var(--card-bg);
+    color: var(--card-fg);
+    border-color: var(--boxxy-ink);
 }
 
 .bx-demo-tab {

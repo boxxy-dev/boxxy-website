@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}404 Not Found — {{ config.title }}{% endblock title %}
+
+{% block content %}
+<main class="bx-home" style="min-height: calc(100vh - 150px); display: flex; align-items: center; padding: 3rem 1.25rem;">
+    <div class="bx-container" style="max-width: 640px; width: 100%; margin: 0 auto;">
+        <section class="bx-card" style="padding: 2.25rem 2rem; text-align: center;">
+            <div class="boxxy-badge" style="margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                <span class="bx-green-text" aria-hidden="true">&gt;_</span>
+                <span>EXIT CODE 404 · NOT FOUND</span>
+            </div>
+
+            <h1 style="font-family: 'Lexend', sans-serif; font-size: clamp(3rem, 8vw, 4.75rem); font-weight: 800; line-height: 1; letter-spacing: -2px; margin: 0 0 0.75rem;">
+                404
+            </h1>
+
+            <p style="font-size: 1.05rem; opacity: 0.85; max-width: 44ch; margin: 0 auto 1.5rem; line-height: 1.6;">
+                This page couldn't be found — it may have moved, been renamed, or never existed in this workspace.
+            </p>
+
+            <div style="background: var(--window-bg, #1d1d20); border: 2px solid var(--boxxy-ink, #050505); border-radius: 10px; padding: 0.85rem 1rem; margin: 0 auto 1.75rem; max-width: 480px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6;">
+                <div><span class="bx-green-text">$</span> cd <span id="bx-404-path">/unknown</span></div>
+                <div style="opacity: 0.7;">boxxy: no such file or directory</div>
+            </div>
+
+            <div class="bx-hero-cta" style="justify-content: center; margin-bottom: 1.5rem;">
+                <a href="/" class="bx-pill-btn is-suggested">
+                    <span>Back to Home</span>
+                    <span aria-hidden="true">→</span>
+                </a>
+                <a href="/getting-started" class="bx-pill-btn">
+                    <span>Getting Started</span>
+                </a>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.65rem 1.25rem; font-size: 0.85rem; opacity: 0.8;">
+                <a href="/terminal">Terminal</a>
+                <a href="/keybindings">Keybindings</a>
+                <a href="/characters">Characters</a>
+                <a href="/skills">Skills</a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script>
+(function () {
+    var el = document.getElementById('bx-404-path');
+    if (el && window.location && window.location.pathname) {
+        el.textContent = window.location.pathname;
+    }
+})();
+</script>
+{% endblock content %}

@@ -51,11 +51,13 @@ Running a system upgrade, dev server, or long build and want to close your tab o
 - **One-Click & Split-Layout Restore:** When you come back, click the background shells badge in the header bar (or ask your character *"Restore my background shell"*) to reattach individual tabs — or hit **Restore All** to reconstruct your exact vertical and horizontal split-pane layout!
 - **Launch Detached Apps:** You can also ask your character to launch GUI apps, dev servers, or background scripts directly without blocking your active prompt.
 
+Learn more in [Run in Background](@/run-in-background.md).
+
 ---
 
 ## Reminders & Scheduled Tasks
 
-Your characters understand when you ask them to **remind you of something!** Ask *"Remind me to take my dog out in 10 minutes"* or *"Remind me to check the deployment in 30 minutes"*, and they will send you a rich desktop notification with their avatar right on time. You can also schedule deferred commands — Boxxy will pop up an approval card when the timer goes off.
+Your characters understand when you ask them to **remind you of something!** Ask *"Remind me to take my dog out in 10 minutes"* or *"Make 6 3-minute laps with a 1-minute break"*, and Boxxy tracks live countdowns in the sidebar and sends rich desktop notifications right on time. See [Reminders & Laps](@/reminders.md).
 
 **Works Even With Boxxy Closed:** If you close a tab or window that has an active character or pending timer and choose **Run in Background**, your character stays awake in the background daemon. Your reminders keep ticking and will still notify your desktop on schedule!
 
@@ -68,7 +70,7 @@ Open =Bookmarks= from the left sidebar or the =Command Palette= to create, searc
 - **Dynamic Template Variables:** Add placeholders using <code>&#123;&#123;&#123;my_var&#125;&#125;&#125;</code> syntax (or click the interactive variable bar in the editor). When you run the bookmark, Boxxy opens a clean in-terminal form prompting you for each value.
 - **AI Script Generation:** Describe what you want in plain English and let Boxxy write or refine the script for you.
 
-All your scripts are stored locally at `~/.config/boxxy-terminal/bookmarks`.
+All your scripts are stored locally at `~/.config/boxxy-terminal/bookmarks`. See [Bookmarks](@/bookmarks.md) for more.
 
 ---
 
