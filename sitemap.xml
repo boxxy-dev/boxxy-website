@@ -4,6 +4,9 @@
         <loc>https://boxxy.dev/</loc>
     </url>
     <url>
+        <loc>https://boxxy.dev/bookmarks/</loc>
+    </url>
+    <url>
         <loc>https://boxxy.dev/characters/</loc>
     </url>
     <url>
@@ -13,13 +16,13 @@
         <loc>https://boxxy.dev/development/</loc>
     </url>
     <url>
-        <loc>https://boxxy.dev/features/</loc>
-    </url>
-    <url>
         <loc>https://boxxy.dev/getting-started/</loc>
     </url>
     <url>
         <loc>https://boxxy.dev/how-it-works/</loc>
+    </url>
+    <url>
+        <loc>https://boxxy.dev/keybindings/</loc>
     </url>
     <url>
         <loc>https://boxxy.dev/live/</loc>
@@ -40,15 +43,21 @@
         <loc>https://boxxy.dev/releases/</loc>
     </url>
     <url>
+        <loc>https://boxxy.dev/reminders/</loc>
+    </url>
+    <url>
+        <loc>https://boxxy.dev/run-in-background/</loc>
+    </url>
+    <url>
         <loc>https://boxxy.dev/skills/</loc>
     </url>
     <url>
         <loc>https://boxxy.dev/telemetry/</loc>
     </url>
     <url>
-        <loc>https://boxxy.dev/theme-api/</loc>
+        <loc>https://boxxy.dev/terminal/</loc>
     </url>
     <url>
-        <loc>https://boxxy.dev/use-cases/</loc>
+        <loc>https://boxxy.dev/theme-api/</loc>
     </url>
 </urlset>

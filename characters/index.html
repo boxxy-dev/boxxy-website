@@ -88,11 +88,14 @@
     <div class="bx-sidebar-section">
         <p class="bx-sidebar-heading">What Boxxy Can Do</p>
         <nav class="bx-nav-list">
-            <a href="/features" class="bx-nav-row ">Features</a>
+            <a href="/terminal" class="bx-nav-row ">Terminal</a>
+            <a href="/keybindings" class="bx-nav-row ">Keybindings</a>
+            <a href="/reminders" class="bx-nav-row ">Reminders</a>
+            <a href="/bookmarks" class="bx-nav-row ">Bookmarks</a>
+            <a href="/run-in-background" class="bx-nav-row ">Run in Background</a>
             <a href="/mcp" class="bx-nav-row ">MCP</a>
             <a href="/skills" class="bx-nav-row ">Skills</a>
             <a href="/characters" class="bx-nav-row is-selected">Characters</a>
-            <a href="/use-cases" class="bx-nav-row ">Use Cases</a>
         </nav>
     </div>
 
@@ -134,36 +137,43 @@
 <hr />
 <h2 id="the-default-characters"><a class="zola-anchor" href="#the-default-characters" aria-label="Anchor link for: the-default-characters">🔗</a>The Default Characters</h2>
 <p>Boxxy ships with three bundled characters:</p>
-<div style="display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 1.5rem 0;">
-<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #8035D4; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
-  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/niko-una/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #8035D4;" alt="Niko Una">
-  <div>
-    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Niko Una</div>
-    <div style="color: #8035D4; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Tsundere Maid of the Linux Desktop</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+<div style="background: #1e1e2e; border: 2px solid #8035D4; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+  <img src="/characters/niko-una/portrait.webp" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 2px solid #8035D4; margin: 0;" alt="Niko Una">
+  <div style="padding: 1rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.45rem;">
+    <div>
+      <div style="font-weight: 700; font-size: 1.08rem; color: #cdd6f4;">Niko Una</div>
+      <div style="color: #b48ef0; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Tsundere Maid of the Linux Desktop</div>
+    </div>
+    <p style="color: #a6adc8; font-size: 0.86rem; line-height: 1.5; margin: 0;">Technically sharp but flustered by praise. Will absolutely help you — just don't expect a thank-you.</p>
   </div>
-  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">Technically sharp but flustered by praise. Will absolutely help you — just don't expect a thank-you.</p>
 </div>
-<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #204A87; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
-  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/levi-kujo/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #204A87;" alt="Levi Kujo">
-  <div>
-    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Levi Kujo</div>
-    <div style="color: #204A87; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Full-Metal Kernel Alchemist</div>
+<div style="background: #1e1e2e; border: 2px solid #204A87; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+  <img src="/characters/levi-kujo/portrait.webp" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 2px solid #204A87; margin: 0;" alt="Levi Kujo">
+  <div style="padding: 1rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.45rem;">
+    <div>
+      <div style="font-weight: 700; font-size: 1.08rem; color: #cdd6f4;">Levi Kujo</div>
+      <div style="color: #6ea4e8; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Full-Metal Kernel Alchemist</div>
+    </div>
+    <p style="color: #a6adc8; font-size: 0.86rem; line-height: 1.5; margin: 0;">No-nonsense and brutally direct. Values demonstrated expertise and has zero patience for cargo-cult practices.</p>
   </div>
-  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">No-nonsense and brutally direct. Values demonstrated expertise and has zero patience for cargo-cult practices.</p>
 </div>
-<div style="flex: 1; min-width: 200px; background: #1e1e2e; border: 2px solid #B31825; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.75rem;">
-  <img src="https://raw.githubusercontent.com/boxxy-dev/boxxy/main/resources/characters/kuro/AVATAR.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #B31825;" alt="Kuro">
-  <div>
-    <div style="font-weight: 700; font-size: 1.1rem; color: #cdd6f4;">Kuro</div>
-    <div style="color: #B31825; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Demonic Arch User, btw</div>
+<div style="background: #1e1e2e; border: 2px solid #B31825; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+  <img src="/characters/kuro/portrait.webp" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 2px solid #B31825; margin: 0;" alt="Kuro">
+  <div style="padding: 1rem 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.45rem;">
+    <div>
+      <div style="font-weight: 700; font-size: 1.08rem; color: #cdd6f4;">Kuro</div>
+      <div style="color: #eb6f77; font-size: 0.8rem; font-weight: 600; margin-top: 2px;">Demonic Arch User, btw</div>
+    </div>
+    <p style="color: #a6adc8; font-size: 0.86rem; line-height: 1.5; margin: 0;">Theatrical and sardonic. Celebrates every successful build as a minor dark victory, and will remind you to use the ArchWiki.</p>
   </div>
-  <p style="color: #a6adc8; font-size: 0.875rem; margin: 0;">Theatrical and sardonic. Celebrates every successful build as a minor dark victory, and will remind you to use the ArchWiki.</p>
 </div>
 </div>
 <hr />
 <h2 id="picking-inviting-characters"><a class="zola-anchor" href="#picking-inviting-characters" aria-label="Anchor link for: picking-inviting-characters">🔗</a>Picking &amp; Inviting Characters</h2>
 <ul>
-<li><strong>Pick on Any New Pane:</strong> Press <code>Ctrl+/</code> on a fresh pane and click any character banner card to start chatting with them (or give individual characters their own model in =Models Selection=).</li>
+<li><strong>Pick on Any New Pane:</strong> Press <code>Ctrl+/</code> on a fresh pane and click any character banner card to start chatting with them.</li>
+<li><strong>Give Each Character Their Own Model:</strong> Every character can use a different AI model in =Models Selection= — so you can build a specialized crew! For example, give one character a top coding model for deep refactors, another a fast, low-cost model for quick Linux fixes, notes, or summarizing emails, a local Ollama model for offline tasks, or an image-capable model for generating artwork.</li>
 <li><strong>Invite Teammates Mid-Chat:</strong> Mention <code>:levi</code> (or run <code>/debate :kuro &lt;topic&gt;</code>) to bring a second character right into the same conversation!</li>
 <li><strong>Private Off-the-Record Chat:</strong> Run <code>/incognito</code> on a new pane to chat without saving history, memories, or system context.</li>
 </ul>
@@ -231,6 +241,14 @@
             
         
             
+        
+            
+        
+            
+        
+            
+        
+            
                 
                 
                 <div class="bx-pager-col">
@@ -243,14 +261,12 @@
                 </div>
                 <div class="bx-pager-col is-right">
                     
-                        <a href="&#x2F;use-cases&#x2F;" class="bx-pager-btn is-next">
+                        <a href="&#x2F;releases&#x2F;" class="bx-pager-btn is-next">
                             <span class="bx-pager-dir">Next →</span>
-                            <span class="bx-pager-title">Use Cases</span>
+                            <span class="bx-pager-title">Releases</span>
                         </a>
                     
                 </div>
-            
-        
             
         
             

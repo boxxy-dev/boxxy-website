@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal — Boxxy Terminal</title>
+    <meta name="description" content="A powerful CLI tool to simplify your development workflow">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
+    <link rel="stylesheet" href="/css/style.css">
+    
+</head>
+<body>
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
+    <header class="bx-headerbar">
+        <div class="bx-headerbar-inner">
+            <div class="bx-header-left">
+                <a class="bx-brand-btn" href="/">
+                    <span class="bx-brand-prompt" aria-hidden="true">&gt;_</span>
+                    <span>Boxxy Terminal</span>
+                </a>
+            </div>
+
+            <nav class="bx-tabbar" id="site-menu" aria-label="Main navigation">
+                <a href="/" class="bx-nav-tab ">Home</a>
+                <a href="/getting-started" class="bx-nav-tab is-selected">Docs</a>
+                <a href="/theme-api" class="bx-nav-tab ">Theme API</a>
+                <a href="/news" class="bx-nav-tab ">News</a>
+            </nav>
+
+            <div class="bx-header-right">
+                <a class="bx-status-pill " href="/live" title="Live Community Telemetry">
+                    <span class="bx-live-dot" aria-hidden="true"></span>
+                    <span>Live</span>
+                </a>
+                <a class="bx-tactile-btn bx-star-btn" href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Star</span>
+                    <span class="bx-star-count" id="github-stars">···</span>
+                </a>
+                <button type="button" class="bx-tactile-btn bx-mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    
+
+
+    
+
+
+<div class="bx-docs-shell">
+    
+<div class="bx-docs-mobile-bar">
+    <button type="button" class="bx-tactile-btn bx-docs-mobile-toggle" id="docs-mobile-toggle" aria-expanded="false">
+        <span><strong class="bx-green-text">&gt;_</strong> Documentation Menu</span>
+        <span>▾</span>
+    </button>
+</div>
+
+<aside class="bx-docs-sidebar" id="docs-side" aria-label="Documentation navigation">
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">Getting Started</p>
+        <nav class="bx-nav-list">
+            <a href="/getting-started" class="bx-nav-row ">Getting Started</a>
+            <a href="/how-it-works" class="bx-nav-row ">How It Works</a>
+            <a href="/development" class="bx-nav-row ">Development</a>
+            <a href="/theme-api" class="bx-nav-row ">Boxxy Theme API</a>
+            <a href="/desktop-integrations" class="bx-nav-row ">Desktop Integrations</a>
+            <a href="/providers" class="bx-nav-row ">Providers</a>
+            <a href="/telemetry" class="bx-nav-row ">Telemetry</a>
+        </nav>
+    </div>
+
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">What Boxxy Can Do</p>
+        <nav class="bx-nav-list">
+            <a href="/terminal" class="bx-nav-row is-selected">Terminal</a>
+            <a href="/keybindings" class="bx-nav-row ">Keybindings</a>
+            <a href="/reminders" class="bx-nav-row ">Reminders</a>
+            <a href="/bookmarks" class="bx-nav-row ">Bookmarks</a>
+            <a href="/run-in-background" class="bx-nav-row ">Run in Background</a>
+            <a href="/mcp" class="bx-nav-row ">MCP</a>
+            <a href="/skills" class="bx-nav-row ">Skills</a>
+            <a href="/characters" class="bx-nav-row ">Characters</a>
+        </nav>
+    </div>
+
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">Community</p>
+        <nav class="bx-nav-list">
+            <a href="/releases" class="bx-nav-row ">Releases</a>
+            <a href="/live" class="bx-nav-row ">
+                <span>Dashboard</span>
+                <span class="bx-mini-badge is-highlight">LIVE</span>
+            </a>
+        </nav>
+    </div>
+</aside>
+
+
+    <article class="bx-docs-article content-area">
+        <div class="bx-crumb">
+            <span>Docs</span>
+            <span class="bx-crumb-sep">/</span>
+            <span>What Boxxy Can Do</span>
+            
+                <span class="bx-crumb-sep">/</span>
+                <span class="bx-crumb-current">Terminal</span>
+            
+        </div>
+
+        
+            <h1 id="terminal"><a class="zola-anchor" href="#terminal" aria-label="Anchor link for: terminal">🔗</a>Terminal</h1>
+<p>Boxxy is, first and foremost, a fast Linux terminal built in Rust for <strong>GTK 4.24+</strong>. Even if you never turn on the AI features, you get a crisp, responsive terminal designed for everyday speed and clean desktop integration.</p>
+<hr />
+<h2 id="fast-rust-engine-boxxy-vte"><a class="zola-anchor" href="#fast-rust-engine-boxxy-vte" aria-label="Anchor link for: fast-rust-engine-boxxy-vte">🔗</a>Fast Rust Engine (<code>boxxy-vte</code>)</h2>
+<p>At the core of Boxxy is a custom, 100% Rust terminal engine built for smooth rendering and modern shell features:</p>
+<ul>
+<li><strong>GPU-Accelerated Rendering:</strong> Uses GTK4's scene graph with optional native Wayland frosted-glass blur for crisp text and silky scrolling.</li>
+<li><strong>Kitty Graphics &amp; Built-In Image Viewer:</strong> Render images directly in the terminal grid, or inspect high-res images in Boxxy's built-in multi-tab <strong>Image Viewer</strong> with fast thumbnail decoding, pan/zoom, and clipboard copy.</li>
+<li><strong>Smart Shell Integration:</strong> Full support for <strong>OSC 133</strong> prompt markers, <strong>OSC 7</strong> directory tracking, <strong>OSC 8</strong> clickable hyperlinks (with media previews on hover), and <strong>OSC 9;4</strong> progress bars (from Cargo, Flatpak, and more) rendered natively in the UI.</li>
+<li><strong>Reflow, Search &amp; Wayland Clipboard:</strong> Smooth text reflow on window resize, fast Unicode-aware regex search, full-scrollback selection with edge autoscrolling, and reliable Wayland clipboard persistence.</li>
+</ul>
+<hr />
+<h2 id="panes-tabs-background-shells"><a class="zola-anchor" href="#panes-tabs-background-shells" aria-label="Anchor link for: panes-tabs-background-shells">🔗</a>Panes, Tabs &amp; Background Shells</h2>
+<ul>
+<li><strong>Splits &amp; Drag-and-Drop Panes:</strong> Split your terminal vertically or horizontally as much as you like, swap panes with shortcuts, or grab the subtle top handle to drag and drop a pane into any split zone — even across tabs.</li>
+<li><strong>Smart Tab Naming:</strong> Tabs automatically stay readable by showing what matters most — remote host and directory (<code>host · dir</code>), active commands like <code>vim</code>, or smart folder disambiguation (<code>src · parent</code>) — with the full path on hover.</li>
+<li><strong>Inactive Pane Dimming:</strong> Subtly dims unfocused splits so your active cursor always stands out.</li>
+<li><strong>Run in Background:</strong> Close a tab or quit Boxxy without killing builds, servers, or system upgrades, and restore your entire split layout whenever you come back. <a href="https://boxxy.dev/run-in-background/">Learn how Run in Background works →</a></li>
+</ul>
+<hr />
+<h2 id="themes-appearance"><a class="zola-anchor" href="#themes-appearance" aria-label="Anchor link for: themes-appearance">🔗</a>Themes &amp; Appearance</h2>
+<ul>
+<li><strong>Boxxy Themes:</strong> Switch between official =Boxxy Dark= and =Boxxy Light=, pick a custom <strong>Accent Color</strong>, load hot-reloaded community <code>.toml</code> themes, or follow your system's Adwaita style. See the <a href="https://boxxy.dev/theme-api/">Boxxy Theme API</a>.</li>
+<li><strong>Terminal Palettes &amp; Glass:</strong> Choose from community iTerm2 terminal color schemes, adjust window opacity with frosted-glass blur, or set tab-wide background images.</li>
+</ul>
+<hr />
+<h2 id="bookmarks-shortcuts-cli"><a class="zola-anchor" href="#bookmarks-shortcuts-cli" aria-label="Anchor link for: bookmarks-shortcuts-cli">🔗</a>Bookmarks, Shortcuts &amp; CLI</h2>
+<ul>
+<li><strong>Interactive Bookmarks:</strong> Save reusable =Bash= and =Python= scripts with <code>{{{variable}}}</code> placeholders and run them through a quick in-terminal form. <a href="https://boxxy.dev/bookmarks/">Learn how Bookmarks work →</a></li>
+<li><strong>Command Palette &amp; Custom Shortcuts:</strong> Press <code>Ctrl+Shift+P</code> to jump to any action, or click-to-record your own keybindings (and Smart Shortcuts) in =Preferences= → =Shortcuts=. <a href="https://boxxy.dev/keybindings/">See all default Keybindings →</a></li>
+<li><strong>Modern CLI:</strong> Open tabs, directories, or commands from anywhere (<code>-t</code>, <code>-d</code>, <code>-e</code>, <code>--hold</code>), or run headless utilities like <code>boxxy-terminal +doctor</code>, <code>+env</code>, and <code>+agent status</code>.</li>
+<li><strong>Desktop Integration:</strong> Right-click any folder in <strong>GNOME Files (Nautilus)</strong> to <strong>Open With Boxxy</strong>, and keep an eye on background shells from your panel with the <a href="https://boxxy.dev/desktop-integrations/">GNOME Shell &amp; COSMIC companions</a>.</li>
+</ul>
+
+        
+
+        
+
+
+
+<div class="bx-article-footer">
+    <div class="bx-pager">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                
+                <div class="bx-pager-col">
+                    
+                        <a href="&#x2F;telemetry&#x2F;" class="bx-pager-btn">
+                            <span class="bx-pager-dir">← Previous</span>
+                            <span class="bx-pager-title">Telemetry</span>
+                        </a>
+                    
+                </div>
+                <div class="bx-pager-col is-right">
+                    
+                        <a href="&#x2F;keybindings&#x2F;" class="bx-pager-btn is-next">
+                            <span class="bx-pager-dir">Next →</span>
+                            <span class="bx-pager-title">Keybindings</span>
+                        </a>
+                    
+                </div>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+
+    
+    <div class="bx-edit-row">
+        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/terminal.md" target="_blank" rel="noopener" class="bx-flat-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span>Improve this page on GitHub</span>
+        </a>
+    </div>
+    
+</div>
+
+    </article>
+
+    
+    
+        
+    
+
+    
+    <nav class="bx-docs-toc" aria-label="On this page">
+        <p class="bx-toc-heading">On this page</p>
+        <ul class="bx-toc-list">
+            
+                <li>
+                    <a href="#fast-rust-engine-boxxy-vte" data-toc-link="fast-rust-engine-boxxy-vte" class="is-active">Fast Rust Engine (boxxy-vte)</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#panes-tabs-background-shells" data-toc-link="panes-tabs-background-shells" class="">Panes, Tabs &amp; Background Shells</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#themes-appearance" data-toc-link="themes-appearance" class="">Themes &amp; Appearance</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#bookmarks-shortcuts-cli" data-toc-link="bookmarks-shortcuts-cli" class="">Bookmarks, Shortcuts &amp; CLI</a>
+                    
+                </li>
+            
+        </ul>
+    </nav>
+    
+
+
+</div>
+
+
+    <footer class="bx-footer">
+        <div class="bx-footer-inner">
+            <div class="bx-footer-left">
+                <span class="bx-footer-prompt">&gt;_</span>
+                <span>Boxxy Terminal · Built with Rust &amp; GTK4 for Linux</span>
+            </div>
+            <div class="bx-footer-links">
+                <a href="/getting-started">Docs</a>
+                <a href="/theme-api">Theme API</a>
+                <a href="/news">News</a>
+                <a href="/releases">Releases</a>
+                <a href="/live">Telemetry</a>
+                <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

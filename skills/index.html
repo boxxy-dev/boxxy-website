@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Skills — Boxxy Terminal</title>
+    <title>Skills — Boxxy Terminal</title>
     <meta name="description" content="A powerful CLI tool to simplify your development workflow">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,11 +88,14 @@
     <div class="bx-sidebar-section">
         <p class="bx-sidebar-heading">What Boxxy Can Do</p>
         <nav class="bx-nav-list">
-            <a href="/features" class="bx-nav-row ">Features</a>
+            <a href="/terminal" class="bx-nav-row ">Terminal</a>
+            <a href="/keybindings" class="bx-nav-row ">Keybindings</a>
+            <a href="/reminders" class="bx-nav-row ">Reminders</a>
+            <a href="/bookmarks" class="bx-nav-row ">Bookmarks</a>
+            <a href="/run-in-background" class="bx-nav-row ">Run in Background</a>
             <a href="/mcp" class="bx-nav-row ">MCP</a>
             <a href="/skills" class="bx-nav-row is-selected">Skills</a>
             <a href="/characters" class="bx-nav-row ">Characters</a>
-            <a href="/use-cases" class="bx-nav-row ">Use Cases</a>
         </nav>
     </div>
 
@@ -116,53 +119,67 @@
             <span>What Boxxy Can Do</span>
             
                 <span class="bx-crumb-sep">/</span>
-                <span class="bx-crumb-current">Character Skills</span>
+                <span class="bx-crumb-current">Skills</span>
             
         </div>
 
         
-            <h1 id="agentic-skills-automations"><a class="zola-anchor" href="#agentic-skills-automations" aria-label="Anchor link for: agentic-skills-automations">🔗</a>Agentic Skills &amp; Automations</h1>
-<p>Boxxy uses the <a rel="external" href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">standard Agentic Skill System</a>, allowing characters to "level up" their expertise on demand. Instead of overwhelming the character with every possible instruction at once, Boxxy lets characters discover, load, and execute specialized domain knowledge and custom scripts only when they need them.</p>
-<p>This treats characters not just as chatbots, but as autonomous systems capable of executing pre-defined workflows, utilizing local scripts, and strictly following domain-specific rules.</p>
+            <h1 id="skills"><a class="zola-anchor" href="#skills" aria-label="Anchor link for: skills">🔗</a>Skills</h1>
+<p>Skills are reusable playbooks that teach your =BoxxyClaw= characters how to handle specific workflows — without stuffing every conversation with instructions they don't need.</p>
+<p>Instead of repeating the same rules over and over, drop a Markdown playbook into your skills folder and let Boxxy load it automatically whenever it's relevant.</p>
 <hr />
-<h2 id="what-are-skills"><a class="zola-anchor" href="#what-are-skills" aria-label="Anchor link for: what-are-skills">🔗</a>What are Skills?</h2>
-<p>Skills are specialized instruction sets, workflow definitions, and tool configurations that target specific domains. Examples include:</p>
-<ul>
-<li><code>linux-system</code>: Advanced OS insights, log analysis, and preference management.</li>
-<li><code>linux-cleaner</code>: Safe execution of system-wide cleanup tasks (e.g., clearing package caches, orphaned dependencies, and stale logs).</li>
-<li><code>docker-admin</code>: Specialized commands for managing containers, images, and networks safely.</li>
-<li><code>network-analyzer</code>: Instructions for diagnosing connection issues, checking open ports, and managing firewall rules.</li>
-</ul>
-<hr />
-<h2 id="how-activation-works"><a class="zola-anchor" href="#how-activation-works" aria-label="Anchor link for: how-activation-works">🔗</a>How Activation Works</h2>
-<p>Activation is entirely <strong>automatic</strong>. You don't need to manually tell your character which skill to use.</p>
-<ol>
-<li><strong>Discovery:</strong> When you send a prompt, the character evaluates its "Available Skills" list against your request.</li>
-<li><strong>Activation:</strong> If it identifies a relevant skill (e.g., you ask to "deploy the app"), it uses the <code>activate_skill</code> tool.</li>
-<li><strong>Instruction Loading:</strong> Boxxy instantly injects the full, detailed instructions, required scripts, and constraints for that skill into the character's active context.</li>
-<li><strong>Autonomous Execution:</strong> The character then follows those expert-level guidelines—executing any necessary shell commands, reading files, or invoking other tools—to complete the task autonomously and accurately.</li>
-</ol>
-<hr />
-<h2 id="viewing-available-skills"><a class="zola-anchor" href="#viewing-available-skills" aria-label="Anchor link for: viewing-available-skills">🔗</a>Viewing Available Skills</h2>
-<p>You can see which skills your character can currently activate — just ask them directly:</p>
+<h2 id="built-in-skills"><a class="zola-anchor" href="#built-in-skills" aria-label="Anchor link for: built-in-skills">🔗</a>Built-in Skills</h2>
+<p>Boxxy ships with <strong>three official skills</strong> ready to use. They are <strong>turned off by default</strong> so they never clutter everyday coding turns — enable any of them anytime in =Preferences= (<code>Ctrl+,</code>) → =Skills=.</p>
+<h3 id="boxxy-theme-creator"><a class="zola-anchor" href="#boxxy-theme-creator" aria-label="Anchor link for: boxxy-theme-creator">🔗</a>Boxxy Theme Creator</h3>
+<p>Design a custom look for Boxxy just by describing a vibe or palette. Your character writes a ready-to-use <code>.toml</code> theme straight into your themes folder so you can pick it immediately in =Preferences= → =Themes=.</p>
 <blockquote>
-<p><strong>Example Prompt:</strong> "Which specialized skills can you activate for this task?"</p>
+<p><strong>Try asking:</strong> <em>"Create a Boxxy theme inspired by Studio Ghibli"</em></p>
+</blockquote>
+<h3 id="boxxy-character-creator"><a class="zola-anchor" href="#boxxy-character-creator" aria-label="Anchor link for: boxxy-character-creator">🔗</a>Boxxy Character Creator</h3>
+<p>Build a brand-new AI companion from scratch. Your character walks you through a quick 4-question interview, generates (or crops your own) <code>16:9</code> portrait and <code>1:1</code> avatar artwork, and packages a complete character ready to use in your drawer.</p>
+<blockquote>
+<p><strong>Try asking:</strong> <em>"Let's create a new character"</em></p>
+</blockquote>
+<h3 id="boxxy-self-dev-bug-reporter"><a class="zola-anchor" href="#boxxy-self-dev-bug-reporter" aria-label="Anchor link for: boxxy-self-dev-bug-reporter">🔗</a>Boxxy Self-Dev &amp; Bug Reporter</h3>
+<p>Spot a bug in Boxxy or want to contribute a fix? Your character can shallow-clone Boxxy's source code to pinpoint the root cause and draft a clean GitHub issue — or even implement a fix, test it live in an isolated <code>--dev</code> window, and open a PR with your approval.</p>
+<blockquote>
+<p><strong>Try asking:</strong> <em>"Help me investigate and report a bug in Boxxy"</em></p>
 </blockquote>
 <hr />
-<h2 id="creating-custom-skills-power-users"><a class="zola-anchor" href="#creating-custom-skills-power-users" aria-label="Anchor link for: creating-custom-skills-power-users">🔗</a>Creating Custom Skills (Power Users)</h2>
-<p>Skills are defined as Markdown files with YAML frontmatter located in your configuration directory (<code>~/.config/boxxy-terminal/skills/</code>).</p>
-<p>A basic skill file looks like this:</p>
+<h2 id="how-skills-work"><a class="zola-anchor" href="#how-skills-work" aria-label="Anchor link for: how-skills-work">🔗</a>How Skills Work</h2>
+<ul>
+<li><strong>Automatic Matching:</strong> When you send a message, Boxxy matches it locally against your enabled skills (with zero extra LLM calls) and injects the right instructions right when they're needed.</li>
+<li><strong>Zero Overhead When Off:</strong> Skills toggled off in =Preferences= → =Skills= are skipped completely — zero tokens spent until you turn them on.</li>
+<li><strong>Hot Reload:</strong> Edit or add a skill file and Boxxy picks it up automatically, without restarting the terminal.</li>
+</ul>
+<hr />
+<h2 id="creating-your-own-skills"><a class="zola-anchor" href="#creating-your-own-skills" aria-label="Anchor link for: creating-your-own-skills">🔗</a>Creating Your Own Skills</h2>
+<p>You can add your own skills for anything you do repeatedly — deploying an app, cleaning up Docker, following team conventions, or running local scripts.</p>
+<p>Open =Preferences= → =Skills= and click <strong>Open Skills Folder</strong> (located at <code>~/.config/boxxy-terminal/boxxyclaw/skills/</code>), then create a folder with a <code>SKILL.md</code> file inside:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="plain"><span class="giallo-l"><span>~/.config/boxxy-terminal/boxxyclaw/skills/</span></span>
+<span class="giallo-l"><span>└── my-deploy/</span></span>
+<span class="giallo-l"><span>    └── SKILL.md</span></span></code></pre>
+<p><em>(A single flat <code>&lt;name&gt;.md</code> file works too if you don't need extra scripts alongside it.)</em></p>
+<p>Here's a minimal <code>SKILL.md</code>:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="markdown"><span class="giallo-l"><span style="color: #9399B2;">---</span></span>
-<span class="giallo-l"><span style="color: #89B4FA;">name</span><span style="color: #94E2D5;">:</span><span style="color: #A6E3A1;"> &quot;my-custom-skill&quot;</span></span>
-<span class="giallo-l"><span style="color: #89B4FA;">description</span><span style="color: #94E2D5;">:</span><span style="color: #A6E3A1;"> &quot;Expertise in my company&#39;s internal API and deployment&quot;</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;">name</span><span style="color: #94E2D5;">:</span><span style="color: #A6E3A1;"> &quot;My Deploy Workflow&quot;</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;">description</span><span style="color: #94E2D5;">:</span><span style="color: #A6E3A1;"> &quot;Safe staging and production deployments for our web app&quot;</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;">triggers</span><span style="color: #94E2D5;">:</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  -</span><span style="color: #A6E3A1;"> deploy</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  -</span><span style="color: #A6E3A1;"> release</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;">pinned</span><span style="color: #94E2D5;">:</span><span style="color: #FAB387;"> false</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">---</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #F38BA8;"># Instructions</span></span>
-<span class="giallo-l"><span>When the user asks about our internal API or asks to deploy, always ensure you:</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">1.</span><span> Check the </span><span style="color: #A6E3A1;">`X-Internal-Header`</span><span>.</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">2.</span><span> Reference the documentation at </span><span style="color: #A6E3A1;">`https://docs.internal.com`</span><span>.</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">3.</span><span> To deploy, run the script located at </span><span style="color: #A6E3A1;">`./scripts/deploy.sh`</span><span>.</span></span></code></pre><h3 id="hot-reloading"><a class="zola-anchor" href="#hot-reloading" aria-label="Anchor link for: hot-reloading">🔗</a>Hot Reloading</h3>
-<p>Once you save a new skill file, Boxxy's <strong>Hot Reload</strong> system detects the change instantly, making the skill available to all active characters without needing to restart the terminal. This allows for rapid iteration of your agentic workflows!</p>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>When the user asks to deploy:</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">1.</span><span> Run </span><span style="color: #A6E3A1;">`cargo test`</span><span> first and stop if anything fails.</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">2.</span><span> Check that </span><span style="color: #A6E3A1;">`git status`</span><span> is clean.</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">3.</span><span> Run </span><span style="color: #A6E3A1;">`./scripts/deploy.sh staging`</span><span> and summarize the output.</span></span></code></pre>
+<ul>
+<li><strong><code>triggers</code></strong> <em>(optional)</em> — Keywords or phrases that help Boxxy match the skill right away.</li>
+<li><strong><code>pinned</code></strong> <em>(optional)</em> — Set to <code>true</code> if you want this skill always active on every turn.</li>
+</ul>
 
         
 
@@ -172,6 +189,14 @@
 
 <div class="bx-article-footer">
     <div class="bx-pager">
+        
+            
+        
+            
+        
+            
+        
+            
         
             
         
@@ -216,8 +241,6 @@
         
             
         
-            
-        
     </div>
 
     
@@ -243,30 +266,33 @@
         <ul class="bx-toc-list">
             
                 <li>
-                    <a href="#what-are-skills" data-toc-link="what-are-skills" class="is-active">What are Skills?</a>
-                    
-                </li>
-            
-                <li>
-                    <a href="#how-activation-works" data-toc-link="how-activation-works" class="">How Activation Works</a>
-                    
-                </li>
-            
-                <li>
-                    <a href="#viewing-available-skills" data-toc-link="viewing-available-skills" class="">Viewing Available Skills</a>
-                    
-                </li>
-            
-                <li>
-                    <a href="#creating-custom-skills-power-users" data-toc-link="creating-custom-skills-power-users" class="">Creating Custom Skills (Power Users)</a>
+                    <a href="#built-in-skills" data-toc-link="built-in-skills" class="is-active">Built-in Skills</a>
                     
                         <ul class="bx-toc-sublist">
                             
                                 <li>
-                                    <a href="#hot-reloading" data-toc-link="hot-reloading">Hot Reloading</a>
+                                    <a href="#boxxy-theme-creator" data-toc-link="boxxy-theme-creator">Boxxy Theme Creator</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="#boxxy-character-creator" data-toc-link="boxxy-character-creator">Boxxy Character Creator</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="#boxxy-self-dev-bug-reporter" data-toc-link="boxxy-self-dev-bug-reporter">Boxxy Self-Dev &amp; Bug Reporter</a>
                                 </li>
                             
                         </ul>
+                    
+                </li>
+            
+                <li>
+                    <a href="#how-skills-work" data-toc-link="how-skills-work" class="">How Skills Work</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#creating-your-own-skills" data-toc-link="creating-your-own-skills" class="">Creating Your Own Skills</a>
                     
                 </li>
             

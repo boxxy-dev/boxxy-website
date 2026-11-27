@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keybindings — Boxxy Terminal</title>
+    <meta name="description" content="A powerful CLI tool to simplify your development workflow">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/dev.boxxy.BoxxyTerminal.png">
+    <link rel="stylesheet" href="/css/style.css">
+    
+</head>
+<body>
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Boxxy HeaderBar (`.content-header` + `AdwTabBar` geometry) -->
+    <header class="bx-headerbar">
+        <div class="bx-headerbar-inner">
+            <div class="bx-header-left">
+                <a class="bx-brand-btn" href="/">
+                    <span class="bx-brand-prompt" aria-hidden="true">&gt;_</span>
+                    <span>Boxxy Terminal</span>
+                </a>
+            </div>
+
+            <nav class="bx-tabbar" id="site-menu" aria-label="Main navigation">
+                <a href="/" class="bx-nav-tab ">Home</a>
+                <a href="/getting-started" class="bx-nav-tab is-selected">Docs</a>
+                <a href="/theme-api" class="bx-nav-tab ">Theme API</a>
+                <a href="/news" class="bx-nav-tab ">News</a>
+            </nav>
+
+            <div class="bx-header-right">
+                <a class="bx-status-pill " href="/live" title="Live Community Telemetry">
+                    <span class="bx-live-dot" aria-hidden="true"></span>
+                    <span>Live</span>
+                </a>
+                <a class="bx-tactile-btn bx-star-btn" href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Star</span>
+                    <span class="bx-star-count" id="github-stars">···</span>
+                </a>
+                <button type="button" class="bx-tactile-btn bx-mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    
+
+
+    
+
+
+<div class="bx-docs-shell">
+    
+<div class="bx-docs-mobile-bar">
+    <button type="button" class="bx-tactile-btn bx-docs-mobile-toggle" id="docs-mobile-toggle" aria-expanded="false">
+        <span><strong class="bx-green-text">&gt;_</strong> Documentation Menu</span>
+        <span>▾</span>
+    </button>
+</div>
+
+<aside class="bx-docs-sidebar" id="docs-side" aria-label="Documentation navigation">
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">Getting Started</p>
+        <nav class="bx-nav-list">
+            <a href="/getting-started" class="bx-nav-row ">Getting Started</a>
+            <a href="/how-it-works" class="bx-nav-row ">How It Works</a>
+            <a href="/development" class="bx-nav-row ">Development</a>
+            <a href="/theme-api" class="bx-nav-row ">Boxxy Theme API</a>
+            <a href="/desktop-integrations" class="bx-nav-row ">Desktop Integrations</a>
+            <a href="/providers" class="bx-nav-row ">Providers</a>
+            <a href="/telemetry" class="bx-nav-row ">Telemetry</a>
+        </nav>
+    </div>
+
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">What Boxxy Can Do</p>
+        <nav class="bx-nav-list">
+            <a href="/terminal" class="bx-nav-row ">Terminal</a>
+            <a href="/keybindings" class="bx-nav-row is-selected">Keybindings</a>
+            <a href="/reminders" class="bx-nav-row ">Reminders</a>
+            <a href="/bookmarks" class="bx-nav-row ">Bookmarks</a>
+            <a href="/run-in-background" class="bx-nav-row ">Run in Background</a>
+            <a href="/mcp" class="bx-nav-row ">MCP</a>
+            <a href="/skills" class="bx-nav-row ">Skills</a>
+            <a href="/characters" class="bx-nav-row ">Characters</a>
+        </nav>
+    </div>
+
+    <div class="bx-sidebar-section">
+        <p class="bx-sidebar-heading">Community</p>
+        <nav class="bx-nav-list">
+            <a href="/releases" class="bx-nav-row ">Releases</a>
+            <a href="/live" class="bx-nav-row ">
+                <span>Dashboard</span>
+                <span class="bx-mini-badge is-highlight">LIVE</span>
+            </a>
+        </nav>
+    </div>
+</aside>
+
+
+    <article class="bx-docs-article content-area">
+        <div class="bx-crumb">
+            <span>Docs</span>
+            <span class="bx-crumb-sep">/</span>
+            <span>What Boxxy Can Do</span>
+            
+                <span class="bx-crumb-sep">/</span>
+                <span class="bx-crumb-current">Keybindings</span>
+            
+        </div>
+
+        
+            <h1 id="keybindings"><a class="zola-anchor" href="#keybindings" aria-label="Anchor link for: keybindings">🔗</a>Keybindings</h1>
+<p>Boxxy comes with sensible defaults for tabs, splits, navigation, and =BoxxyClaw= — and every shortcut can be customized in =Preferences= (<code>Ctrl+,</code>) → =Shortcuts= or directly in <code>~/.config/boxxy-terminal/keybindings.toml</code>.</p>
+<p>You can also print your active keymap anytime from the CLI:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">boxxy-terminal</span><span style="color: #A6E3A1;"> +keybinds</span></span></code></pre>
+<hr />
+<h2 id="general"><a class="zola-anchor" href="#general" aria-label="Anchor link for: general">🔗</a>General</h2>
+<table><thead><tr><th style="text-align: left">Action</th><th style="text-align: left">Default Shortcut</th></tr></thead><tbody>
+<tr><td style="text-align: left">Command Palette</td><td style="text-align: left"><code>Ctrl+Shift+P</code></td></tr>
+<tr><td style="text-align: left">Ask Boxxy-Claw</td><td style="text-align: left"><code>Ctrl+/</code></td></tr>
+<tr><td style="text-align: left">Ask Side Question (<code>/btw</code>)</td><td style="text-align: left"><code>Ctrl+Shift+B</code></td></tr>
+<tr><td style="text-align: left">Toggle Claw Code &amp; Diff Blocks</td><td style="text-align: left"><code>Ctrl+Shift+D</code></td></tr>
+<tr><td style="text-align: left">Toggle Sidebar</td><td style="text-align: left"><code>Ctrl+Shift+J</code></td></tr>
+<tr><td style="text-align: left">New Window</td><td style="text-align: left"><code>Ctrl+Shift+N</code></td></tr>
+<tr><td style="text-align: left">Preferences</td><td style="text-align: left"><code>Ctrl+,</code></td></tr>
+</tbody></table>
+<hr />
+<h2 id="terminal"><a class="zola-anchor" href="#terminal" aria-label="Anchor link for: terminal">🔗</a>Terminal</h2>
+<table><thead><tr><th style="text-align: left">Action</th><th style="text-align: left">Default Shortcut</th></tr></thead><tbody>
+<tr><td style="text-align: left">Copy / Paste</td><td style="text-align: left"><code>Ctrl+Shift+C</code> / <code>Ctrl+Shift+V</code></td></tr>
+<tr><td style="text-align: left">Select All</td><td style="text-align: left"><code>Ctrl+Shift+A</code></td></tr>
+<tr><td style="text-align: left">Search Scrollback</td><td style="text-align: left"><code>Ctrl+Shift+F</code></td></tr>
+<tr><td style="text-align: left">Previous / Next Command Block</td><td style="text-align: left"><code>Ctrl+Shift+PageUp</code> / <code>Ctrl+Shift+PageDown</code></td></tr>
+<tr><td style="text-align: left">Open Scrollback in Editor</td><td style="text-align: left"><code>Ctrl+Alt+Shift+J</code></td></tr>
+<tr><td style="text-align: left">Zoom In / Out / Reset</td><td style="text-align: left"><code>Ctrl++</code> / <code>Ctrl+-</code> / <code>Ctrl+0</code></td></tr>
+</tbody></table>
+<hr />
+<h2 id="split-panes"><a class="zola-anchor" href="#split-panes" aria-label="Anchor link for: split-panes">🔗</a>Split Panes</h2>
+<table><thead><tr><th style="text-align: left">Action</th><th style="text-align: left">Default Shortcut</th></tr></thead><tbody>
+<tr><td style="text-align: left">Split Right / Split Down</td><td style="text-align: left"><code>Ctrl+Shift+O</code> / <code>Ctrl+Shift+E</code></td></tr>
+<tr><td style="text-align: left">Close Pane</td><td style="text-align: left"><code>Ctrl+Shift+W</code></td></tr>
+<tr><td style="text-align: left">Focus Pane</td><td style="text-align: left"><code>Ctrl+Alt+Arrows</code></td></tr>
+<tr><td style="text-align: left">Swap Pane</td><td style="text-align: left"><code>Ctrl+Shift+Arrows</code></td></tr>
+</tbody></table>
+<hr />
+<h2 id="tabs"><a class="zola-anchor" href="#tabs" aria-label="Anchor link for: tabs">🔗</a>Tabs</h2>
+<table><thead><tr><th style="text-align: left">Action</th><th style="text-align: left">Default Shortcut</th></tr></thead><tbody>
+<tr><td style="text-align: left">New Tab / Close Tab</td><td style="text-align: left"><code>Ctrl+Shift+T</code> / <code>Ctrl+Shift+Q</code></td></tr>
+<tr><td style="text-align: left">Next / Previous Tab</td><td style="text-align: left"><code>Ctrl+Tab</code> / <code>Ctrl+Shift+Tab</code> <em>(or <code>Ctrl+PageDown</code> / <code>PageUp</code>)</em></td></tr>
+<tr><td style="text-align: left">Jump to Tab 1–10</td><td style="text-align: left"><code>Alt+1</code> – <code>Alt+9</code>, <code>Alt+0</code></td></tr>
+</tbody></table>
+<hr />
+<h2 id="customizing-smart-shortcuts"><a class="zola-anchor" href="#customizing-smart-shortcuts" aria-label="Anchor link for: customizing-smart-shortcuts">🔗</a>Customizing &amp; Smart Shortcuts</h2>
+<ul>
+<li><strong>Click-to-Record UI:</strong> Open =Preferences= → =Shortcuts= to rebind any action, assign multiple chords, or revert individual rows in one click. Actions without a default shortcut (like <strong>Toggle Maximize Pane</strong>, <strong>Equalize Splits</strong>, <strong>Copy Last Command Output</strong>, <strong>Bookmarks</strong>, or <strong>Background Shells</strong>) can also be bound here.</li>
+<li><strong>Smart Shortcuts (<code>performable:</code>):</strong> Toggle <strong>Smart Shortcut</strong> on actions like Copy to make them context-aware — for example, binding <code>performable:Ctrl+C</code> copies when text is selected and sends a normal <code>^C</code> interrupt when nothing is selected.</li>
+<li><strong>Dotfile-Friendly Config:</strong> Only your customized bindings are written to <code>~/.config/boxxy-terminal/keybindings.toml</code>, so untouched shortcuts automatically stay up to date, and edits hot-reload when the window regains focus.</li>
+</ul>
+
+        
+
+        
+
+
+
+<div class="bx-article-footer">
+    <div class="bx-pager">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                
+                <div class="bx-pager-col">
+                    
+                        <a href="&#x2F;terminal&#x2F;" class="bx-pager-btn">
+                            <span class="bx-pager-dir">← Previous</span>
+                            <span class="bx-pager-title">Terminal</span>
+                        </a>
+                    
+                </div>
+                <div class="bx-pager-col is-right">
+                    
+                        <a href="&#x2F;reminders&#x2F;" class="bx-pager-btn is-next">
+                            <span class="bx-pager-dir">Next →</span>
+                            <span class="bx-pager-title">Reminders</span>
+                        </a>
+                    
+                </div>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+
+    
+    <div class="bx-edit-row">
+        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/keybindings.md" target="_blank" rel="noopener" class="bx-flat-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span>Improve this page on GitHub</span>
+        </a>
+    </div>
+    
+</div>
+
+    </article>
+
+    
+    
+        
+    
+
+    
+    <nav class="bx-docs-toc" aria-label="On this page">
+        <p class="bx-toc-heading">On this page</p>
+        <ul class="bx-toc-list">
+            
+                <li>
+                    <a href="#general" data-toc-link="general" class="is-active">General</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#terminal" data-toc-link="terminal" class="">Terminal</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#split-panes" data-toc-link="split-panes" class="">Split Panes</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#tabs" data-toc-link="tabs" class="">Tabs</a>
+                    
+                </li>
+            
+                <li>
+                    <a href="#customizing-smart-shortcuts" data-toc-link="customizing-smart-shortcuts" class="">Customizing &amp; Smart Shortcuts</a>
+                    
+                </li>
+            
+        </ul>
+    </nav>
+    
+
+
+</div>
+
+
+    <footer class="bx-footer">
+        <div class="bx-footer-inner">
+            <div class="bx-footer-left">
+                <span class="bx-footer-prompt">&gt;_</span>
+                <span>Boxxy Terminal · Built with Rust &amp; GTK4 for Linux</span>
+            </div>
+            <div class="bx-footer-links">
+                <a href="/getting-started">Docs</a>
+                <a href="/theme-api">Theme API</a>
+                <a href="/news">News</a>
+                <a href="/releases">Releases</a>
+                <a href="/live">Telemetry</a>
+                <a href="https://github.com/boxxy-dev/boxxy" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

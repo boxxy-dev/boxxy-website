@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Use Cases — Boxxy Terminal</title>
+    <title>Run in Background — Boxxy Terminal</title>
     <meta name="description" content="A powerful CLI tool to simplify your development workflow">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,11 +88,14 @@
     <div class="bx-sidebar-section">
         <p class="bx-sidebar-heading">What Boxxy Can Do</p>
         <nav class="bx-nav-list">
-            <a href="/features" class="bx-nav-row ">Features</a>
+            <a href="/terminal" class="bx-nav-row ">Terminal</a>
+            <a href="/keybindings" class="bx-nav-row ">Keybindings</a>
+            <a href="/reminders" class="bx-nav-row ">Reminders</a>
+            <a href="/bookmarks" class="bx-nav-row ">Bookmarks</a>
+            <a href="/run-in-background" class="bx-nav-row is-selected">Run in Background</a>
             <a href="/mcp" class="bx-nav-row ">MCP</a>
             <a href="/skills" class="bx-nav-row ">Skills</a>
             <a href="/characters" class="bx-nav-row ">Characters</a>
-            <a href="/use-cases" class="bx-nav-row is-selected">Use Cases</a>
         </nav>
     </div>
 
@@ -116,42 +119,39 @@
             <span>What Boxxy Can Do</span>
             
                 <span class="bx-crumb-sep">/</span>
-                <span class="bx-crumb-current">Use Cases</span>
+                <span class="bx-crumb-current">Run in Background</span>
             
         </div>
 
         
-            <h1 id="use-cases"><a class="zola-anchor" href="#use-cases" aria-label="Anchor link for: use-cases">🔗</a>Use Cases</h1>
-<p>Boxxy is built to handle everything from everyday reminders and background jobs to deep Linux system administration. Think of it as your ultimate Linux companion. Here are the most popular ways people use Boxxy every day:</p>
-<h3 id="1-debugging-fixing-your-linux-box"><a class="zola-anchor" href="#1-debugging-fixing-your-linux-box" aria-label="Anchor link for: 1-debugging-fixing-your-linux-box">🔗</a>1. Debugging &amp; Fixing Your Linux Box</h3>
+            <h1 id="run-in-background"><a class="zola-anchor" href="#run-in-background" aria-label="Anchor link for: run-in-background">🔗</a>Run in Background</h1>
+<p>Started a long <code>cargo build</code>, system upgrade, or local dev server and want to close your tab — or quit Boxxy altogether — without losing it? <strong>Run in Background</strong> keeps your shells alive after the window closes, and lets you pick up right where you left off.</p>
+<hr />
+<h2 id="how-to-use-it"><a class="zola-anchor" href="#how-to-use-it" aria-label="Anchor link for: how-to-use-it">🔗</a>How to Use It</h2>
 <ul>
-<li><strong>The Scenario:</strong> You try to run a system update or start a service, and it fails with conflicting packages, broken GPG keys, or a cryptic <code>systemd</code> error.</li>
-<li><strong>The Boxxy Way:</strong> Instead of hunting through forum threads, press <code>Control + /</code> (or click the <strong>Error Detected</strong> pill) and type "fix this." Boxxy reads the failure straight from your terminal buffer, checks your OS and package manager state, and proposes the exact commands to fix it — waiting for your click on <strong>Approve</strong>.</li>
+<li><strong>When Closing a Tab or Window:</strong> If a pane has a running process, an active =BoxxyClaw= character, or a pending reminder, Boxxy shows a quick 3-button prompt: <strong>Cancel</strong>, <strong>Terminate</strong>, or <strong>Run in Background</strong>.</li>
+<li><strong>Make It Automatic:</strong> Turn on =Always Keep Running Processes in Background= in =Preferences= → =Advanced= → =Shell=. Active shells and AI sessions will automatically detach whenever you close a tab or quit, while idle shells close cleanly without getting in your way.</li>
 </ul>
-<h3 id="2-sending-long-tasks-to-the-background"><a class="zola-anchor" href="#2-sending-long-tasks-to-the-background" aria-label="Anchor link for: 2-sending-long-tasks-to-the-background">🔗</a>2. Sending Long Tasks to the Background</h3>
+<hr />
+<h2 id="how-it-works"><a class="zola-anchor" href="#how-it-works" aria-label="Anchor link for: how-it-works">🔗</a>How It Works</h2>
+<p>Your terminal sessions don't actually live inside the Boxxy window — they're hosted by <code>boxxy-agent</code>, a lightweight background daemon running on your system.</p>
 <ul>
-<li><strong>The Scenario:</strong> You're compiling a huge Rust workspace, running a full distro upgrade, or hosting a local dev server, and you need to close your terminal window to declutter your desktop.</li>
-<li><strong>The Boxxy Way:</strong> Close the tab or window and click <strong>Run in Background</strong>. Boxxy's background daemon keeps your shell and AI character running safely. You can monitor or reattach it from the <strong>GNOME Shell</strong> or <strong>COSMIC</strong> top-panel companion, or reopen Boxxy later and click <strong>Restore All</strong> to get your exact split-pane layout and TUI screen back instantly.</li>
+<li><strong>Instant Detach:</strong> Choosing <strong>Run in Background</strong> simply disconnects the UI from your shell while <code>boxxy-agent</code> keeps the process running.</li>
+<li><strong>Full Screen &amp; Output Preserved:</strong> The daemon keeps a 4 MB output buffer per detached shell, so interactive TUI apps (<code>vim</code>, <code>htop</code>, builds, logs) come back intact with their scrollback and state.</li>
+<li><strong>AI Sessions &amp; Reminders Stay Awake:</strong> If that tab had an active character or scheduled timer, it stays alive in the daemon too — your reminders will still fire desktop notifications right on schedule, even with Boxxy closed.</li>
 </ul>
-<h3 id="3-persistent-reminders-scheduled-tasks"><a class="zola-anchor" href="#3-persistent-reminders-scheduled-tasks" aria-label="Anchor link for: 3-persistent-reminders-scheduled-tasks">🔗</a>3. Persistent Reminders &amp; Scheduled Tasks</h3>
+<hr />
+<h2 id="coming-back-to-your-work"><a class="zola-anchor" href="#coming-back-to-your-work" aria-label="Anchor link for: coming-back-to-your-work">🔗</a>Coming Back to Your Work</h2>
 <ul>
-<li><strong>The Scenario:</strong> You're deep in code and want to remember to check a deployment in 20 minutes, take a break in an hour, or run a cleanup task later.</li>
-<li><strong>The Boxxy Way:</strong> Press <code>Control + /</code> and tell your character: "Remind me to check the staging deploy in 20 minutes." Even if you close the terminal into the background, your character's timer keeps ticking in the daemon and sends a native desktop notification with their avatar right on schedule.</li>
+<li><strong>Header Bar Badge:</strong> When you reopen Boxxy, click the background shells indicator in the header bar to reattach any individual shell — or hit <strong>Restore All</strong> to reconstruct your exact vertical and horizontal split-pane layout in one click.</li>
+<li><strong>Ask Your Character:</strong> You can also just ask a character <em>"Restore my background shell"</em> and they'll bring it back into a new tab for you.</li>
+<li><strong>Desktop Top Bar:</strong> Using the <a href="https://boxxy.dev/desktop-integrations/">GNOME Shell Extension or COSMIC Applet</a>? You can monitor detached shells and jump straight back into them from your desktop panel.</li>
 </ul>
-<h3 id="4-chatting-pairing-with-your-favorite-character"><a class="zola-anchor" href="#4-chatting-pairing-with-your-favorite-character" aria-label="Anchor link for: 4-chatting-pairing-with-your-favorite-character">🔗</a>4. Chatting &amp; Pairing with Your Favorite Character</h3>
+<hr />
+<h2 id="good-to-know"><a class="zola-anchor" href="#good-to-know" aria-label="Anchor link for: good-to-know">🔗</a>Good to Know</h2>
 <ul>
-<li><strong>The Scenario:</strong> Standard AI assistants feel robotic, forget your setup between tabs, and don't know whether you prefer <code>fish</code> over <code>bash</code> or <code>podman</code> over <code>docker</code>.</li>
-<li><strong>The Boxxy Way:</strong> Pair up with <strong>Niko</strong>, <strong>Levi</strong>, or <strong>Kuro</strong> — or create your own character in seconds. Your character knows your name, keeps their unique personality, and automatically learns your tools and project habits over time through <strong>Memories &amp; Dreams</strong>.</li>
-</ul>
-<h3 id="5-system-cleanup-disk-maintenance"><a class="zola-anchor" href="#5-system-cleanup-disk-maintenance" aria-label="Anchor link for: 5-system-cleanup-disk-maintenance">🔗</a>5. System Cleanup &amp; Disk Maintenance</h3>
-<ul>
-<li><strong>The Scenario:</strong> Your root partition hits 98% capacity and you aren't sure what is eating up your drive.</li>
-<li><strong>The Boxxy Way:</strong> Ask your character: "My disk is almost full, help me clean it up safely." They will inspect disk usage, identify heavy caches, old container images, or orphaned packages, and propose safe cleanup steps one by one for your approval.</li>
-</ul>
-<h3 id="6-one-click-parameterized-scripts-with-bookmarks"><a class="zola-anchor" href="#6-one-click-parameterized-scripts-with-bookmarks" aria-label="Anchor link for: 6-one-click-parameterized-scripts-with-bookmarks">🔗</a>6. One-Click Parameterized Scripts with Bookmarks</h3>
-<ul>
-<li><strong>The Scenario:</strong> You have deployment, backup, or SSH tunnel scripts that you run often, but you always have to edit flags or hostnames by hand.</li>
-<li><strong>The Boxxy Way:</strong> Save the script in <strong>Bookmarks</strong> using <code>{{{environment}}}</code> or <code>{{{host}}}</code> variables (or ask Boxxy to generate the script for you). Whenever you run it, Boxxy prompts you for those variables in a clean overlay form and executes it right in your pane.</li>
+<li><strong>Works on Native &amp; Flatpak:</strong> Because <code>boxxy-agent</code> runs on the host, background shells work identically whether you installed Boxxy natively or via Flatpak.</li>
+<li><strong>Automatic Cleanup:</strong> Once a detached shell finishes on its own, Boxxy automatically sweeps it up after 4 hours so old sessions never pile up.</li>
 </ul>
 
         
@@ -190,20 +190,26 @@
                 
                 <div class="bx-pager-col">
                     
-                        <a href="&#x2F;characters&#x2F;" class="bx-pager-btn">
+                        <a href="&#x2F;bookmarks&#x2F;" class="bx-pager-btn">
                             <span class="bx-pager-dir">← Previous</span>
-                            <span class="bx-pager-title">Characters</span>
+                            <span class="bx-pager-title">Bookmarks</span>
                         </a>
                     
                 </div>
                 <div class="bx-pager-col is-right">
                     
-                        <a href="&#x2F;releases&#x2F;" class="bx-pager-btn is-next">
+                        <a href="&#x2F;mcp&#x2F;" class="bx-pager-btn is-next">
                             <span class="bx-pager-dir">Next →</span>
-                            <span class="bx-pager-title">Releases</span>
+                            <span class="bx-pager-title">MCP</span>
                         </a>
                     
                 </div>
+            
+        
+            
+        
+            
+        
             
         
             
@@ -212,7 +218,7 @@
 
     
     <div class="bx-edit-row">
-        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/use-cases.md" target="_blank" rel="noopener" class="bx-flat-link">
+        <a href="https://github.com/boxxy-dev/boxxy-website/edit/main/content/run-in-background.md" target="_blank" rel="noopener" class="bx-flat-link">
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
             <span>Improve this page on GitHub</span>
         </a>
@@ -233,32 +239,22 @@
         <ul class="bx-toc-list">
             
                 <li>
-                    <a href="#1-debugging-fixing-your-linux-box" data-toc-link="1-debugging-fixing-your-linux-box" class="is-active">1. Debugging &amp; Fixing Your Linux Box</a>
+                    <a href="#how-to-use-it" data-toc-link="how-to-use-it" class="is-active">How to Use It</a>
                     
                 </li>
             
                 <li>
-                    <a href="#2-sending-long-tasks-to-the-background" data-toc-link="2-sending-long-tasks-to-the-background" class="">2. Sending Long Tasks to the Background</a>
+                    <a href="#how-it-works" data-toc-link="how-it-works" class="">How It Works</a>
                     
                 </li>
             
                 <li>
-                    <a href="#3-persistent-reminders-scheduled-tasks" data-toc-link="3-persistent-reminders-scheduled-tasks" class="">3. Persistent Reminders &amp; Scheduled Tasks</a>
+                    <a href="#coming-back-to-your-work" data-toc-link="coming-back-to-your-work" class="">Coming Back to Your Work</a>
                     
                 </li>
             
                 <li>
-                    <a href="#4-chatting-pairing-with-your-favorite-character" data-toc-link="4-chatting-pairing-with-your-favorite-character" class="">4. Chatting &amp; Pairing with Your Favorite Character</a>
-                    
-                </li>
-            
-                <li>
-                    <a href="#5-system-cleanup-disk-maintenance" data-toc-link="5-system-cleanup-disk-maintenance" class="">5. System Cleanup &amp; Disk Maintenance</a>
-                    
-                </li>
-            
-                <li>
-                    <a href="#6-one-click-parameterized-scripts-with-bookmarks" data-toc-link="6-one-click-parameterized-scripts-with-bookmarks" class="">6. One-Click Parameterized Scripts with Bookmarks</a>
+                    <a href="#good-to-know" data-toc-link="good-to-know" class="">Good to Know</a>
                     
                 </li>
             
